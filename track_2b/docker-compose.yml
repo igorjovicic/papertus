@@ -1,4 +1,10 @@
 # Paperasse — un seul service. `make run` = `docker compose up --build`.
+#
+# Le modèle est joint par trois variables : LLM_NAME, LLM_BASE_URL, LLM_API_KEY.
+# Elles viennent soit d'un fichier .env (facultatif, copié depuis .env.example),
+# soit du shell qui lance `make run` (export LLM_API_KEY=… ; la valeur du shell
+# l'emporte sur celle du .env).
+#
 # Le dossier ./papers de l'hôte est le dépôt de papiers ; s'il est vide au premier
 # démarrage, les 100 papiers synthétiques de data/papers y sont copiés pour que
 # la page montre quelque chose tout de suite.
@@ -9,8 +15,12 @@ services:
     ports:
       - "8640:8640"
     env_file:
-      - .env
+      - path: .env
+        required: false
     environment:
+      LLM_NAME: ${LLM_NAME:-swiss-ai/Apertus-v1.5-70B}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
       PAPERS_DIR: /papers
       RUNTIME_DIR: /app/runtime
     volumes:

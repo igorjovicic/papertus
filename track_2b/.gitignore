@@ -21,6 +21,6 @@ __pycache__/
 build/
 dist/
 node_modules/
-papers/
-runtime/
+/papers/
+/runtime/
 venv/

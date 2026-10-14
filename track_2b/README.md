@@ -23,6 +23,19 @@ make run                 # docker compose up --build
 open http://localhost:8640
 ```
 
+The `.env` file is optional: the same three variables can come from the shell instead, and a value
+exported in the shell wins over the file.
+
+```bash
+export LLM_NAME=swiss-ai/Apertus-v1.5-70B
+export LLM_BASE_URL=https://<your-endpoint>/v1
+export LLM_API_KEY=<your key>
+make run
+```
+
+The build pulls `python:3.12-slim-bookworm` and the pinned packages of `requirements.txt`; nothing else
+touches the network at build time, and at run time only `LLM_BASE_URL` is contacted.
+
 On the first start the `./papers` folder is empty, so the 100 synthetic papers of `data/papers` are
 copied into it and read one after the other (the page shows the progress; each paper is read once and
 cached by file hash in `runtime/cache.json`). Then:

@@ -1,6 +1,7 @@
 # Paperasse — image unique : Python 3.12, le code et les papiers d'exemple.
 # Aucune ressource réseau au démarrage ; seul le point d'accès LLM est joint à l'exécution.
-FROM python:3.12-slim
+# Image épinglée (python:3.12-slim, Debian bookworm, 2026-10) : la construction ne touche le réseau que pour pip.
+FROM python:3.12-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
