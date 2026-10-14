@@ -1,0 +1,25 @@
+{
+  "id": "p088",
+  "file": "data/papers/p088.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Fiduciaire Lemaire Sàrl",
+    "recipient": "Laurent Monnier",
+    "amount_chf": 2663.99,
+    "currency": "CHF",
+    "iban": "CH3831464869400714515",
+    "reference": "588262729607962494193061276",
+    "reference_type": "QRR",
+    "invoice_number": "2026-127",
+    "invoice_date": "2026-10-14",
+    "due_date": "2026-10-24",
+    "purpose": "Facture 2026-127"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "p099",
+  "file": "data/papers/p099.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "second_amount"
+  ],
+  "facts": {
+    "authority": "Betreibungsamt Bern-Mittelland",
+    "recipient": "Lea Baumann",
+    "letter_date": "2026-08-09",
+    "subject": "Zahlungsbefehl – Betreibung Nr. 2026-16021-BE",
+    "letter_kind": "payment_summons",
+    "amount_chf": 4117.3,
+    "deadline": "2026-08-29",
+    "reference_number": "2026-16021-BE",
+    "action_required": "pay"
+  }
+}

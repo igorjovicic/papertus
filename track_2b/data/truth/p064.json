@@ -1,0 +1,24 @@
+{
+  "id": "p064",
+  "file": "data/papers/p064.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Malerei Frei",
+    "recipient": "Nora Keller",
+    "amount_chf": 4653.16,
+    "currency": "CHF",
+    "iban": "CH7031469109403141734",
+    "reference": "970253581923541168452062403",
+    "reference_type": "QRR",
+    "invoice_number": "2026-240",
+    "invoice_date": "2026-10-08",
+    "due_date": "2026-11-07",
+    "purpose": "Rechnung 2026-240"
+  }
+}

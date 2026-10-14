@@ -1,0 +1,23 @@
+{
+  "id": "p072",
+  "file": "data/papers/p072.pdf",
+  "kind": "qr_bill",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe"
+  ],
+  "facts": {
+    "issuer": "Fiduciaria Colombo",
+    "recipient": "Elena Ferrari",
+    "amount_chf": 2305.99,
+    "currency": "CHF",
+    "iban": "CH3031259978753281962",
+    "reference": "120380153497130082672469434",
+    "reference_type": "QRR",
+    "invoice_number": "2026-943",
+    "invoice_date": "2026-09-23",
+    "due_date": "2026-10-13",
+    "purpose": "Fattura 2026-943"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "p086",
+  "file": "data/papers/p086.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "no_amount"
+  ],
+  "facts": {
+    "authority": "Stadt Luzern – Bauverwaltung",
+    "recipient": "Martin Suter-Bircher",
+    "letter_date": "2026-09-14",
+    "subject": "Baubewilligung – Entscheid (Dossier 2026-91289-LU)",
+    "letter_kind": "permit_decision",
+    "amount_chf": null,
+    "deadline": "2026-10-14",
+    "reference_number": "2026-91289-LU",
+    "action_required": "none"
+  }
+}

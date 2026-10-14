@@ -1,0 +1,23 @@
+{
+  "id": "p075",
+  "file": "data/papers/p075.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash"
+  ],
+  "facts": {
+    "issuer": "Jardins Vuille",
+    "recipient": "Jean-Luc Perrin",
+    "amount_chf": 7887.84,
+    "currency": "CHF",
+    "iban": "CH2606412922394172840",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-820",
+    "invoice_date": "2026-10-08",
+    "due_date": "2026-10-18",
+    "purpose": "Facture 2026-820"
+  }
+}

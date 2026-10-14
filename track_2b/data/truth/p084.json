@@ -1,0 +1,21 @@
+{
+  "id": "p084",
+  "file": "data/papers/p084.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe"
+  ],
+  "facts": {
+    "authority": "Assurance-maladie Jura-Léman SA",
+    "recipient": "Sophie Berthoud",
+    "letter_date": "2026-09-03",
+    "subject": "Primes 2027 – assurance obligatoire des soins (LAMal)",
+    "letter_kind": "premium_notice",
+    "amount_chf": 584.75,
+    "deadline": "2026-11-30",
+    "reference_number": "2026-91924-GE",
+    "action_required": "none"
+  }
+}

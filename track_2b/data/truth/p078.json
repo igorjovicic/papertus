@@ -1,0 +1,22 @@
+{
+  "id": "p078",
+  "file": "data/papers/p078.pdf",
+  "kind": "official_letter",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Ufficio delle imposte",
+    "recipient": "Luca Moretti",
+    "letter_date": "2026-10-03",
+    "subject": "Decisione di tassazione 2025 – imposta cantonale e comunale",
+    "letter_kind": "tax_decision",
+    "amount_chf": 1457.75,
+    "deadline": "2026-11-02",
+    "reference_number": "2026-96413-TI",
+    "action_required": "pay"
+  }
+}

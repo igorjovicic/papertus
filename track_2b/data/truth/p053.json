@@ -1,0 +1,23 @@
+{
+  "id": "p053",
+  "file": "data/papers/p053.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Commune d'Yverdon-les-Bains – Greffe municipal",
+    "recipient": "Camille Rossier",
+    "letter_date": "2026-08-31",
+    "subject": "Contrôle des habitants – documents à fournir",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-09-14",
+    "reference_number": "2026-25907-VD",
+    "action_required": "submit_documents"
+  }
+}

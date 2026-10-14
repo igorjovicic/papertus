@@ -1,0 +1,24 @@
+{
+  "id": "p015",
+  "file": "data/papers/p015.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Sanitär Zbinden GmbH",
+    "recipient": "Martin Suter-Bircher",
+    "amount_chf": 3815.39,
+    "currency": "CHF",
+    "iban": "CH7302219870143739098",
+    "reference": "RF8720261523697",
+    "reference_type": "SCOR",
+    "invoice_number": "2026-152",
+    "invoice_date": "2026-09-02",
+    "due_date": "2026-10-02",
+    "purpose": "Rechnung 2026-152"
+  }
+}

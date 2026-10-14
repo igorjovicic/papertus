@@ -1,0 +1,21 @@
+{
+  "id": "p100",
+  "file": "data/papers/p100.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_space"
+  ],
+  "facts": {
+    "authority": "Kantonales Steueramt",
+    "recipient": "Martin Suter-Bircher",
+    "letter_date": "2026-09-30",
+    "subject": "Veranlagungsverfügung 2025 – Staats- und Gemeindesteuern",
+    "letter_kind": "tax_decision",
+    "amount_chf": 4514.3,
+    "deadline": "2026-10-30",
+    "reference_number": "2026-10088-ZH",
+    "action_required": "pay"
+  }
+}

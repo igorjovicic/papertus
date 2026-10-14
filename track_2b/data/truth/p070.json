@@ -1,0 +1,94 @@
+{
+  "id": "p070",
+  "file": "data/papers/p070.pdf",
+  "kind": "bank_statement",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "footer_date"
+  ],
+  "facts": {
+    "bank": "Zugerland Bank AG",
+    "account_iban": "CH2402219122682170508",
+    "holder": "Martin Suter-Bircher",
+    "period_start": "2026-09-01",
+    "period_end": "2026-09-30",
+    "opening_balance": 9772.0,
+    "closing_balance": 12002.65,
+    "movements": [
+      {
+        "date": "2026-09-03",
+        "label": "Miete September – Hausverwaltung Tösstal",
+        "amount": -1357.0
+      },
+      {
+        "date": "2026-09-09",
+        "label": "Swisscom – Rechnung",
+        "amount": -86.0
+      },
+      {
+        "date": "2026-09-10",
+        "label": "Migros Winterthur",
+        "amount": -54.3
+      },
+      {
+        "date": "2026-09-12",
+        "label": "Apotheke am Markt",
+        "amount": -69.3
+      },
+      {
+        "date": "2026-09-14",
+        "label": "Steuern – Akontozahlung",
+        "amount": -365.85
+      },
+      {
+        "date": "2026-09-15",
+        "label": "Restaurant Rössli",
+        "amount": -106.45
+      },
+      {
+        "date": "2026-09-17",
+        "label": "TWINT Eingang – Essen geteilt",
+        "amount": 68.3
+      },
+      {
+        "date": "2026-09-18",
+        "label": "Bezug Bancomat",
+        "amount": -135.0
+      },
+      {
+        "date": "2026-09-19",
+        "label": "Strom – Stadtwerke",
+        "amount": -126.0
+      },
+      {
+        "date": "2026-09-19",
+        "label": "Tankstelle Wyss",
+        "amount": -50.0
+      },
+      {
+        "date": "2026-09-24",
+        "label": "Coop Bern Bahnhof",
+        "amount": -30.0
+      },
+      {
+        "date": "2026-09-25",
+        "label": "Lohn – Werkstatt Suter",
+        "amount": 4873.0
+      },
+      {
+        "date": "2026-09-25",
+        "label": "TWINT – Wochenmarkt",
+        "amount": -34.0
+      },
+      {
+        "date": "2026-09-30",
+        "label": "Krankenkasse Bergblick – Prämie",
+        "amount": -296.75
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

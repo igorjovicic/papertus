@@ -1,0 +1,26 @@
+{
+  "id": "p097",
+  "file": "data/papers/p097.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "second_amount",
+    "creditor_name_drift",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Sanitär Zbinden GmbH",
+    "recipient": "Nora Keller",
+    "amount_chf": 6400.66,
+    "currency": "CHF",
+    "iban": "CH8131261859591468814",
+    "reference": "364740950376561784094762042",
+    "reference_type": "QRR",
+    "invoice_number": "2026-204",
+    "invoice_date": "2026-08-21",
+    "due_date": "2026-09-10",
+    "purpose": "Rechnung 2026-204"
+  }
+}

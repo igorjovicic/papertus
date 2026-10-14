@@ -1,0 +1,22 @@
+{
+  "id": "p028",
+  "file": "data/papers/p028.pdf",
+  "kind": "official_letter",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount"
+  ],
+  "facts": {
+    "authority": "Ufficio di esecuzione di Lugano",
+    "recipient": "Giulia Pedrazzini",
+    "letter_date": "2026-08-31",
+    "subject": "Precetto esecutivo – esecuzione n. 2026-98647-TI",
+    "letter_kind": "payment_summons",
+    "amount_chf": 3645.75,
+    "deadline": "2026-09-20",
+    "reference_number": "2026-98647-TI",
+    "action_required": "pay"
+  }
+}

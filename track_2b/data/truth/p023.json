@@ -1,0 +1,25 @@
+{
+  "id": "p023",
+  "file": "data/papers/p023.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "second_amount",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Physio du Léman Sàrl",
+    "recipient": "Laurent Monnier",
+    "amount_chf": 4357.89,
+    "currency": "CHF",
+    "iban": "CH9331401317487972975",
+    "reference": "395700743667349376732865801",
+    "reference_type": "QRR",
+    "invoice_number": "2026-580",
+    "invoice_date": "2026-08-15",
+    "due_date": "2026-09-14",
+    "purpose": "Facture 2026-580"
+  }
+}

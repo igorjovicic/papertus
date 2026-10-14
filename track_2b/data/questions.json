@@ -1,0 +1,758 @@
+[
+  {
+    "id": "q01",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Garage Morel SA ?",
+    "type": "amount",
+    "truth": 927.5,
+    "papers": [
+      "p020"
+    ]
+  },
+  {
+    "id": "q02",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
+    "type": "amount",
+    "truth": 5516.78,
+    "papers": [
+      "p043"
+    ]
+  },
+  {
+    "id": "q03",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
+    "type": "amount",
+    "truth": 4357.89,
+    "papers": [
+      "p023"
+    ]
+  },
+  {
+    "id": "q04",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
+    "type": "amount",
+    "truth": 4223.79,
+    "papers": [
+      "p038"
+    ]
+  },
+  {
+    "id": "q05",
+    "lang": "de",
+    "kind": "owe",
+    "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
+    "type": "amount",
+    "truth": 4777.59,
+    "papers": [
+      "p014"
+    ]
+  },
+  {
+    "id": "q06",
+    "lang": "it",
+    "kind": "owe",
+    "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
+    "type": "amount",
+    "truth": 10539.3,
+    "papers": [
+      "p058"
+    ]
+  },
+  {
+    "id": "q07",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
+    "type": "amount",
+    "truth": 980.25,
+    "papers": [
+      "p037"
+    ]
+  },
+  {
+    "id": "q08",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
+    "type": "amount",
+    "truth": 2663.99,
+    "papers": [
+      "p088"
+    ]
+  },
+  {
+    "id": "q09",
+    "lang": "fr",
+    "kind": "owe",
+    "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
+    "type": "amount",
+    "truth": 5832.21,
+    "papers": [
+      "p087"
+    ]
+  },
+  {
+    "id": "q10",
+    "lang": "de",
+    "kind": "owe",
+    "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
+    "type": "amount",
+    "truth": 1821.59,
+    "papers": [
+      "p051"
+    ]
+  },
+  {
+    "id": "q11",
+    "lang": "de",
+    "kind": "owe",
+    "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
+    "type": "amount",
+    "truth": 2562.08,
+    "papers": [
+      "p071"
+    ]
+  },
+  {
+    "id": "q12",
+    "lang": "it",
+    "kind": "owe",
+    "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
+    "type": "amount",
+    "truth": 4741.21,
+    "papers": [
+      "p046"
+    ]
+  },
+  {
+    "id": "q13",
+    "lang": "fr",
+    "kind": "balance",
+    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 30.09.2026 ?",
+    "type": "amount",
+    "truth": 3138.75,
+    "papers": [
+      "p026"
+    ]
+  },
+  {
+    "id": "q14",
+    "lang": "fr",
+    "kind": "balance",
+    "question": "Quel est le solde du compte chez Banque Romande du Lac SA au 30.09.2026 ?",
+    "type": "amount",
+    "truth": 11061.8,
+    "papers": [
+      "p006"
+    ]
+  },
+  {
+    "id": "q15",
+    "lang": "fr",
+    "kind": "balance",
+    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 10.10.2026 ?",
+    "type": "amount",
+    "truth": 1661.2,
+    "papers": [
+      "p052"
+    ]
+  },
+  {
+    "id": "q16",
+    "lang": "it",
+    "kind": "balance",
+    "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
+    "type": "amount",
+    "truth": 12421.9,
+    "papers": [
+      "p079"
+    ]
+  },
+  {
+    "id": "q17",
+    "lang": "de",
+    "kind": "balance",
+    "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
+    "type": "amount",
+    "truth": 7623.3,
+    "papers": [
+      "p039"
+    ]
+  },
+  {
+    "id": "q18",
+    "lang": "de",
+    "kind": "balance",
+    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 31.08.2026?",
+    "type": "amount",
+    "truth": 7026.25,
+    "papers": [
+      "p031"
+    ]
+  },
+  {
+    "id": "q19",
+    "lang": "it",
+    "kind": "balance",
+    "question": "Qual è il saldo del conto presso Banca Sud Ticino SA al 10.10.2026?",
+    "type": "amount",
+    "truth": 6957.3,
+    "papers": [
+      "p054"
+    ]
+  },
+  {
+    "id": "q20",
+    "lang": "de",
+    "kind": "balance",
+    "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
+    "type": "amount",
+    "truth": 13485.75,
+    "papers": [
+      "p018"
+    ]
+  },
+  {
+    "id": "q21",
+    "lang": "de",
+    "kind": "balance",
+    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 30.09.2026?",
+    "type": "amount",
+    "truth": 13963.8,
+    "papers": [
+      "p019"
+    ]
+  },
+  {
+    "id": "q22",
+    "lang": "de",
+    "kind": "balance",
+    "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026?",
+    "type": "amount",
+    "truth": 1988.8,
+    "papers": [
+      "p002"
+    ]
+  },
+  {
+    "id": "q23",
+    "lang": "fr",
+    "kind": "due_on",
+    "question": "Quelles factures sont dues le 05.09.2026 ?",
+    "type": "list",
+    "truth": [
+      "p010",
+      "p060"
+    ],
+    "papers": [
+      "p010",
+      "p060"
+    ]
+  },
+  {
+    "id": "q24",
+    "lang": "de",
+    "kind": "due_on",
+    "question": "Welche Rechnungen sind am 13.09.2026 fällig?",
+    "type": "list",
+    "truth": [
+      "p005",
+      "p042"
+    ],
+    "papers": [
+      "p005",
+      "p042"
+    ]
+  },
+  {
+    "id": "q25",
+    "lang": "fr",
+    "kind": "due_on",
+    "question": "Quelles factures sont dues le 21.09.2026 ?",
+    "type": "list",
+    "truth": [
+      "p011",
+      "p055"
+    ],
+    "papers": [
+      "p011",
+      "p055"
+    ]
+  },
+  {
+    "id": "q26",
+    "lang": "de",
+    "kind": "due_on",
+    "question": "Welche Rechnungen sind am 26.09.2026 fällig?",
+    "type": "list",
+    "truth": [
+      "p020",
+      "p074"
+    ],
+    "papers": [
+      "p020",
+      "p074"
+    ]
+  },
+  {
+    "id": "q27",
+    "lang": "it",
+    "kind": "due_on",
+    "question": "Quali fatture scadono il 08.10.2026?",
+    "type": "list",
+    "truth": [
+      "p030",
+      "p038"
+    ],
+    "papers": [
+      "p030",
+      "p038"
+    ]
+  },
+  {
+    "id": "q28",
+    "lang": "fr",
+    "kind": "due_on",
+    "question": "Quelles factures sont dues le 14.10.2026 ?",
+    "type": "list",
+    "truth": [
+      "p025",
+      "p087"
+    ],
+    "papers": [
+      "p025",
+      "p087"
+    ]
+  },
+  {
+    "id": "q29",
+    "lang": "de",
+    "kind": "due_on",
+    "question": "Welche Rechnungen sind am 15.10.2026 fällig?",
+    "type": "list",
+    "truth": [
+      "p046",
+      "p071"
+    ],
+    "papers": [
+      "p046",
+      "p071"
+    ]
+  },
+  {
+    "id": "q30",
+    "lang": "fr",
+    "kind": "due_on",
+    "question": "Quelles factures sont dues le 16.10.2026 ?",
+    "type": "list",
+    "truth": [
+      "p009",
+      "p096"
+    ],
+    "papers": [
+      "p009",
+      "p096"
+    ]
+  },
+  {
+    "id": "q31",
+    "lang": "fr",
+    "kind": "count_month",
+    "question": "Combien de factures ai-je reçues en août ?",
+    "type": "count",
+    "truth": 14,
+    "papers": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+    ]
+  },
+  {
+    "id": "q32",
+    "lang": "de",
+    "kind": "count_month",
+    "question": "Wie viele Rechnungen habe ich im August erhalten?",
+    "type": "count",
+    "truth": 14,
+    "papers": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+    ]
+  },
+  {
+    "id": "q33",
+    "lang": "it",
+    "kind": "count_month",
+    "question": "Quante fatture ho ricevuto in settembre?",
+    "type": "count",
+    "truth": 18,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q34",
+    "lang": "fr",
+    "kind": "count_month",
+    "question": "Combien de factures ai-je reçues en septembre ?",
+    "type": "count",
+    "truth": 18,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q35",
+    "lang": "de",
+    "kind": "count_month",
+    "question": "Wie viele Rechnungen habe ich im September erhalten?",
+    "type": "count",
+    "truth": 18,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q36",
+    "lang": "it",
+    "kind": "count_month",
+    "question": "Quante fatture ho ricevuto in agosto?",
+    "type": "count",
+    "truth": 14,
+    "papers": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+    ]
+  },
+  {
+    "id": "q37",
+    "lang": "fr",
+    "kind": "total_month",
+    "question": "Total des factures reçues en septembre ?",
+    "type": "amount",
+    "truth": 65770.53,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q38",
+    "lang": "de",
+    "kind": "total_month",
+    "question": "Total der im September erhaltenen Rechnungen?",
+    "type": "amount",
+    "truth": 65770.53,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q39",
+    "lang": "it",
+    "kind": "total_month",
+    "question": "Totale delle fatture ricevute in settembre?",
+    "type": "amount",
+    "truth": 65770.53,
+    "papers": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+    ]
+  },
+  {
+    "id": "q40",
+    "lang": "fr",
+    "kind": "total_month",
+    "question": "Total des factures reçues en août ?",
+    "type": "amount",
+    "truth": 63363.4,
+    "papers": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+    ]
+  },
+  {
+    "id": "q41",
+    "lang": "de",
+    "kind": "total_month",
+    "question": "Total der im August erhaltenen Rechnungen?",
+    "type": "amount",
+    "truth": 63363.4,
+    "papers": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+    ]
+  },
+  {
+    "id": "q42",
+    "lang": "it",
+    "kind": "total_month",
+    "question": "Totale delle fatture ricevute in ottobre?",
+    "type": "amount",
+    "truth": 29133.73,
+    "papers": [
+      "p017",
+      "p024",
+      "p046",
+      "p064",
+      "p065",
+      "p071",
+      "p075",
+      "p088"
+    ]
+  },
+  {
+    "id": "q43",
+    "lang": "fr",
+    "kind": "deadline",
+    "question": "Quel est le délai de Assurance-maladie Jura-Léman SA (réf. 2026-48829-GE) ?",
+    "type": "date",
+    "truth": "2026-11-30",
+    "papers": [
+      "p013"
+    ]
+  },
+  {
+    "id": "q44",
+    "lang": "it",
+    "kind": "deadline",
+    "question": "Qual è il termine fissato da Città di Lugano – Ufficio tecnico (rif. 2026-77154-TI)?",
+    "type": "date",
+    "truth": "2026-09-29",
+    "papers": [
+      "p036"
+    ]
+  },
+  {
+    "id": "q45",
+    "lang": "fr",
+    "kind": "deadline",
+    "question": "Quel est le délai de Commune d'Yverdon-les-Bains – Greffe municipal (réf. 2026-25907-VD) ?",
+    "type": "date",
+    "truth": "2026-09-14",
+    "papers": [
+      "p053"
+    ]
+  },
+  {
+    "id": "q46",
+    "lang": "de",
+    "kind": "deadline",
+    "question": "Welche Frist setzt Kantonales Steueramt (Ref. 2026-10088-ZH)?",
+    "type": "date",
+    "truth": "2026-10-30",
+    "papers": [
+      "p100"
+    ]
+  },
+  {
+    "id": "q47",
+    "lang": "fr",
+    "kind": "deadline",
+    "question": "Quel est le délai de Commune de Vevey – Police des constructions (réf. 2026-27758-VD) ?",
+    "type": "date",
+    "truth": "2026-09-15",
+    "papers": [
+      "p085"
+    ]
+  },
+  {
+    "id": "q48",
+    "lang": "fr",
+    "kind": "deadline",
+    "question": "Quel est le délai de Service cantonal des contributions (réf. 2026-48974-FR) ?",
+    "type": "date",
+    "truth": "2026-10-28",
+    "papers": [
+      "p016"
+    ]
+  },
+  {
+    "id": "q49",
+    "lang": "de",
+    "kind": "deadline",
+    "question": "Welche Frist setzt Stadt Luzern – Bauverwaltung (Ref. 2026-91289-LU)?",
+    "type": "date",
+    "truth": "2026-10-14",
+    "papers": [
+      "p086"
+    ]
+  },
+  {
+    "id": "q50",
+    "lang": "fr",
+    "kind": "deadline",
+    "question": "Quel est le délai de Commune de Vevey – Contrôle des habitants (réf. 2026-50562-VD) ?",
+    "type": "date",
+    "truth": "2026-09-22",
+    "papers": [
+      "p045"
+    ]
+  }
+]

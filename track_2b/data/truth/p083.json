@@ -1,0 +1,24 @@
+{
+  "id": "p083",
+  "file": "data/papers/p083.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Électricité Favre SA",
+    "recipient": "Camille Rossier",
+    "amount_chf": 3211.22,
+    "currency": "CHF",
+    "iban": "CH0430129477459520169",
+    "reference": "456086968528717357795967122",
+    "reference_type": "QRR",
+    "invoice_number": "2026-712",
+    "invoice_date": "2026-08-09",
+    "due_date": "2026-08-19",
+    "purpose": "Facture 2026-712"
+  }
+}

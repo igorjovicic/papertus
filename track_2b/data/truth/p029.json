@@ -1,0 +1,99 @@
+{
+  "id": "p029",
+  "file": "data/papers/p029.pdf",
+  "kind": "bank_statement",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "footer_date"
+  ],
+  "facts": {
+    "bank": "Caisse d'Épargne de la Broye",
+    "account_iban": "CH7706412135448546713",
+    "holder": "Marie Favre",
+    "period_start": "2026-09-01",
+    "period_end": "2026-09-30",
+    "opening_balance": 6838.75,
+    "closing_balance": 10281.05,
+    "movements": [
+      {
+        "date": "2026-09-02",
+        "label": "Virement reçu – remboursement",
+        "amount": 75.85
+      },
+      {
+        "date": "2026-09-03",
+        "label": "Loyer septembre – Régie du Lac",
+        "amount": -1916.0
+      },
+      {
+        "date": "2026-09-04",
+        "label": "Swisscom – facture",
+        "amount": -76.5
+      },
+      {
+        "date": "2026-09-05",
+        "label": "TWINT – Marché de Vevey",
+        "amount": -10.0
+      },
+      {
+        "date": "2026-09-10",
+        "label": "Coop Pronto Lausanne",
+        "amount": -12.75
+      },
+      {
+        "date": "2026-09-13",
+        "label": "Restaurant Le Lac",
+        "amount": -122.75
+      },
+      {
+        "date": "2026-09-15",
+        "label": "Essence – station Rochat",
+        "amount": -75.75
+      },
+      {
+        "date": "2026-09-19",
+        "label": "Retrait Bancomat",
+        "amount": -312.0
+      },
+      {
+        "date": "2026-09-20",
+        "label": "SBB CFF FFS – billet",
+        "amount": -74.3
+      },
+      {
+        "date": "2026-09-21",
+        "label": "TWINT reçu – partage repas",
+        "amount": 48.75
+      },
+      {
+        "date": "2026-09-21",
+        "label": "Impôts – acompte",
+        "amount": -419.3
+      },
+      {
+        "date": "2026-09-21",
+        "label": "Pharmacie du Centre",
+        "amount": -74.0
+      },
+      {
+        "date": "2026-09-22",
+        "label": "Migros Vevey",
+        "amount": -115.1
+      },
+      {
+        "date": "2026-09-26",
+        "label": "Salaire – Atelier Verdon SA",
+        "amount": 6594.0
+      },
+      {
+        "date": "2026-09-28",
+        "label": "Électricité – Services industriels",
+        "amount": -67.85
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

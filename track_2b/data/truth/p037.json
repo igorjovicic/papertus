@@ -1,0 +1,25 @@
+{
+  "id": "p037",
+  "file": "data/papers/p037.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "second_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Physio du Léman Sàrl",
+    "recipient": "Marie Favre",
+    "amount_chf": 980.25,
+    "currency": "CHF",
+    "iban": "CH2630881142488524208",
+    "reference": "583142718788086368283965982",
+    "reference_type": "QRR",
+    "invoice_number": "2026-598",
+    "invoice_date": "2026-08-30",
+    "due_date": "2026-09-09",
+    "purpose": "Facture 2026-598"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "id": "p018",
+  "file": "data/papers/p018.pdf",
+  "kind": "bank_statement",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_space"
+  ],
+  "facts": {
+    "bank": "Zugerland Bank AG",
+    "account_iban": "CH8002219256355366221",
+    "holder": "Martin Suter-Bircher",
+    "period_start": "2026-08-01",
+    "period_end": "2026-08-31",
+    "opening_balance": 11040.2,
+    "closing_balance": 13485.75,
+    "movements": [
+      {
+        "date": "2026-08-03",
+        "label": "Miete August – Hausverwaltung Tösstal",
+        "amount": -1827.0
+      },
+      {
+        "date": "2026-08-03",
+        "label": "Coop Bern Bahnhof",
+        "amount": -7.9
+      },
+      {
+        "date": "2026-08-06",
+        "label": "Strom – Stadtwerke",
+        "amount": -131.2
+      },
+      {
+        "date": "2026-08-15",
+        "label": "Steuern – Akontozahlung",
+        "amount": -779.0
+      },
+      {
+        "date": "2026-08-18",
+        "label": "Tankstelle Wyss",
+        "amount": -101.75
+      },
+      {
+        "date": "2026-08-23",
+        "label": "SBB CFF FFS – Billett",
+        "amount": -106.2
+      },
+      {
+        "date": "2026-08-24",
+        "label": "Swisscom – Rechnung",
+        "amount": -95.9
+      },
+      {
+        "date": "2026-08-25",
+        "label": "Lohn – Werkstatt Suter",
+        "amount": 5941.0
+      },
+      {
+        "date": "2026-08-29",
+        "label": "Migros Winterthur",
+        "amount": -90.3
+      },
+      {
+        "date": "2026-08-31",
+        "label": "Bezug Bancomat",
+        "amount": -356.2
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

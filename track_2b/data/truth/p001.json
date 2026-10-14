@@ -1,0 +1,21 @@
+{
+  "id": "p001",
+  "file": "data/papers/p001.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe"
+  ],
+  "facts": {
+    "authority": "Administration cantonale des impôts",
+    "recipient": "Jean-Luc Perrin",
+    "letter_date": "2026-08-25",
+    "subject": "Décision de taxation 2025 – impôt cantonal et communal",
+    "letter_kind": "tax_decision",
+    "amount_chf": 4138.0,
+    "deadline": "2026-09-24",
+    "reference_number": "2026-64040-VD",
+    "action_required": "pay"
+  }
+}

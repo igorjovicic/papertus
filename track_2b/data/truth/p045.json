@@ -1,0 +1,22 @@
+{
+  "id": "p045",
+  "file": "data/papers/p045.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "no_amount"
+  ],
+  "facts": {
+    "authority": "Commune de Vevey – Contrôle des habitants",
+    "recipient": "Camille Rossier",
+    "letter_date": "2026-09-02",
+    "subject": "Contrôle des habitants – documents à fournir",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-09-22",
+    "reference_number": "2026-50562-VD",
+    "action_required": "submit_documents"
+  }
+}

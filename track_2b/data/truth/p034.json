@@ -1,0 +1,88 @@
+{
+  "id": "p034",
+  "file": "data/papers/p034.pdf",
+  "kind": "bank_statement",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_space"
+  ],
+  "facts": {
+    "bank": "Banque Romande du Lac SA",
+    "account_iban": "CH3708731722219066762",
+    "holder": "Camille Rossier",
+    "period_start": "2026-09-01",
+    "period_end": "2026-09-30",
+    "opening_balance": 4474.75,
+    "closing_balance": 5937.0,
+    "movements": [
+      {
+        "date": "2026-09-01",
+        "label": "Loyer septembre – Régie du Lac",
+        "amount": -1508.0
+      },
+      {
+        "date": "2026-09-01",
+        "label": "Pharmacie du Centre",
+        "amount": -30.0
+      },
+      {
+        "date": "2026-09-03",
+        "label": "TWINT reçu – partage repas",
+        "amount": 13.0
+      },
+      {
+        "date": "2026-09-03",
+        "label": "Impôts – acompte",
+        "amount": -520.1
+      },
+      {
+        "date": "2026-09-05",
+        "label": "Restaurant Le Lac",
+        "amount": -40.0
+      },
+      {
+        "date": "2026-09-06",
+        "label": "Assurance-maladie Jura-Léman – prime",
+        "amount": -438.2
+      },
+      {
+        "date": "2026-09-10",
+        "label": "TWINT – Marché de Vevey",
+        "amount": -44.85
+      },
+      {
+        "date": "2026-09-11",
+        "label": "Retrait Bancomat",
+        "amount": -289.0
+      },
+      {
+        "date": "2026-09-13",
+        "label": "Migros Vevey",
+        "amount": -124.3
+      },
+      {
+        "date": "2026-09-19",
+        "label": "Électricité – Services industriels",
+        "amount": -106.45
+      },
+      {
+        "date": "2026-09-20",
+        "label": "SBB CFF FFS – billet",
+        "amount": -16.0
+      },
+      {
+        "date": "2026-09-26",
+        "label": "Salaire – Haute école fictive",
+        "amount": 4670.0
+      },
+      {
+        "date": "2026-09-30",
+        "label": "Swisscom – facture",
+        "amount": -103.85
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

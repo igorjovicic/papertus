@@ -1,0 +1,69 @@
+{
+  "id": "p026",
+  "file": "data/papers/p026.pdf",
+  "kind": "bank_statement",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "footer_date"
+  ],
+  "facts": {
+    "bank": "Banque du Jura Fictive SA",
+    "account_iban": "CH8602498773062725840",
+    "holder": "Sophie Berthoud",
+    "period_start": "2026-09-01",
+    "period_end": "2026-09-30",
+    "opening_balance": 1159.2,
+    "closing_balance": 3138.75,
+    "movements": [
+      {
+        "date": "2026-09-03",
+        "label": "Loyer septembre – Régie du Lac",
+        "amount": -1555.0
+      },
+      {
+        "date": "2026-09-03",
+        "label": "TWINT – Marché de Vevey",
+        "amount": -28.2
+      },
+      {
+        "date": "2026-09-10",
+        "label": "Retrait Bancomat",
+        "amount": -117.75
+      },
+      {
+        "date": "2026-09-19",
+        "label": "Swisscom – facture",
+        "amount": -75.85
+      },
+      {
+        "date": "2026-09-21",
+        "label": "Assurance-maladie Jura-Léman – prime",
+        "amount": -408.5
+      },
+      {
+        "date": "2026-09-21",
+        "label": "Restaurant Le Lac",
+        "amount": -38.0
+      },
+      {
+        "date": "2026-09-22",
+        "label": "Essence – station Rochat",
+        "amount": -62.45
+      },
+      {
+        "date": "2026-09-24",
+        "label": "TWINT reçu – partage repas",
+        "amount": 32.3
+      },
+      {
+        "date": "2026-09-26",
+        "label": "Salaire – Banque Romande du Lac SA",
+        "amount": 4233.0
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

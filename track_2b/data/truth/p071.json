@@ -1,0 +1,25 @@
+{
+  "id": "p071",
+  "file": "data/papers/p071.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount",
+    "no_qr"
+  ],
+  "facts": {
+    "issuer": "Gärtnerei Wyss",
+    "recipient": "Anna Steiner",
+    "amount_chf": 2562.08,
+    "currency": "CHF",
+    "iban": "CH8308305024722602367",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-236",
+    "invoice_date": "2026-10-05",
+    "due_date": "2026-10-15",
+    "purpose": "Rechnung 2026-236"
+  }
+}

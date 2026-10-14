@@ -1,0 +1,21 @@
+{
+  "id": "p069",
+  "file": "data/papers/p069.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash"
+  ],
+  "facts": {
+    "authority": "Steuerverwaltung des Kantons Bern",
+    "recipient": "Nora Keller",
+    "letter_date": "2026-08-30",
+    "subject": "Veranlagungsverfügung 2025 – Staats- und Gemeindesteuern",
+    "letter_kind": "tax_decision",
+    "amount_chf": 2541.45,
+    "deadline": "2026-09-29",
+    "reference_number": "2026-42435-BE",
+    "action_required": "pay"
+  }
+}

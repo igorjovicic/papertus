@@ -1,0 +1,25 @@
+{
+  "id": "p038",
+  "file": "data/papers/p038.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount",
+    "no_qr"
+  ],
+  "facts": {
+    "issuer": "Électricité Favre SA",
+    "recipient": "Marie Favre",
+    "amount_chf": 4223.79,
+    "currency": "CHF",
+    "iban": "CH9208731646116310824",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-546",
+    "invoice_date": "2026-09-08",
+    "due_date": "2026-10-08",
+    "purpose": "Facture 2026-546"
+  }
+}

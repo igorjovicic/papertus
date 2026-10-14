@@ -1,0 +1,23 @@
+{
+  "id": "p085",
+  "file": "data/papers/p085.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "no_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Commune de Vevey – Police des constructions",
+    "recipient": "Nicolas Chappuis",
+    "letter_date": "2026-08-16",
+    "subject": "Permis de construire – décision (dossier 2026-27758-VD)",
+    "letter_kind": "permit_decision",
+    "amount_chf": null,
+    "deadline": "2026-09-15",
+    "reference_number": "2026-27758-VD",
+    "action_required": "none"
+  }
+}

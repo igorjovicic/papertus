@@ -1,0 +1,22 @@
+{
+  "id": "p059",
+  "file": "data/papers/p059.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "no_amount"
+  ],
+  "facts": {
+    "authority": "Stadt Winterthur – Einwohnerdienste",
+    "recipient": "Thomas Gerber",
+    "letter_date": "2026-08-28",
+    "subject": "Einwohnerkontrolle – fehlende Unterlagen",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-09-27",
+    "reference_number": "2026-88966-ZH",
+    "action_required": "submit_documents"
+  }
+}

@@ -1,0 +1,27 @@
+# Paperasse — un seul service. `make run` = `docker compose up --build`.
+# Le dossier ./papers de l'hôte est le dépôt de papiers ; s'il est vide au premier
+# démarrage, les 100 papiers synthétiques de data/papers y sont copiés pour que
+# la page montre quelque chose tout de suite.
+services:
+  paperasse:
+    build: .
+    container_name: paperasse
+    ports:
+      - "8640:8640"
+    env_file:
+      - .env
+    environment:
+      PAPERS_DIR: /papers
+      RUNTIME_DIR: /app/runtime
+    volumes:
+      - ./papers:/papers
+    # Copie des exemples si le dossier est vide, puis le serveur.
+    command: >
+      sh -c "if [ -z \"$$(ls -A /papers 2>/dev/null)\" ]; then
+               echo 'papers/ vide : copie des exemples de data/papers';
+               cp /app/data/papers/*.pdf /papers/ 2>/dev/null || true;
+             fi;
+             exec uvicorn paperasse.web:app --host 0.0.0.0 --port 8640"
+    # Pour un serveur Apertus local sur la machine hôte (vLLM ou un serveur GGUF), voir .env.example.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

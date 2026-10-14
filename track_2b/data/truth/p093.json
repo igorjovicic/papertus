@@ -1,0 +1,23 @@
+{
+  "id": "p093",
+  "file": "data/papers/p093.pdf",
+  "kind": "official_letter",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "no_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Città di Lugano – Ufficio tecnico",
+    "recipient": "Elena Ferrari",
+    "letter_date": "2026-10-09",
+    "subject": "Licenza edilizia – decisione (incarto 2026-93769-TI)",
+    "letter_kind": "permit_decision",
+    "amount_chf": null,
+    "deadline": "2026-11-08",
+    "reference_number": "2026-93769-TI",
+    "action_required": "none"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "p065",
+  "file": "data/papers/p065.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount"
+  ],
+  "facts": {
+    "issuer": "Fiduciaire Lemaire Sàrl",
+    "recipient": "Nicolas Chappuis",
+    "amount_chf": 3975.43,
+    "currency": "CHF",
+    "iban": "CH9431883437383162273",
+    "reference": "731617305692753851237365888",
+    "reference_type": "QRR",
+    "invoice_number": "2026-588",
+    "invoice_date": "2026-10-02",
+    "due_date": "2026-10-22",
+    "purpose": "Facture 2026-588"
+  }
+}

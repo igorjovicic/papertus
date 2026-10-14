@@ -1,0 +1,25 @@
+{
+  "id": "p074",
+  "file": "data/papers/p074.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "creditor_name_drift",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Gärtnerei Wyss",
+    "recipient": "Thomas Gerber",
+    "amount_chf": 7634.94,
+    "currency": "CHF",
+    "iban": "CH4730427332142552613",
+    "reference": "113573429042519218809564383",
+    "reference_type": "QRR",
+    "invoice_number": "2026-438",
+    "invoice_date": "2026-08-27",
+    "due_date": "2026-09-26",
+    "purpose": "Rechnung 2026-438"
+  }
+}

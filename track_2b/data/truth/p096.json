@@ -1,0 +1,24 @@
+{
+  "id": "p096",
+  "file": "data/papers/p096.pdf",
+  "kind": "qr_bill",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Pasticceria Rossi",
+    "recipient": "Elena Ferrari",
+    "amount_chf": 1871.32,
+    "currency": "CHF",
+    "iban": "CH7108127793538175339",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-662",
+    "invoice_date": "2026-09-26",
+    "due_date": "2026-10-16",
+    "purpose": "Fattura 2026-662"
+  }
+}

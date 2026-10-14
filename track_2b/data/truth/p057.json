@@ -1,0 +1,22 @@
+{
+  "id": "p057",
+  "file": "data/papers/p057.pdf",
+  "kind": "official_letter",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "second_amount"
+  ],
+  "facts": {
+    "authority": "Office des poursuites de la Riviera",
+    "recipient": "Camille Rossier",
+    "letter_date": "2026-08-04",
+    "subject": "Commandement de payer – poursuite n° 2026-24089-VD",
+    "letter_kind": "payment_summons",
+    "amount_chf": 1487.6,
+    "deadline": "2026-08-24",
+    "reference_number": "2026-24089-VD",
+    "action_required": "pay"
+  }
+}

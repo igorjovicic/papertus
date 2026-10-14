@@ -1,0 +1,24 @@
+{
+  "id": "p005",
+  "file": "data/papers/p005.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_qr"
+  ],
+  "facts": {
+    "issuer": "Boulangerie Dupraz Sàrl",
+    "recipient": "Marie Favre",
+    "amount_chf": 5396.41,
+    "currency": "CHF",
+    "iban": "CH3902498509030752531",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-725",
+    "invoice_date": "2026-08-24",
+    "due_date": "2026-09-13",
+    "purpose": "Facture 2026-725"
+  }
+}

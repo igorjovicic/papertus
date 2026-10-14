@@ -1,0 +1,23 @@
+{
+  "id": "p042",
+  "file": "data/papers/p042.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe"
+  ],
+  "facts": {
+    "issuer": "Fiduciaire Lemaire Sàrl",
+    "recipient": "Marie Favre",
+    "amount_chf": 2326.04,
+    "currency": "CHF",
+    "iban": "CH8631292367852375490",
+    "reference": "187553030325970761244165490",
+    "reference_type": "QRR",
+    "invoice_number": "2026-549",
+    "invoice_date": "2026-08-24",
+    "due_date": "2026-09-13",
+    "purpose": "Facture 2026-549"
+  }
+}

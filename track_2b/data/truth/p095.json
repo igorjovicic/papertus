@@ -1,0 +1,73 @@
+{
+  "id": "p095",
+  "file": "data/papers/p095.pdf",
+  "kind": "bank_statement",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash"
+  ],
+  "facts": {
+    "bank": "Banque du Jura Fictive SA",
+    "account_iban": "CH2802498203680400651",
+    "holder": "Jean-Luc Perrin",
+    "period_start": "2026-10-01",
+    "period_end": "2026-10-10",
+    "opening_balance": 11212.75,
+    "closing_balance": 8015.15,
+    "movements": [
+      {
+        "date": "2026-10-01",
+        "label": "Pharmacie du Centre",
+        "amount": -49.5
+      },
+      {
+        "date": "2026-10-01",
+        "label": "Swisscom – facture",
+        "amount": -87.2
+      },
+      {
+        "date": "2026-10-03",
+        "label": "Loyer octobre – Régie du Lac",
+        "amount": -1860.0
+      },
+      {
+        "date": "2026-10-03",
+        "label": "Restaurant Le Lac",
+        "amount": -126.5
+      },
+      {
+        "date": "2026-10-03",
+        "label": "TWINT – Marché de Vevey",
+        "amount": -44.0
+      },
+      {
+        "date": "2026-10-06",
+        "label": "SBB CFF FFS – billet",
+        "amount": -127.0
+      },
+      {
+        "date": "2026-10-07",
+        "label": "Virement reçu – remboursement",
+        "amount": 145.45
+      },
+      {
+        "date": "2026-10-07",
+        "label": "Assurance-maladie Jura-Léman – prime",
+        "amount": -530.75
+      },
+      {
+        "date": "2026-10-09",
+        "label": "Retrait Bancomat",
+        "amount": -353.1
+      },
+      {
+        "date": "2026-10-10",
+        "label": "Électricité – Services industriels",
+        "amount": -165.0
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

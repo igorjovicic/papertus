@@ -1,0 +1,22 @@
+{
+  "id": "p036",
+  "file": "data/papers/p036.pdf",
+  "kind": "official_letter",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Città di Lugano – Ufficio tecnico",
+    "recipient": "Marco Bernasconi",
+    "letter_date": "2026-08-30",
+    "subject": "Licenza edilizia – decisione (incarto 2026-77154-TI)",
+    "letter_kind": "permit_decision",
+    "amount_chf": 150.0,
+    "deadline": "2026-09-29",
+    "reference_number": "2026-77154-TI",
+    "action_required": "pay"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "p024",
+  "file": "data/papers/p024.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash"
+  ],
+  "facts": {
+    "issuer": "Elektro Brunner GmbH",
+    "recipient": "David Frei",
+    "amount_chf": 2173.46,
+    "currency": "CHF",
+    "iban": "CH7731623185456932180",
+    "reference": "322108680007723527608165547",
+    "reference_type": "QRR",
+    "invoice_number": "2026-554",
+    "invoice_date": "2026-10-08",
+    "due_date": "2026-11-07",
+    "purpose": "Rechnung 2026-554"
+  }
+}

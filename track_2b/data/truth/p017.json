@@ -1,0 +1,25 @@
+{
+  "id": "p017",
+  "file": "data/papers/p017.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Schreinerei Huber AG",
+    "recipient": "Nora Keller",
+    "amount_chf": 476.56,
+    "currency": "CHF",
+    "iban": "CH3931216319845838633",
+    "reference": "149754831746716257658168816",
+    "reference_type": "QRR",
+    "invoice_number": "2026-881",
+    "invoice_date": "2026-10-11",
+    "due_date": "2026-11-10",
+    "purpose": "Rechnung 2026-881"
+  }
+}

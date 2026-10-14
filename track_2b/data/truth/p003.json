@@ -1,0 +1,23 @@
+{
+  "id": "p003",
+  "file": "data/papers/p003.pdf",
+  "kind": "official_letter",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "no_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Comune di Mendrisio – Controllo abitanti",
+    "recipient": "Marco Bernasconi",
+    "letter_date": "2026-09-27",
+    "subject": "Controllo abitanti – documenti mancanti",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-10-27",
+    "reference_number": "2026-89457-TI",
+    "action_required": "submit_documents"
+  }
+}

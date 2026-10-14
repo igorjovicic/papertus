@@ -1,0 +1,99 @@
+{
+  "id": "p004",
+  "file": "data/papers/p004.pdf",
+  "kind": "bank_statement",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "unbalanced"
+  ],
+  "facts": {
+    "bank": "Sparkasse Tösstal",
+    "account_iban": "CH0406876048338665100",
+    "holder": "Nora Keller",
+    "period_start": "2026-09-01",
+    "period_end": "2026-09-30",
+    "opening_balance": 827.3,
+    "closing_balance": 2730.1,
+    "movements": [
+      {
+        "date": "2026-09-03",
+        "label": "Miete September – Hausverwaltung Tösstal",
+        "amount": -1701.0
+      },
+      {
+        "date": "2026-09-03",
+        "label": "Apotheke am Markt",
+        "amount": -51.5
+      },
+      {
+        "date": "2026-09-10",
+        "label": "Krankenkasse Bergblick – Prämie",
+        "amount": -560.3
+      },
+      {
+        "date": "2026-09-10",
+        "label": "TWINT Eingang – Essen geteilt",
+        "amount": 65.5
+      },
+      {
+        "date": "2026-09-10",
+        "label": "Gutschrift – Rückzahlung",
+        "amount": 189.1
+      },
+      {
+        "date": "2026-09-14",
+        "label": "Steuern – Akontozahlung",
+        "amount": -688.45
+      },
+      {
+        "date": "2026-09-15",
+        "label": "Restaurant Rössli",
+        "amount": -141.75
+      },
+      {
+        "date": "2026-09-16",
+        "label": "Swisscom – Rechnung",
+        "amount": -69.0
+      },
+      {
+        "date": "2026-09-18",
+        "label": "Coop Bern Bahnhof",
+        "amount": -17.0
+      },
+      {
+        "date": "2026-09-21",
+        "label": "Strom – Stadtwerke",
+        "amount": -97.9
+      },
+      {
+        "date": "2026-09-22",
+        "label": "TWINT – Wochenmarkt",
+        "amount": -44.0
+      },
+      {
+        "date": "2026-09-22",
+        "label": "SBB CFF FFS – Billett",
+        "amount": -133.5
+      },
+      {
+        "date": "2026-09-25",
+        "label": "Lohn – Alpenbank AG",
+        "amount": 5691.0
+      },
+      {
+        "date": "2026-09-26",
+        "label": "Bezug Bancomat",
+        "amount": -264.9
+      },
+      {
+        "date": "2026-09-27",
+        "label": "Tankstelle Wyss",
+        "amount": -83.0
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": false
+}

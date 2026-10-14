@@ -1,0 +1,23 @@
+{
+  "id": "p048",
+  "file": "data/papers/p048.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_amount",
+    "footer_date"
+  ],
+  "facts": {
+    "authority": "Stadt Winterthur – Einwohnerdienste",
+    "recipient": "Nora Keller",
+    "letter_date": "2026-10-10",
+    "subject": "Einwohnerkontrolle – fehlende Unterlagen",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-11-09",
+    "reference_number": "2026-12154-ZH",
+    "action_required": "submit_documents"
+  }
+}

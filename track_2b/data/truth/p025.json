@@ -1,0 +1,25 @@
+{
+  "id": "p025",
+  "file": "data/papers/p025.pdf",
+  "kind": "qr_bill",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_qr",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Fiduciaria Colombo",
+    "recipient": "Marco Bernasconi",
+    "amount_chf": 6508.05,
+    "currency": "CHF",
+    "iban": "CH7606654258156110078",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-782",
+    "invoice_date": "2026-09-14",
+    "due_date": "2026-10-14",
+    "purpose": "Fattura 2026-782"
+  }
+}

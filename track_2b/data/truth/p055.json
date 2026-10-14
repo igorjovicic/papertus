@@ -1,0 +1,23 @@
+{
+  "id": "p055",
+  "file": "data/papers/p055.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe"
+  ],
+  "facts": {
+    "issuer": "Treuhand Meier AG",
+    "recipient": "Nora Keller",
+    "amount_chf": 4334.49,
+    "currency": "CHF",
+    "iban": "CH8931242344214436005",
+    "reference": "507333270914170579876267548",
+    "reference_type": "QRR",
+    "invoice_number": "2026-754",
+    "invoice_date": "2026-09-11",
+    "due_date": "2026-09-21",
+    "purpose": "Rechnung 2026-754"
+  }
+}

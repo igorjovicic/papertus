@@ -1,0 +1,90 @@
+{
+  "id": "p050",
+  "file": "data/papers/p050.pdf",
+  "kind": "bank_statement",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "unbalanced",
+    "footer_date"
+  ],
+  "facts": {
+    "bank": "Alpenbank AG",
+    "account_iban": "CH5308305322281391379",
+    "holder": "Anna Steiner",
+    "period_start": "2026-10-01",
+    "period_end": "2026-10-10",
+    "opening_balance": 1517.5,
+    "closing_balance": -409.65,
+    "movements": [
+      {
+        "date": "2026-10-01",
+        "label": "Miete Oktober – Hausverwaltung Tösstal",
+        "amount": -1192.0
+      },
+      {
+        "date": "2026-10-01",
+        "label": "Bezug Bancomat",
+        "amount": -269.45
+      },
+      {
+        "date": "2026-10-02",
+        "label": "Migros Winterthur",
+        "amount": -28.3
+      },
+      {
+        "date": "2026-10-02",
+        "label": "Coop Bern Bahnhof",
+        "amount": -25.0
+      },
+      {
+        "date": "2026-10-03",
+        "label": "Restaurant Rössli",
+        "amount": -155.75
+      },
+      {
+        "date": "2026-10-05",
+        "label": "Strom – Stadtwerke",
+        "amount": -157.0
+      },
+      {
+        "date": "2026-10-05",
+        "label": "SBB CFF FFS – Billett",
+        "amount": -117.2
+      },
+      {
+        "date": "2026-10-06",
+        "label": "Apotheke am Markt",
+        "amount": -63.3
+      },
+      {
+        "date": "2026-10-06",
+        "label": "TWINT Eingang – Essen geteilt",
+        "amount": 44.1
+      },
+      {
+        "date": "2026-10-07",
+        "label": "Tankstelle Wyss",
+        "amount": -68.9
+      },
+      {
+        "date": "2026-10-08",
+        "label": "Gutschrift – Rückzahlung",
+        "amount": 106.3
+      },
+      {
+        "date": "2026-10-09",
+        "label": "TWINT – Wochenmarkt",
+        "amount": -28.2
+      },
+      {
+        "date": "2026-10-10",
+        "label": "Steuern – Akontozahlung",
+        "amount": -470.3
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": false
+}

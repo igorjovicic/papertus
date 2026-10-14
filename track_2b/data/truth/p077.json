@@ -1,0 +1,22 @@
+{
+  "id": "p077",
+  "file": "data/papers/p077.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_amount"
+  ],
+  "facts": {
+    "authority": "Gemeinde Horgen – Einwohnerkontrolle",
+    "recipient": "Anna Steiner",
+    "letter_date": "2026-08-30",
+    "subject": "Einwohnerkontrolle – fehlende Unterlagen",
+    "letter_kind": "commune_notice",
+    "amount_chf": null,
+    "deadline": "2026-09-19",
+    "reference_number": "2026-76287-ZH",
+    "action_required": "submit_documents"
+  }
+}

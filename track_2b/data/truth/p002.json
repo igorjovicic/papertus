@@ -1,0 +1,68 @@
+{
+  "id": "p002",
+  "file": "data/papers/p002.pdf",
+  "kind": "bank_statement",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash"
+  ],
+  "facts": {
+    "bank": "Zugerland Bank AG",
+    "account_iban": "CH4402219737884981282",
+    "holder": "Lea Baumann",
+    "period_start": "2026-10-01",
+    "period_end": "2026-10-10",
+    "opening_balance": 5171.5,
+    "closing_balance": 1988.8,
+    "movements": [
+      {
+        "date": "2026-10-01",
+        "label": "Miete Oktober – Hausverwaltung Tösstal",
+        "amount": -1868.0
+      },
+      {
+        "date": "2026-10-04",
+        "label": "Apotheke am Markt",
+        "amount": -15.5
+      },
+      {
+        "date": "2026-10-04",
+        "label": "Migros Winterthur",
+        "amount": -92.3
+      },
+      {
+        "date": "2026-10-05",
+        "label": "Restaurant Rössli",
+        "amount": -99.0
+      },
+      {
+        "date": "2026-10-05",
+        "label": "TWINT – Wochenmarkt",
+        "amount": -45.0
+      },
+      {
+        "date": "2026-10-05",
+        "label": "SBB CFF FFS – Billett",
+        "amount": -30.0
+      },
+      {
+        "date": "2026-10-06",
+        "label": "Swisscom – Rechnung",
+        "amount": -124.45
+      },
+      {
+        "date": "2026-10-06",
+        "label": "Tankstelle Wyss",
+        "amount": -59.0
+      },
+      {
+        "date": "2026-10-07",
+        "label": "Steuern – Akontozahlung",
+        "amount": -849.45
+      }
+    ],
+    "currency": "CHF"
+  },
+  "balanced": true
+}

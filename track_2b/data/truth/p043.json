@@ -1,0 +1,25 @@
+{
+  "id": "p043",
+  "file": "data/papers/p043.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "no_qr",
+    "footer_date"
+  ],
+  "facts": {
+    "issuer": "Physio du Léman Sàrl",
+    "recipient": "Sophie Berthoud",
+    "amount_chf": 5516.78,
+    "currency": "CHF",
+    "iban": "CH3006412870347176290",
+    "reference": null,
+    "reference_type": "NON",
+    "invoice_number": "2026-994",
+    "invoice_date": "2026-08-27",
+    "due_date": "2026-09-06",
+    "purpose": "Facture 2026-994"
+  }
+}

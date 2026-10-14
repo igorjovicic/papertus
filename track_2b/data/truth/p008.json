@@ -1,0 +1,25 @@
+{
+  "id": "p008",
+  "file": "data/papers/p008.pdf",
+  "kind": "qr_bill",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "second_amount",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Studio Bianchi Sagl",
+    "recipient": "Giulia Pedrazzini",
+    "amount_chf": 2012.81,
+    "currency": "CHF",
+    "iban": "CH4831531127639372412",
+    "reference": "300573765536185476321267365",
+    "reference_type": "QRR",
+    "invoice_number": "2026-736",
+    "invoice_date": "2026-08-21",
+    "due_date": "2026-09-20",
+    "purpose": "Fattura 2026-736"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "p046",
+  "file": "data/papers/p046.pdf",
+  "kind": "qr_bill",
+  "language": "it",
+  "pages": 1,
+  "traps": [
+    "format_space",
+    "second_amount",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Pasticceria Rossi",
+    "recipient": "Marco Bernasconi",
+    "amount_chf": 4741.21,
+    "currency": "CHF",
+    "iban": "CH4130210930768379867",
+    "reference": "763919338706298981701165516",
+    "reference_type": "QRR",
+    "invoice_number": "2026-551",
+    "invoice_date": "2026-10-05",
+    "due_date": "2026-10-15",
+    "purpose": "Fattura 2026-551"
+  }
+}

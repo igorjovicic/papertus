@@ -1,0 +1,24 @@
+{
+  "id": "p094",
+  "file": "data/papers/p094.pdf",
+  "kind": "qr_bill",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "creditor_name_drift"
+  ],
+  "facts": {
+    "issuer": "Gärtnerei Wyss",
+    "recipient": "Nora Keller",
+    "amount_chf": 2276.96,
+    "currency": "CHF",
+    "iban": "CH9230374761812548743",
+    "reference": "286250611469401806723362169",
+    "reference_type": "QRR",
+    "invoice_number": "2026-216",
+    "invoice_date": "2026-09-08",
+    "due_date": "2026-09-18",
+    "purpose": "Rechnung 2026-216"
+  }
+}

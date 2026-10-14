@@ -1,0 +1,22 @@
+{
+  "id": "p067",
+  "file": "data/papers/p067.pdf",
+  "kind": "official_letter",
+  "language": "de",
+  "pages": 1,
+  "traps": [
+    "format_fr_dash",
+    "second_amount"
+  ],
+  "facts": {
+    "authority": "Betreibungsamt Bern-Mittelland",
+    "recipient": "Thomas Gerber",
+    "letter_date": "2026-10-06",
+    "subject": "Zahlungsbefehl – Betreibung Nr. 2026-71344-BE",
+    "letter_kind": "payment_summons",
+    "amount_chf": 1932.5,
+    "deadline": "2026-10-26",
+    "reference_number": "2026-71344-BE",
+    "action_required": "pay"
+  }
+}

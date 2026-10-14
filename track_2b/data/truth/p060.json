@@ -1,0 +1,24 @@
+{
+  "id": "p060",
+  "file": "data/papers/p060.pdf",
+  "kind": "qr_bill",
+  "language": "fr",
+  "pages": 1,
+  "traps": [
+    "format_apostrophe",
+    "second_amount"
+  ],
+  "facts": {
+    "issuer": "Physio du Léman Sàrl",
+    "recipient": "Camille Rossier",
+    "amount_chf": 3514.06,
+    "currency": "CHF",
+    "iban": "CH6106412371917215429",
+    "reference": "RF1520261398311",
+    "reference_type": "SCOR",
+    "invoice_number": "2026-139",
+    "invoice_date": "2026-08-06",
+    "due_date": "2026-09-05",
+    "purpose": "Facture 2026-139"
+  }
+}
