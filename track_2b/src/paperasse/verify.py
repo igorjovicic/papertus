@@ -658,7 +658,12 @@ def numbers_grounded(prose: str, facts: Any) -> tuple[bool, list[str]]:
             continue
         if any(abs(v - n) < 0.005 for n in numbers):
             continue
-        if "." not in tok and "," not in tok and tok in digit_strings:
-            continue
+        if "." not in tok and "," not in tok:
+            if tok in digit_strings:
+                continue
+            # Un identifiant cité par son début ou sa fin (« compte se terminant par 3911 ») : au moins
+            # 4 chiffres, préfixe ou suffixe d'un groupe de chiffres des faits (IBAN, référence).
+            if len(tok) >= 4 and any(len(d) > len(tok) and (d.endswith(tok) or d.startswith(tok)) for d in digit_strings):
+                continue
         missing.append(tok)
     return (not missing, missing)

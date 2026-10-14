@@ -6,25 +6,25 @@
    "method": "baseline",
    "papers": 100,
    "fields": 550,
-   "correct_pct": 88.7,
-   "invented_pct": 4.7,
+   "correct_pct": 88.9,
+   "invented_pct": 4.5,
    "blank_pct": 6.5,
    "kind_correct_pct": 91.0,
-   "tokens_total": 145416,
-   "tokens_per_paper": 1454.0,
+   "tokens_total": 145644,
+   "tokens_per_paper": 1456.0,
    "seconds_per_paper": 6.1,
    "questions": 20,
-   "questions_match_pct": 25.0,
-   "questions_tokens_total": 289149,
+   "questions_match_pct": 30.0,
+   "questions_tokens_total": 289252,
    "per_kind": {
     "bank_statement": {
-     "correct": 143,
-     "invented": 7,
+     "correct": 144,
+     "invented": 6,
      "blank": 0,
      "papers": 30,
      "kind_ok": 30,
-     "correct_pct": 95.3,
-     "invented_pct": 4.7,
+     "correct_pct": 96.0,
+     "invented_pct": 4.0,
      "blank_pct": 0.0
     },
     "official_letter": {
@@ -55,8 +55,8 @@
      "blank": 0
     },
     "bank_statement.closing_balance": {
-     "correct": 24,
-     "invented": 6,
+     "correct": 25,
+     "invented": 5,
      "blank": 0
     },
     "bank_statement.movements": {
@@ -134,32 +134,35 @@
      "invented": 9,
      "blank": 0
     }
-   }
+   },
+   "questions_retrieval": 20,
+   "questions_retrieval_match_pct": 95.0,
+   "questions_retrieval_tokens_total": 85886
   },
   "ours": {
    "method": "ours",
    "papers": 100,
    "fields": 550,
-   "correct_pct": 99.6,
+   "correct_pct": 99.8,
    "invented_pct": 0.0,
-   "blank_pct": 0.4,
+   "blank_pct": 0.2,
    "kind_correct_pct": 100.0,
-   "tokens_total": 110970,
-   "tokens_per_paper": 1110.0,
-   "seconds_per_paper": 6.5,
+   "tokens_total": 111145,
+   "tokens_per_paper": 1111.0,
+   "seconds_per_paper": 6.4,
    "questions": 50,
-   "questions_match_pct": 96.0,
-   "questions_tokens_total": 87739,
+   "questions_match_pct": 100.0,
+   "questions_tokens_total": 78975,
    "per_kind": {
     "bank_statement": {
-     "correct": 148,
+     "correct": 149,
      "invented": 0,
-     "blank": 2,
+     "blank": 1,
      "papers": 30,
      "kind_ok": 30,
-     "correct_pct": 98.7,
+     "correct_pct": 99.3,
      "invented_pct": 0.0,
-     "blank_pct": 1.3
+     "blank_pct": 0.7
     },
     "official_letter": {
      "correct": 120,
@@ -189,9 +192,9 @@
      "blank": 0
     },
     "bank_statement.closing_balance": {
-     "correct": 28,
+     "correct": 29,
      "invented": 0,
-     "blank": 2
+     "blank": 1
     },
     "bank_statement.movements": {
      "correct": 29,
@@ -270,7 +273,7 @@
     }
    },
    "questions_same_as_baseline": 20,
-   "questions_same_as_baseline_match_pct": 95.0
+   "questions_same_as_baseline_match_pct": 100.0
   }
  },
  "details": {
@@ -638,7 +641,7 @@
       "period_start": "correct",
       "period_end": "correct",
       "opening_balance": "correct",
-      "closing_balance": "invented"
+      "closing_balance": "correct"
      },
      "movements": "invented",
      "traps": [
@@ -2222,50 +2225,53 @@
     },
     {
      "id": "q13",
-     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 30.09.2026 ?",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
      "truth": 3138.75,
      "type": "amount",
      "answer": "CHF 3'138.75",
      "match": true,
+     "papers_seen": [],
      "tokens": {
-      "prompt_tokens": 14447,
+      "prompt_tokens": 14469,
       "completion_tokens": 12,
-      "total_tokens": 14459,
+      "total_tokens": 14481,
       "calls": 1
      },
-     "seconds": 0.48,
+     "seconds": 1.08,
      "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q14",
-     "question": "Quel est le solde du compte chez Banque Romande du Lac SA au 30.09.2026 ?",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
      "truth": 11061.8,
      "type": "amount",
-     "answer": "CHF 13'963.80",
-     "match": false,
+     "answer": "CHF 11'061.80",
+     "match": true,
+     "papers_seen": [],
      "tokens": {
-      "prompt_tokens": 14446,
+      "prompt_tokens": 14468,
       "completion_tokens": 13,
-      "total_tokens": 14459,
+      "total_tokens": 14481,
       "calls": 1
      },
-     "seconds": 0.53,
+     "seconds": 1.09,
      "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q15",
-     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 10.10.2026 ?",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
      "truth": 1661.2,
      "type": "amount",
-     "answer": "CHF 13'519.90",
+     "answer": "-1353.90",
      "match": false,
+     "papers_seen": [],
      "tokens": {
-      "prompt_tokens": 14447,
-      "completion_tokens": 13,
-      "total_tokens": 14460,
+      "prompt_tokens": 14469,
+      "completion_tokens": 9,
+      "total_tokens": 14478,
       "calls": 1
      },
-     "seconds": 5.58,
+     "seconds": 1.04,
      "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
@@ -2302,34 +2308,36 @@
     },
     {
      "id": "q18",
-     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 31.08.2026?",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
      "truth": 7026.25,
      "type": "amount",
      "answer": "CHF 13'963.80",
      "match": false,
+     "papers_seen": [],
      "tokens": {
-      "prompt_tokens": 14445,
+      "prompt_tokens": 14466,
       "completion_tokens": 13,
-      "total_tokens": 14458,
+      "total_tokens": 14479,
       "calls": 1
      },
-     "seconds": 0.52,
+     "seconds": 1.05,
      "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q19",
-     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA al 10.10.2026?",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
      "truth": 6957.3,
      "type": "amount",
-     "answer": "CHF 1'353.90",
+     "answer": "-1353.90 CHF",
      "match": false,
+     "papers_seen": [],
      "tokens": {
-      "prompt_tokens": 14445,
-      "completion_tokens": 12,
-      "total_tokens": 14457,
+      "prompt_tokens": 14466,
+      "completion_tokens": 11,
+      "total_tokens": 14477,
       "calls": 1
      },
-     "seconds": 9.48,
+     "seconds": 0.53,
      "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
@@ -2552,12 +2560,12 @@
     },
     "p021": {
      "tokens": {
-      "prompt_tokens": 1142,
-      "completion_tokens": 640,
-      "total_tokens": 1782,
+      "prompt_tokens": 1143,
+      "completion_tokens": 628,
+      "total_tokens": 1771,
       "calls": 1
      },
-     "seconds": 12.14,
+     "seconds": 10.32,
      "kind": "bank_statement"
     },
     "p022": {
@@ -2602,12 +2610,12 @@
     },
     "p026": {
      "tokens": {
-      "prompt_tokens": 1195,
-      "completion_tokens": 552,
-      "total_tokens": 1747,
+      "prompt_tokens": 1203,
+      "completion_tokens": 666,
+      "total_tokens": 1869,
       "calls": 1
      },
-     "seconds": 9.69,
+     "seconds": 10.91,
      "kind": "bank_statement"
     },
     "p027": {
@@ -2842,12 +2850,12 @@
     },
     "p050": {
      "tokens": {
-      "prompt_tokens": 1206,
-      "completion_tokens": 701,
-      "total_tokens": 1907,
+      "prompt_tokens": 1207,
+      "completion_tokens": 825,
+      "total_tokens": 2032,
       "calls": 1
      },
-     "seconds": 12.14,
+     "seconds": 13.1,
      "kind": "bank_statement"
     },
     "p051": {
@@ -2902,12 +2910,12 @@
     },
     "p056": {
      "tokens": {
-      "prompt_tokens": 1228,
-      "completion_tokens": 597,
-      "total_tokens": 1825,
+      "prompt_tokens": 1231,
+      "completion_tokens": 586,
+      "total_tokens": 1817,
       "calls": 1
      },
-     "seconds": 10.24,
+     "seconds": 9.51,
      "kind": "bank_statement"
     },
     "p057": {
@@ -3350,7 +3358,515 @@
      "seconds": 3.7,
      "kind": "official_letter"
     }
-   }
+   },
+   "questions_retrieval": [
+    {
+     "id": "q01",
+     "question": "Combien dois-je encore à Garage Morel SA ?",
+     "truth": 927.5,
+     "type": "amount",
+     "answer": "CHF 927.50",
+     "match": true,
+     "papers_seen": [
+      "p020",
+      "p005",
+      "p008",
+      "p009",
+      "p010",
+      "p011"
+     ],
+     "tokens": {
+      "prompt_tokens": 3227,
+      "completion_tokens": 10,
+      "total_tokens": 3237,
+      "calls": 1
+     },
+     "seconds": 2.92,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q02",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
+     "truth": 5516.78,
+     "type": "amount",
+     "answer": "CHF 5'516.78",
+     "match": true,
+     "papers_seen": [
+      "p043",
+      "p023",
+      "p037",
+      "p060",
+      "p087",
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 3278,
+      "completion_tokens": 12,
+      "total_tokens": 3290,
+      "calls": 1
+     },
+     "seconds": 1.57,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q03",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
+     "truth": 4357.89,
+     "type": "amount",
+     "answer": "CHF 4 357.89",
+     "match": true,
+     "papers_seen": [
+      "p023",
+      "p037",
+      "p043",
+      "p060",
+      "p087",
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 3278,
+      "completion_tokens": 12,
+      "total_tokens": 3290,
+      "calls": 1
+     },
+     "seconds": 2.8,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q04",
+     "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
+     "truth": 4223.79,
+     "type": "amount",
+     "answer": "CHF 4'223.79",
+     "match": true,
+     "papers_seen": [
+      "p038",
+      "p033",
+      "p057",
+      "p083",
+      "p005",
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 2643,
+      "completion_tokens": 12,
+      "total_tokens": 2655,
+      "calls": 1
+     },
+     "seconds": 1.56,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q05",
+     "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
+     "truth": 4777.59,
+     "type": "amount",
+     "answer": "Fr. 4777.59",
+     "match": true,
+     "papers_seen": [
+      "p014",
+      "p080",
+      "p010",
+      "p017",
+      "p032",
+      "p051"
+     ],
+     "tokens": {
+      "prompt_tokens": 3703,
+      "completion_tokens": 11,
+      "total_tokens": 3714,
+      "calls": 1
+     },
+     "seconds": 3.35,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q06",
+     "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
+     "truth": 10539.3,
+     "type": "amount",
+     "answer": "CHF 10'539.30",
+     "match": true,
+     "papers_seen": [
+      "p058",
+      "p015",
+      "p022",
+      "p025",
+      "p072",
+      "p005"
+     ],
+     "tokens": {
+      "prompt_tokens": 3185,
+      "completion_tokens": 13,
+      "total_tokens": 3198,
+      "calls": 1
+     },
+     "seconds": 2.72,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q07",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
+     "truth": 980.25,
+     "type": "amount",
+     "answer": "CHF 980.25",
+     "match": true,
+     "papers_seen": [
+      "p037",
+      "p023",
+      "p043",
+      "p060",
+      "p087",
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 3278,
+      "completion_tokens": 10,
+      "total_tokens": 3288,
+      "calls": 1
+     },
+     "seconds": 1.47,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q08",
+     "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
+     "truth": 2663.99,
+     "type": "amount",
+     "answer": "CHF 2'663.99",
+     "match": true,
+     "papers_seen": [
+      "p088",
+      "p042",
+      "p065",
+      "p057",
+      "p005",
+      "p011"
+     ],
+     "tokens": {
+      "prompt_tokens": 3358,
+      "completion_tokens": 12,
+      "total_tokens": 3370,
+      "calls": 1
+     },
+     "seconds": 1.37,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q09",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
+     "truth": 5832.21,
+     "type": "amount",
+     "answer": "CHF 5'832.21",
+     "match": true,
+     "papers_seen": [
+      "p087",
+      "p023",
+      "p037",
+      "p043",
+      "p060",
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 3278,
+      "completion_tokens": 12,
+      "total_tokens": 3290,
+      "calls": 1
+     },
+     "seconds": 1.54,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q10",
+     "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
+     "truth": 1821.59,
+     "type": "amount",
+     "answer": "Fr. 1821.59",
+     "match": true,
+     "papers_seen": [
+      "p051",
+      "p055",
+      "p030",
+      "p067",
+      "p041",
+      "p082"
+     ],
+     "tokens": {
+      "prompt_tokens": 2706,
+      "completion_tokens": 11,
+      "total_tokens": 2717,
+      "calls": 1
+     },
+     "seconds": 1.53,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q11",
+     "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
+     "truth": 2562.08,
+     "type": "amount",
+     "answer": "CHF 2'562.08",
+     "match": true,
+     "papers_seen": [
+      "p071",
+      "p032",
+      "p074",
+      "p094",
+      "p041",
+      "p082"
+     ],
+     "tokens": {
+      "prompt_tokens": 3003,
+      "completion_tokens": 12,
+      "total_tokens": 3015,
+      "calls": 1
+     },
+     "seconds": 1.82,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q12",
+     "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
+     "truth": 4741.21,
+     "type": "amount",
+     "answer": "CHF 4 741.21",
+     "match": true,
+     "papers_seen": [
+      "p046",
+      "p091",
+      "p096",
+      "p057",
+      "p060",
+      "p062"
+     ],
+     "tokens": {
+      "prompt_tokens": 3241,
+      "completion_tokens": 12,
+      "total_tokens": 3253,
+      "calls": 1
+     },
+     "seconds": 1.0,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q13",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
+     "truth": 3138.75,
+     "type": "amount",
+     "answer": "3'138.75 CHF",
+     "match": true,
+     "papers_seen": [
+      "p026",
+      "p049",
+      "p006",
+      "p034",
+      "p004",
+      "p012",
+      "p029",
+      "p076",
+      "p098",
+      "p019",
+      "p047",
+      "p068",
+      "p070",
+      "p090"
+     ],
+     "tokens": {
+      "prompt_tokens": 9214,
+      "completion_tokens": 11,
+      "total_tokens": 9225,
+      "calls": 1
+     },
+     "seconds": 2.99,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q14",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
+     "truth": 11061.8,
+     "type": "amount",
+     "answer": "11 061.80 CHF",
+     "match": true,
+     "papers_seen": [
+      "p006",
+      "p034",
+      "p026",
+      "p049",
+      "p004",
+      "p012",
+      "p029",
+      "p076",
+      "p098",
+      "p019",
+      "p047",
+      "p068",
+      "p070",
+      "p090"
+     ],
+     "tokens": {
+      "prompt_tokens": 9213,
+      "completion_tokens": 12,
+      "total_tokens": 9225,
+      "calls": 1
+     },
+     "seconds": 3.08,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q15",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
+     "truth": 1661.2,
+     "type": "amount",
+     "answer": "CHF 1'661.20",
+     "match": true,
+     "papers_seen": [
+      "p052",
+      "p095",
+      "p007",
+      "p061",
+      "p002",
+      "p021",
+      "p050",
+      "p054",
+      "p081"
+     ],
+     "tokens": {
+      "prompt_tokens": 5626,
+      "completion_tokens": 12,
+      "total_tokens": 5638,
+      "calls": 1
+     },
+     "seconds": 2.99,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q16",
+     "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
+     "truth": 12421.9,
+     "type": "amount",
+     "answer": "12'421.90 CHF",
+     "match": true,
+     "papers_seen": [
+      "p079",
+      "p018",
+      "p031",
+      "p039",
+      "p044",
+      "p056",
+      "p073"
+     ],
+     "tokens": {
+      "prompt_tokens": 4452,
+      "completion_tokens": 12,
+      "total_tokens": 4464,
+      "calls": 1
+     },
+     "seconds": 2.78,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q17",
+     "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
+     "truth": 7623.3,
+     "type": "amount",
+     "answer": "7623.30",
+     "match": true,
+     "papers_seen": [
+      "p039",
+      "p018",
+      "p031",
+      "p044",
+      "p056",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4449,
+      "completion_tokens": 8,
+      "total_tokens": 4457,
+      "calls": 1
+     },
+     "seconds": 2.07,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q18",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
+     "truth": 7026.25,
+     "type": "amount",
+     "answer": "7026.25",
+     "match": true,
+     "papers_seen": [
+      "p031",
+      "p056",
+      "p018",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4459,
+      "completion_tokens": 8,
+      "total_tokens": 4467,
+      "calls": 1
+     },
+     "seconds": 2.1,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q19",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
+     "truth": 6957.3,
+     "type": "amount",
+     "answer": "-1353.90",
+     "match": false,
+     "papers_seen": [
+      "p021",
+      "p054",
+      "p081",
+      "p002",
+      "p007",
+      "p050",
+      "p052",
+      "p061",
+      "p095"
+     ],
+     "tokens": {
+      "prompt_tokens": 5623,
+      "completion_tokens": 9,
+      "total_tokens": 5632,
+      "calls": 1
+     },
+     "seconds": 2.09,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    },
+    {
+     "id": "q20",
+     "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
+     "truth": 13485.75,
+     "type": "amount",
+     "answer": "CHF 13 485.75",
+     "match": true,
+     "papers_seen": [
+      "p018",
+      "p031",
+      "p056",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4448,
+      "completion_tokens": 13,
+      "total_tokens": 4461,
+      "calls": 1
+     },
+     "seconds": 2.11,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
+    }
+   ]
   },
   "ours": {
    "papers": [
@@ -3716,7 +4232,7 @@
       "period_start": "correct",
       "period_end": "correct",
       "opening_balance": "correct",
-      "closing_balance": "blank"
+      "closing_balance": "correct"
      },
      "movements": "correct",
      "traps": [
@@ -5119,7 +5635,16 @@
       "total_tokens": 1400,
       "calls": 1
      },
-     "seconds": 0.68
+     "seconds": 0.68,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p020",
+      "p005",
+      "p008",
+      "p009",
+      "p010",
+      "p011"
+     ]
     },
     {
      "id": "q02",
@@ -5134,7 +5659,16 @@
       "total_tokens": 1383,
       "calls": 1
      },
-     "seconds": 0.68
+     "seconds": 0.68,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p043",
+      "p023",
+      "p037",
+      "p060",
+      "p087",
+      "p013"
+     ]
     },
     {
      "id": "q03",
@@ -5149,7 +5683,16 @@
       "total_tokens": 1383,
       "calls": 1
      },
-     "seconds": 0.69
+     "seconds": 0.69,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p023",
+      "p037",
+      "p043",
+      "p060",
+      "p087",
+      "p013"
+     ]
     },
     {
      "id": "q04",
@@ -5164,7 +5707,16 @@
       "total_tokens": 1435,
       "calls": 1
      },
-     "seconds": 0.69
+     "seconds": 0.69,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p038",
+      "p033",
+      "p083",
+      "p005",
+      "p037",
+      "p042"
+     ]
     },
     {
      "id": "q05",
@@ -5179,7 +5731,16 @@
       "total_tokens": 1508,
       "calls": 1
      },
-     "seconds": 0.49
+     "seconds": 0.49,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p014",
+      "p080",
+      "p055",
+      "p010",
+      "p017",
+      "p032"
+     ]
     },
     {
      "id": "q06",
@@ -5194,7 +5755,16 @@
       "total_tokens": 1429,
       "calls": 1
      },
-     "seconds": 0.86
+     "seconds": 0.86,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p058",
+      "p015",
+      "p022",
+      "p025",
+      "p072",
+      "p005"
+     ]
     },
     {
      "id": "q07",
@@ -5209,7 +5779,16 @@
       "total_tokens": 1382,
       "calls": 1
      },
-     "seconds": 0.47
+     "seconds": 0.47,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p037",
+      "p023",
+      "p043",
+      "p060",
+      "p087",
+      "p013"
+     ]
     },
     {
      "id": "q08",
@@ -5224,7 +5803,16 @@
       "total_tokens": 1520,
       "calls": 1
      },
-     "seconds": 1.03
+     "seconds": 1.03,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p088",
+      "p042",
+      "p065",
+      "p005",
+      "p023",
+      "p037"
+     ]
     },
     {
      "id": "q09",
@@ -5239,7 +5827,16 @@
       "total_tokens": 1383,
       "calls": 1
      },
-     "seconds": 0.38
+     "seconds": 0.38,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p087",
+      "p023",
+      "p037",
+      "p043",
+      "p060",
+      "p013"
+     ]
     },
     {
      "id": "q10",
@@ -5254,7 +5851,16 @@
       "total_tokens": 1411,
       "calls": 1
      },
-     "seconds": 0.37
+     "seconds": 0.37,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p051",
+      "p055",
+      "p030",
+      "p005",
+      "p008",
+      "p009"
+     ]
     },
     {
      "id": "q11",
@@ -5269,7 +5875,16 @@
       "total_tokens": 1526,
       "calls": 1
      },
-     "seconds": 1.11
+     "seconds": 1.11,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p071",
+      "p032",
+      "p074",
+      "p094",
+      "p055",
+      "p005"
+     ]
     },
     {
      "id": "q12",
@@ -5284,52 +5899,70 @@
       "total_tokens": 1471,
       "calls": 1
      },
-     "seconds": 1.05
+     "seconds": 1.05,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p046",
+      "p091",
+      "p096",
+      "p060",
+      "p062",
+      "p083"
+     ]
     },
     {
      "id": "q13",
-     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 30.09.2026 ?",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
      "truth": 3138.75,
      "type": "amount",
-     "answer": "Le solde est de 3138.75 CHF pour Sophie Berthoud [p026] et de 10873.0 CHF pour Jean-Luc Perrin [p049].",
+     "answer": "3138.75 CHF [p026]",
      "match": true,
+     "papers_seen": [
+      "p026"
+     ],
      "tokens": {
-      "prompt_tokens": 2267,
-      "completion_tokens": 49,
-      "total_tokens": 2316,
+      "prompt_tokens": 385,
+      "completion_tokens": 16,
+      "total_tokens": 401,
       "calls": 1
      },
-     "seconds": 1.56
+     "seconds": 0.55
     },
     {
      "id": "q14",
-     "question": "Quel est le solde du compte chez Banque Romande du Lac SA au 30.09.2026 ?",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
      "truth": 11061.8,
      "type": "amount",
-     "answer": "11061.8 CHF (p006) et 5937.0 CHF (p034)",
+     "answer": "11061.8 CHF [p006]",
      "match": true,
+     "papers_seen": [
+      "p006"
+     ],
      "tokens": {
-      "prompt_tokens": 2266,
-      "completion_tokens": 32,
-      "total_tokens": 2298,
+      "prompt_tokens": 384,
+      "completion_tokens": 16,
+      "total_tokens": 400,
       "calls": 1
      },
-     "seconds": 0.93
+     "seconds": 0.57
     },
     {
      "id": "q15",
-     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 10.10.2026 ?",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
      "truth": 1661.2,
      "type": "amount",
-     "answer": "8015.15 CHF [p095]",
-     "match": false,
+     "answer": "1661.2 CHF [p052]",
+     "match": true,
+     "papers_seen": [
+      "p052"
+     ],
      "tokens": {
-      "prompt_tokens": 1521,
-      "completion_tokens": 16,
-      "total_tokens": 1537,
+      "prompt_tokens": 384,
+      "completion_tokens": 15,
+      "total_tokens": 399,
       "calls": 1
      },
-     "seconds": 0.82
+     "seconds": 0.54
     },
     {
      "id": "q16",
@@ -5338,58 +5971,84 @@
      "type": "amount",
      "answer": "12421.9 CHF [p079]",
      "match": true,
+     "papers_seen": [
+      "p079",
+      "p018",
+      "p031",
+      "p039",
+      "p044",
+      "p056",
+      "p073"
+     ],
      "tokens": {
       "prompt_tokens": 1292,
       "completion_tokens": 16,
       "total_tokens": 1308,
       "calls": 1
      },
-     "seconds": 0.78
+     "seconds": 0.86,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q17",
      "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
      "truth": 7623.3,
      "type": "amount",
-     "answer": "7623.3 CHF [p039]",
+     "answer": "7623.3 CHF",
      "match": true,
+     "papers_seen": [
+      "p039",
+      "p018",
+      "p031",
+      "p044",
+      "p056",
+      "p073",
+      "p079"
+     ],
      "tokens": {
       "prompt_tokens": 1289,
-      "completion_tokens": 15,
-      "total_tokens": 1304,
+      "completion_tokens": 9,
+      "total_tokens": 1298,
       "calls": 1
      },
-     "seconds": 0.77
+     "seconds": 1.01,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q18",
-     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 31.08.2026?",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
      "truth": 7026.25,
      "type": "amount",
      "answer": "7026.25 CHF [p031]",
      "match": true,
+     "papers_seen": [
+      "p031"
+     ],
      "tokens": {
-      "prompt_tokens": 1287,
+      "prompt_tokens": 380,
       "completion_tokens": 16,
-      "total_tokens": 1303,
+      "total_tokens": 396,
       "calls": 1
      },
-     "seconds": 0.53
+     "seconds": 0.54
     },
     {
      "id": "q19",
-     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA al 10.10.2026?",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
      "truth": 6957.3,
      "type": "amount",
-     "answer": "Il saldo al 10.10.2026 per i conti presso Banca Sud Ticino SA è: p021: 2789.75 CHF, p054: 6957.3 CHF, p081: 616.35 CHF.",
+     "answer": "Il saldo al 10.10.2026 è 6957.3 CHF [p054].",
      "match": true,
+     "papers_seen": [
+      "p054"
+     ],
      "tokens": {
-      "prompt_tokens": 1519,
-      "completion_tokens": 74,
-      "total_tokens": 1593,
+      "prompt_tokens": 384,
+      "completion_tokens": 31,
+      "total_tokens": 415,
       "calls": 1
      },
-     "seconds": 1.79
+     "seconds": 0.68
     },
     {
      "id": "q20",
@@ -5398,43 +6057,68 @@
      "type": "amount",
      "answer": "13485.75 CHF",
      "match": true,
+     "papers_seen": [
+      "p018",
+      "p031",
+      "p056",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
      "tokens": {
       "prompt_tokens": 1288,
       "completion_tokens": 11,
       "total_tokens": 1299,
       "calls": 1
      },
-     "seconds": 0.76
+     "seconds": 0.44,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q21",
-     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 30.09.2026?",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 1617) am 30.09.2026?",
      "truth": 13963.8,
      "type": "amount",
-     "answer": "Der Saldo beträgt CHF 13 963.80 (Konto [p019]).",
+     "answer": "13963.8 CHF",
      "match": true,
+     "papers_seen": [
+      "p019"
+     ],
      "tokens": {
-      "prompt_tokens": 2265,
-      "completion_tokens": 26,
-      "total_tokens": 2291,
+      "prompt_tokens": 379,
+      "completion_tokens": 10,
+      "total_tokens": 389,
       "calls": 1
      },
-     "seconds": 1.16
+     "seconds": 0.41
     },
     {
      "id": "q22",
      "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026?",
      "truth": 1988.8,
      "type": "amount",
-     "answer": "1988.8 CHF [p002]",
+     "answer": "Der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026 beträgt 1988.8 CHF.",
      "match": true,
+     "papers_seen": [
+      "p002",
+      "p050",
+      "p007",
+      "p021",
+      "p052",
+      "p054",
+      "p061",
+      "p081",
+      "p095"
+     ],
      "tokens": {
-      "prompt_tokens": 1520,
-      "completion_tokens": 15,
-      "total_tokens": 1535,
+      "prompt_tokens": 1547,
+      "completion_tokens": 35,
+      "total_tokens": 1582,
       "calls": 1
      },
-     "seconds": 0.72
+     "seconds": 18.04,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q23",
@@ -5452,7 +6136,13 @@
       "total_tokens": 888,
       "calls": 1
      },
-     "seconds": 0.49
+     "seconds": 0.49,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p010",
+      "p022",
+      "p060"
+     ]
     },
     {
      "id": "q24",
@@ -5470,7 +6160,12 @@
       "total_tokens": 650,
       "calls": 1
      },
-     "seconds": 0.43
+     "seconds": 0.43,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p042"
+     ]
     },
     {
      "id": "q25",
@@ -5488,7 +6183,12 @@
       "total_tokens": 667,
       "calls": 1
      },
-     "seconds": 0.62
+     "seconds": 0.62,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p011",
+      "p055"
+     ]
     },
     {
      "id": "q26",
@@ -5506,7 +6206,14 @@
       "total_tokens": 1009,
       "calls": 1
      },
-     "seconds": 0.53
+     "seconds": 0.53,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p020",
+      "p074",
+      "p096"
+     ]
     },
     {
      "id": "q27",
@@ -5524,7 +6231,15 @@
       "total_tokens": 1252,
       "calls": 1
      },
-     "seconds": 0.41
+     "seconds": 0.41,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p024",
+      "p030",
+      "p038",
+      "p064",
+      "p075"
+     ]
     },
     {
      "id": "q28",
@@ -5542,7 +6257,13 @@
       "total_tokens": 873,
       "calls": 1
      },
-     "seconds": 0.74
+     "seconds": 0.74,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p025",
+      "p087",
+      "p088"
+     ]
     },
     {
      "id": "q29",
@@ -5560,7 +6281,12 @@
       "total_tokens": 623,
       "calls": 1
      },
-     "seconds": 0.78
+     "seconds": 0.78,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p046",
+      "p071"
+     ]
     },
     {
      "id": "q30",
@@ -5578,7 +6304,12 @@
       "total_tokens": 568,
       "calls": 1
      },
-     "seconds": 0.74
+     "seconds": 0.74,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p096"
+     ]
     },
     {
      "id": "q31",
@@ -5593,7 +6324,24 @@
       "total_tokens": 2962,
       "calls": 1
      },
-     "seconds": 0.62
+     "seconds": 0.62,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ]
     },
     {
      "id": "q32",
@@ -5608,7 +6356,24 @@
       "total_tokens": 2961,
       "calls": 1
      },
-     "seconds": 0.23
+     "seconds": 0.23,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ]
     },
     {
      "id": "q33",
@@ -5623,7 +6388,28 @@
       "total_tokens": 3684,
       "calls": 1
      },
-     "seconds": 0.33
+     "seconds": 0.33,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q34",
@@ -5638,7 +6424,28 @@
       "total_tokens": 3687,
       "calls": 1
      },
-     "seconds": 0.41
+     "seconds": 0.41,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q35",
@@ -5653,7 +6460,28 @@
       "total_tokens": 3686,
       "calls": 1
      },
-     "seconds": 0.27
+     "seconds": 0.27,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q36",
@@ -5668,7 +6496,24 @@
       "total_tokens": 2959,
       "calls": 1
      },
-     "seconds": 0.24
+     "seconds": 0.24,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ]
     },
     {
      "id": "q37",
@@ -5683,7 +6528,28 @@
       "total_tokens": 3692,
       "calls": 1
      },
-     "seconds": 0.35
+     "seconds": 0.35,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q38",
@@ -5698,7 +6564,28 @@
       "total_tokens": 3693,
       "calls": 1
      },
-     "seconds": 0.34
+     "seconds": 0.34,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q39",
@@ -5713,7 +6600,28 @@
       "total_tokens": 3694,
       "calls": 1
      },
-     "seconds": 0.35
+     "seconds": 0.35,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ]
     },
     {
      "id": "q40",
@@ -5728,7 +6636,24 @@
       "total_tokens": 2966,
       "calls": 1
      },
-     "seconds": 0.32
+     "seconds": 0.32,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ]
     },
     {
      "id": "q41",
@@ -5743,7 +6668,24 @@
       "total_tokens": 2967,
       "calls": 1
      },
-     "seconds": 0.33
+     "seconds": 0.33,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ]
     },
     {
      "id": "q42",
@@ -5758,7 +6700,18 @@
       "total_tokens": 1788,
       "calls": 1
      },
-     "seconds": 0.33
+     "seconds": 0.33,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p017",
+      "p024",
+      "p046",
+      "p064",
+      "p065",
+      "p071",
+      "p075",
+      "p088"
+     ]
     },
     {
      "id": "q43",
@@ -5773,7 +6726,16 @@
       "total_tokens": 1066,
       "calls": 1
      },
-     "seconds": 0.65
+     "seconds": 0.65,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p013",
+      "p084",
+      "p001",
+      "p003",
+      "p016",
+      "p027"
+     ]
     },
     {
      "id": "q44",
@@ -5788,7 +6750,16 @@
       "total_tokens": 1077,
       "calls": 1
      },
-     "seconds": 0.5
+     "seconds": 0.5,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p036",
+      "p093",
+      "p028",
+      "p078",
+      "p001",
+      "p003"
+     ]
     },
     {
      "id": "q45",
@@ -5803,7 +6774,16 @@
       "total_tokens": 1023,
       "calls": 1
      },
-     "seconds": 0.48
+     "seconds": 0.48,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p053",
+      "p003",
+      "p045",
+      "p085",
+      "p001",
+      "p013"
+     ]
     },
     {
      "id": "q46",
@@ -5818,7 +6798,16 @@
       "total_tokens": 1041,
       "calls": 1
      },
-     "seconds": 0.48
+     "seconds": 0.48,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p100",
+      "p053",
+      "p001",
+      "p003",
+      "p013",
+      "p016"
+     ]
     },
     {
      "id": "q47",
@@ -5833,7 +6822,16 @@
       "total_tokens": 1009,
       "calls": 1
      },
-     "seconds": 0.4
+     "seconds": 0.4,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p085",
+      "p045",
+      "p003",
+      "p053",
+      "p001",
+      "p013"
+     ]
     },
     {
      "id": "q48",
@@ -5848,22 +6846,40 @@
       "total_tokens": 1176,
       "calls": 1
      },
-     "seconds": 0.53
+     "seconds": 0.53,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p016",
+      "p001",
+      "p035",
+      "p066",
+      "p078",
+      "p030"
+     ]
     },
     {
      "id": "q49",
      "question": "Welche Frist setzt Stadt Luzern – Bauverwaltung (Ref. 2026-91289-LU)?",
      "truth": "2026-10-14",
      "type": "date",
-     "answer": "Keine Frist; action_required: none.",
-     "match": false,
+     "answer": "Stadt Luzern – Bauverwaltung setzt eine Frist bis 2026-10-14 [p086].",
+     "match": true,
+     "papers_seen": [
+      "p086",
+      "p048",
+      "p059",
+      "p053",
+      "p001",
+      "p003"
+     ],
      "tokens": {
-      "prompt_tokens": 953,
-      "completion_tokens": 11,
-      "total_tokens": 964,
+      "prompt_tokens": 1067,
+      "completion_tokens": 30,
+      "total_tokens": 1097,
       "calls": 1
      },
-     "seconds": 0.63
+     "seconds": 0.77,
+     "stamp": "swiss-ai/Apertus-v1.5-70B"
     },
     {
      "id": "q50",
@@ -5878,7 +6894,16 @@
       "total_tokens": 1099,
       "calls": 1
      },
-     "seconds": 0.63
+     "seconds": 0.63,
+     "stamp": "swiss-ai/Apertus-v1.5-70B",
+     "papers_seen": [
+      "p045",
+      "p053",
+      "p085",
+      "p003",
+      "p020",
+      "p001"
+     ]
     }
    ],
    "per_paper": {
@@ -6084,12 +7109,12 @@
     },
     "p021": {
      "tokens": {
-      "prompt_tokens": 787,
-      "completion_tokens": 678,
-      "total_tokens": 1465,
+      "prompt_tokens": 788,
+      "completion_tokens": 732,
+      "total_tokens": 1520,
       "calls": 1
      },
-     "seconds": 13.99,
+     "seconds": 12.57,
      "kind": "bank_statement"
     },
     "p022": {
@@ -6134,12 +7159,12 @@
     },
     "p026": {
      "tokens": {
-      "prompt_tokens": 840,
-      "completion_tokens": 536,
-      "total_tokens": 1376,
+      "prompt_tokens": 848,
+      "completion_tokens": 644,
+      "total_tokens": 1492,
       "calls": 1
      },
-     "seconds": 9.78,
+     "seconds": 10.76,
      "kind": "bank_statement"
     },
     "p027": {
@@ -6374,12 +7399,12 @@
     },
     "p050": {
      "tokens": {
-      "prompt_tokens": 851,
+      "prompt_tokens": 852,
       "completion_tokens": 665,
-      "total_tokens": 1516,
+      "total_tokens": 1517,
       "calls": 1
      },
-     "seconds": 11.1,
+     "seconds": 11.46,
      "kind": "bank_statement"
     },
     "p051": {
@@ -6434,12 +7459,12 @@
     },
     "p056": {
      "tokens": {
-      "prompt_tokens": 873,
+      "prompt_tokens": 876,
       "completion_tokens": 564,
-      "total_tokens": 1437,
+      "total_tokens": 1440,
       "calls": 1
      },
-     "seconds": 10.75,
+     "seconds": 9.25,
      "kind": "bank_statement"
     },
     "p057": {

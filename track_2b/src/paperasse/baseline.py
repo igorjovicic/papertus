@@ -48,11 +48,13 @@ def baseline_extract(text: str) -> tuple[str, dict[str, Any]]:
     return kind, {k: facts.get(k) for k in TRUTH_KEYS[kind]}
 
 
-def baseline_paper(path: str, *, paper_id: str | None = None, rel_file: str | None = None) -> Paper:
+def baseline_paper(path: str, *, paper_id: str | None = None, rel_file: str | None = None,
+                   text: str | None = None, pages: int | None = None) -> Paper:
     """PDF → Paper « Baseline » : tous les champs au statut model, aucune vérification."""
     import os
 
-    text, pages = raw_text(path)
+    if text is None or pages is None:
+        text, pages = raw_text(path)
     try:
         kind, raw = baseline_extract(text)
         facts = Facts.from_plain(kind, raw, status="model")

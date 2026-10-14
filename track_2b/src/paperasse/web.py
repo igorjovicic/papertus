@@ -726,10 +726,15 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
   };
 
   // --- départ ---------------------------------------------------------------
+  // L'adresse peut préciser ?lang=de&paper=p050&tab=report (lien partageable, captures d'écran).
+  var params = new URLSearchParams(location.search);
   var saved = 'fr'; try { saved = localStorage.getItem('paperasse.lang') || 'fr'; } catch (e) {}
+  if (params.get('lang')) saved = params.get('lang');
   if (LANGS.indexOf(saved) < 0) saved = 'fr';
+  if (params.get('paper')) state.selected = params.get('paper');
   setLang(saved, true);
-  loadPapers(); poll();
+  loadPapers().then(function () { if (params.get('tab') === 'report') { showTab('report'); genReport(); } });
+  poll();
 })();
 </script>
 </body>

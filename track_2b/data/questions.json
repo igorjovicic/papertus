@@ -135,7 +135,7 @@
     "id": "q13",
     "lang": "fr",
     "kind": "balance",
-    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 30.09.2026 ?",
+    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
     "type": "amount",
     "truth": 3138.75,
     "papers": [
@@ -146,7 +146,7 @@
     "id": "q14",
     "lang": "fr",
     "kind": "balance",
-    "question": "Quel est le solde du compte chez Banque Romande du Lac SA au 30.09.2026 ?",
+    "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
     "type": "amount",
     "truth": 11061.8,
     "papers": [
@@ -157,7 +157,7 @@
     "id": "q15",
     "lang": "fr",
     "kind": "balance",
-    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA au 10.10.2026 ?",
+    "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
     "type": "amount",
     "truth": 1661.2,
     "papers": [
@@ -190,7 +190,7 @@
     "id": "q18",
     "lang": "de",
     "kind": "balance",
-    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 31.08.2026?",
+    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
     "type": "amount",
     "truth": 7026.25,
     "papers": [
@@ -201,7 +201,7 @@
     "id": "q19",
     "lang": "it",
     "kind": "balance",
-    "question": "Qual è il saldo del conto presso Banca Sud Ticino SA al 10.10.2026?",
+    "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
     "type": "amount",
     "truth": 6957.3,
     "papers": [
@@ -223,7 +223,7 @@
     "id": "q21",
     "lang": "de",
     "kind": "balance",
-    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG am 30.09.2026?",
+    "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 1617) am 30.09.2026?",
     "type": "amount",
     "truth": 13963.8,
     "papers": [

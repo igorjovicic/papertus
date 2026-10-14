@@ -212,7 +212,11 @@ def build_paper(*, paper_id: str, file: str, kind: str, text: str, qr: str | Non
 
 def read_raw(path: str) -> dict[str, Any]:
     """Lecture → genre → extraction brute (la seule étape qui parle au modèle)."""
-    text, qr, pages = read_pdf(path)
+    return read_raw_from(*read_pdf(path))
+
+
+def read_raw_from(text: str, qr: str | None, pages: int) -> dict[str, Any]:
+    """Comme read_raw, à partir d'un texte et d'un QR déjà lus."""
     kind = classify(text, qr)
     try:
         raw: dict[str, Any] | None = extract(kind, text, qr)

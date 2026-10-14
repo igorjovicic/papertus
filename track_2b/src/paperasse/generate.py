@@ -319,6 +319,11 @@ def num(x: float, style: str) -> str:
     return f"{whole}." + ("—" if cents == 0 else f"{cents:02d}")
 
 
+def signed_num(x: float, style: str) -> str:
+    """Solde avec son signe : -1'353.90 (les mouvements, eux, vont en colonne débit/crédit)."""
+    return ("-" if round(x, 2) < 0 else "") + num(x, style)
+
+
 def money(x: float, style: str) -> str:
     """Montant avec monnaie : CHF 1'234.50 / CHF 1 234.50 / Fr. 1234.—"""
     prefix = "Fr." if style == "fr_dash" else "CHF"
@@ -327,7 +332,7 @@ def money(x: float, style: str) -> str:
 
 def amount_variants(x: float) -> list[str]:
     """Toutes les écritures qu'un papier peut porter pour ce montant (pour les tests)."""
-    return sorted({num(x, s) for s in STYLES} | {f"{round(x, 2):.2f}"})
+    return sorted({signed_num(x, s) for s in STYLES} | {f"{round(x, 2):.2f}"})
 
 
 def fmt_date(d: dt.date, lang: str, long: bool = False) -> str:
@@ -356,7 +361,7 @@ class Sheet:
     """Une page A4 avec un curseur vertical (en mm depuis le haut)."""
 
     def __init__(self, path: str, title: str):
-        self.c = canvas.Canvas(path, pagesize=A4)
+        self.c = canvas.Canvas(path, pagesize=A4, invariant=1)   # md5 stable d'un run à l'autre
         self.c.setTitle(title)
         self.c.setAuthor("Paperasse – papiers synthétiques")
         self.c.setSubject("Document fictif généré pour un jeu de test")
@@ -760,7 +765,7 @@ def make_bank_statement(spec: Spec, rng: random.Random, out: str) -> Truth:
     running = opening
     sh.text(cols["date"], y, fmt_date(period_start, lang), 10)
     sh.text(cols["label"], y, W["opening"].format(d=fmt_date(period_start, lang)), 10, bold=True)
-    sh.text(cols["balance"] if show_running else cols["credit"], y, num(opening, style), 10, bold=True, right=True)
+    sh.text(cols["balance"] if show_running else cols["credit"], y, signed_num(opening, style), 10, bold=True, right=True)
     y += 6
     count = 1
     for m in moves:
@@ -778,13 +783,13 @@ def make_bank_statement(spec: Spec, rng: random.Random, out: str) -> Truth:
         else:
             sh.text(cols["credit"], y, num(m["amount"], style), 10, right=True)
         if show_running:
-            sh.text(cols["balance"], y, num(running, style), 10, right=True)
+            sh.text(cols["balance"], y, signed_num(running, style), 10, right=True)
         y += 6
         count += 1
     sh.rule(20, 190, y - 3.5, 0.6)
     sh.text(cols["date"], y, fmt_date(period_end, lang), 10)
     sh.text(cols["label"], y, W["closing"].format(d=fmt_date(period_end, lang)), 10, bold=True)
-    sh.text(cols["balance"] if show_running else cols["credit"], y, num(closing, style), 10, bold=True, right=True)
+    sh.text(cols["balance"] if show_running else cols["credit"], y, signed_num(closing, style), 10, bold=True, right=True)
     y += 10
     sh.text(20, y, f"{W['col_debit']} : {money(-sum(m['amount'] for m in moves if m['amount'] < 0), style)}   "
                    f"{W['col_credit']} : {money(sum(m['amount'] for m in moves if m['amount'] > 0), style)}", 9)
@@ -1065,6 +1070,7 @@ Q_TEXT = {
     "owe": {"fr": "Combien dois-je encore à {issuer} ?", "de": "Wie viel schulde ich {issuer} noch?", "it": "Quanto devo ancora a {issuer}?"},
     "owe_no": {"fr": "Combien dois-je encore à {issuer} pour la facture {no} ?", "de": "Wie viel schulde ich {issuer} noch für die Rechnung {no}?", "it": "Quanto devo ancora a {issuer} per la fattura {no}?"},
     "balance": {"fr": "Quel est le solde du compte chez {bank} au {date} ?", "de": "Wie hoch ist der Saldo des Kontos bei {bank} am {date}?", "it": "Qual è il saldo del conto presso {bank} al {date}?"},
+    "account_tail": {"fr": "{bank} (compte se terminant par {tail})", "de": "{bank} (Konto endend auf {tail})", "it": "{bank} (conto che termina con {tail})"},
     "due_on": {"fr": "Quelles factures sont dues le {date} ?", "de": "Welche Rechnungen sind am {date} fällig?", "it": "Quali fatture scadono il {date}?"},
     "count_month": {"fr": "Combien de factures ai-je reçues en {month} ?", "de": "Wie viele Rechnungen habe ich im {month} erhalten?", "it": "Quante fatture ho ricevuto in {month}?"},
     "deadline": {"fr": "Quel est le délai de {authority} (réf. {ref}) ?", "de": "Welche Frist setzt {authority} (Ref. {ref})?", "it": "Qual è il termine fissato da {authority} (rif. {ref})?"},
@@ -1095,15 +1101,19 @@ def build_questions(truths: list[Truth], rng: random.Random, target: int = 50) -
             text = Q_TEXT["owe_no"][b.language].format(issuer=f["issuer"], no=f["invoice_number"])
         add("owe", b.language, text, "amount", f["amount_chf"], [b.id])
 
-    # 2. Solde du compte au … (10) — relevés équilibrés seulement, (banque, fin de période) unique
-    seen: set[tuple[str, str]] = set()
+    # 2. Solde du compte au … (10) — relevés équilibrés seulement ; si plusieurs relevés (même les faux)
+    #    partagent (banque, fin de période), la question nomme le compte par ses 4 derniers chiffres.
+    all_statements = [t for t in truths if t.kind == "bank_statement"]
+    key_count: dict[tuple[str, str], int] = {}
+    for t in all_statements:
+        k = (t.facts["bank"], t.facts["period_end"])
+        key_count[k] = key_count.get(k, 0) + 1
     for s in rng.sample(statements, len(statements)):
-        key = (s.facts["bank"], s.facts["period_end"])
-        if key in seen:
-            continue
-        seen.add(key)
         d = dt.date.fromisoformat(s.facts["period_end"])
-        add("balance", s.language, Q_TEXT["balance"][s.language].format(bank=s.facts["bank"], date=fmt_date(d, s.language)),
+        bank = s.facts["bank"]
+        if key_count[(bank, s.facts["period_end"])] > 1:
+            bank = Q_TEXT["account_tail"][s.language].format(bank=bank, tail=s.facts["account_iban"][-4:])
+        add("balance", s.language, Q_TEXT["balance"][s.language].format(bank=bank, date=fmt_date(d, s.language)),
             "amount", s.facts["closing_balance"], [s.id])
         if sum(1 for q in qs if q["kind"] == "balance") >= 10:
             break

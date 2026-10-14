@@ -243,3 +243,11 @@ def test_numbers_grounded_flags_invented():
 def test_numbers_grounded_ignores_single_digits_and_citations_years():
     ok, missing = verify.numbers_grounded("3 factures en septembre 2026 [p012].", {"d": "2026-09-01", "id": "p012"})
     assert ok, missing
+
+
+def test_numbers_grounded_accepts_id_suffix_but_not_inner_digits():
+    facts = {"account_iban": "CH5208731722219063911", "closing_balance": 3138.75}
+    ok, missing = verify.numbers_grounded("Le solde du compte se terminant par 3911 est de 3138.75 CHF.", facts)
+    assert ok, missing
+    ok, missing = verify.numbers_grounded("Le solde du compte 1722 est de 3138.75 CHF.", facts)
+    assert not ok and "1722" in missing

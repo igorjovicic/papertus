@@ -93,11 +93,10 @@ def _cache_put(method: str, key: str, stamp: str, payload: dict[str, Any]) -> No
 # ---------------------------------------------------------------------------
 
 def run_paper(method: str, truth: Truth, pdf_path: str, use_cache: bool) -> dict[str, Any]:
-    stamp = _file_hash(pdf_path) + ":" + (os.getenv("LLM_NAME") or llm.DEFAULT_MODEL)
-    if use_cache:
-        hit = _cache_get(method, truth.id, stamp)
-        if hit:
-            return hit
+    # L'empreinte porte sur le texte et le QR extraits (gratuits), pas sur les octets du PDF :
+    # un papier regénéré à l'identique ne coûte rien de plus.
+    text, qr, pages = read.read_pdf(pdf_path)
+    stamp = hashlib.sha256((text + "\n" + (qr or "")).encode()).hexdigest()[:16] + ":" + (os.getenv("LLM_NAME") or llm.DEFAULT_MODEL)
     if use_cache and method == "ours":
         # La réponse brute du modèle suffit : la vérification (code pur) est rejouée à chaque fois,
         # ainsi une amélioration des contrôles ne coûte aucun appel.
@@ -105,14 +104,18 @@ def run_paper(method: str, truth: Truth, pdf_path: str, use_cache: bool) -> dict
         if hit:
             paper = read.build_paper(paper_id=truth.id, file=truth.file, **hit["got"])
             return {"paper": paper.to_dict(), "tokens": hit["tokens"], "seconds": hit["seconds"]}
+    if use_cache and method != "ours":
+        hit = _cache_get(method, truth.id, stamp)
+        if hit:
+            return hit
     t0 = time.time()
     with llm.usage_scope() as usage:
         if method == "ours":
-            got = read.read_raw(pdf_path)
+            got = read.read_raw_from(text, qr, pages)
             paper = read.build_paper(paper_id=truth.id, file=truth.file, **got)
             _cache_put(method + "_raw", truth.id, stamp, {"got": got, "tokens": dict(usage), "seconds": round(time.time() - t0, 2)})
         else:
-            paper = baseline.baseline_paper(pdf_path, paper_id=truth.id, rel_file=truth.file)
+            paper = baseline.baseline_paper(pdf_path, paper_id=truth.id, rel_file=truth.file, text=text, pages=pages)
     out = {"paper": paper.to_dict(), "tokens": dict(usage), "seconds": round(time.time() - t0, 2)}
     if method != "ours":
         _cache_put(method, truth.id, stamp, out)
@@ -269,11 +272,20 @@ def select_papers(question: str, papers: list[Paper]) -> list[Paper]:
             score += 1.5
         return score
 
+    # Un identifiant cité par sa fin (« compte se terminant par 5840 ») : le code fait la comparaison.
+    q_suffixes = {t for t in re.findall(r"\b\d{4,}\b", re.sub(r"\d{1,2}[./]\d{1,2}[./]\d{4}|\d{4}-\d{2}-\d{2}", " ", low)) if not t.startswith("20")}
+
+    def id_match(p: Paper) -> bool:
+        ids = [str(p.facts.get(k) or "") for k in ("account_iban", "iban", "reference", "invoice_number", "reference_number")]
+        return any(i.endswith(t) for t in q_suffixes for i in ids if i)
+
     # 1. Une date exacte : tous les papiers qui la portent (solde au …, factures dues le …).
     if q_dates:
         exact = [p for p in papers if q_dates & set(_paper_dates(p))]
         if exact and kinds and any(p.kind in kinds for p in exact):
             exact = [p for p in exact if p.kind in kinds]
+        if q_suffixes and any(id_match(p) for p in exact):
+            exact = [p for p in exact if id_match(p)]
         if exact:
             exact.sort(key=lambda p: (-word_score(p), p.id))
             return exact[:MAX_SELECTED]
@@ -327,6 +339,12 @@ def _aggregates(selected: list[Paper], question: str = "") -> dict[str, Any]:
             if a is not None:
                 m["total_chf"] = round(m["total_chf"] + a, 2)
     agg["bills_by_invoice_month"] = by_month
+    suffixes = {t for t in re.findall(r"\b\d{4,}\b", re.sub(r"\d{1,2}[./]\d{1,2}[./]\d{4}|\d{4}-\d{2}-\d{2}", " ", question)) if not t.startswith("20")}
+    if suffixes:
+        agg["account_ending_with"] = {t: [p.id for p in selected if str(p.facts.get("account_iban") or p.facts.get("iban") or "").endswith(t)] for t in suffixes}
+    letters = [p for p in selected if p.kind == "official_letter"]
+    if letters:
+        agg["letter_deadlines"] = {p.id: p.facts.get("deadline") for p in letters}
     if q_dates:
         iso = {d.isoformat() for d in q_dates}
         agg["bills_due_on_date"] = [p.id for p in bills if p.facts.get("due_date") in iso]
@@ -388,11 +406,25 @@ def _numbers_in_answer(answer: str) -> list[float]:
     return out
 
 
+_FALLBACK_LINES = set(NOT_FOUND.values()) | set(NO_PAPER.values())
+
+
+def answer_is_blank(answer: str) -> bool:
+    """Une réponse « je ne trouve pas » (nos lignes de repli) ou sans aucun chiffre."""
+    a = (answer or "").strip()
+    return not a or a in _FALLBACK_LINES or not re.search(r"\d", a)
+
+
 def question_match(q: dict[str, Any], answer: str) -> bool:
-    """Réponse exacte : le chiffre / la date / la liste de la vérité est dans la réponse."""
+    """Réponse exacte : le chiffre / la date / la liste de la vérité est dans la réponse.
+
+    Strict : une réponse blanche ne compte juste que si la vérité attend un blanc ; seule
+    la réponse est lue (jamais une raison ou un commentaire)."""
     truth = q.get("truth")
     qtype = q.get("type")
     if truth is None:
+        return answer_is_blank(answer)
+    if answer_is_blank(answer):
         return False
     if qtype in ("amount", "count") or isinstance(truth, (int, float)):
         t = verify.parse_amount(truth)
@@ -407,21 +439,42 @@ def question_match(q: dict[str, Any], answer: str) -> bool:
     return _norm_id(truth) in _norm_id(answer)
 
 
+def _facts_stamp(selected: list[Paper]) -> str:
+    return hashlib.sha256(json.dumps([(p.id, p.facts.plain()) for p in selected], ensure_ascii=False, sort_keys=True, default=str).encode()).hexdigest()[:16]
+
+
 def run_question(method: str, q: dict[str, Any], papers: list[Paper], texts: dict[str, str], use_cache: bool) -> dict[str, Any]:
-    key = hashlib.sha256((q["question"] + "|" + ",".join(sorted(texts))).encode()).hexdigest()[:20]
+    """method : 'ours' (faits + calculs + citations + contrôle), 'baseline' (tous les textes bruts,
+    contexte borné), 'baseline_retrieval' (les MÊMES papiers que notre sélection, en texte brut,
+    réponse libre, aucun contrôle)."""
+    selected = select_papers(q["question"], papers) if method != "baseline" else []
+    if method == "ours":
+        key_src = q["question"] + "|" + _facts_stamp(selected)
+    elif method == "baseline_retrieval":
+        key_src = q["question"] + "|" + hashlib.sha256("\n".join(p.text for p in selected).encode()).hexdigest()[:16]
+    else:
+        key_src = q["question"] + "|" + ",".join(sorted(texts))
+    key = hashlib.sha256(key_src.encode()).hexdigest()[:20]
     stamp = os.getenv("LLM_NAME") or llm.DEFAULT_MODEL
     if use_cache:
         hit = _cache_get(method + "_q", key, stamp)
         if hit:
+            hit["match"] = question_match(q, hit["answer"])  # le juge peut changer, la réponse non
             return hit
     t0 = time.time()
     with llm.usage_scope() as usage:
         try:
-            answer = answer_question(q["question"], papers) if method == "ours" else baseline.baseline_questions(texts, q["question"])
+            if method == "ours":
+                answer = answer_question(q["question"], papers)
+            elif method == "baseline_retrieval":
+                answer = baseline.baseline_questions({p.id: p.text for p in selected}, q["question"]) if selected else NO_PAPER[q.get("language", "fr")]
+            else:
+                answer = baseline.baseline_questions(texts, q["question"])
         except (llm.ModelError, llm.ModelAnswerError) as e:
             answer = f"(error: {str(e)[:60]})"
     out = {"id": q["id"], "question": q["question"], "truth": q.get("truth"), "type": q.get("type"),
-           "answer": answer, "match": question_match(q, answer), "tokens": dict(usage), "seconds": round(time.time() - t0, 2)}
+           "answer": answer, "match": question_match(q, answer), "papers_seen": [p.id for p in selected],
+           "tokens": dict(usage), "seconds": round(time.time() - t0, 2)}
     _cache_put(method + "_q", key, stamp, out)
     return out
 
@@ -491,7 +544,8 @@ def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: d
         "",
         "Champs comptés : montants, dates, IBAN, références, numéros (les clés de `schema.scored_keys`). "
         "« Inventé » = une valeur non vide qui diffère de la vérité (ou une valeur là où la vérité exige un blanc). "
-        "Questions : la réponse contient le chiffre, la date ou la liste exacte attendue.",
+        "Questions : la réponse contient le chiffre, la date ou la liste exacte attendue ; une réponse blanche "
+        "(« je ne trouve pas ») ne compte juste que si la vérité attend un blanc ; seules les valeurs sont lues, jamais les raisons.",
         "",
         "| Setup | Metric | Result |",
         "|-------|--------|--------|",
@@ -503,8 +557,13 @@ def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: d
             f"| {L} | fields invented (headline, lower is better) | {s['invented_pct']} % |",
             f"| {L} | fields blank | {s['blank_pct']} % |",
             f"| {L} | kind correct | {s['kind_correct_pct']} % |",
-            f"| {L} | questions exact match ({s['questions']} q) | {s['questions_match_pct']} % |",
         ]
+        if m == "baseline":
+            lines.append(f"| Baseline (all texts in one prompt, context capped at {baseline.MAX_CONTEXT_CHARS} chars) | questions exact match ({s['questions']} q) | {s['questions_match_pct']} % |")
+            if s.get("questions_retrieval"):
+                lines.append(f"| Baseline + retrieval (same papers as Ours, raw text, free-form, no checks) | questions exact match ({s['questions_retrieval']} q) | {s['questions_retrieval_match_pct']} % |")
+        else:
+            lines.append(f"| {L} | questions exact match ({s['questions']} q) | {s['questions_match_pct']} % |")
         if s.get("questions_same_as_baseline"):
             lines.append(f"| {L} | questions exact match on the Baseline's {s['questions_same_as_baseline']} q | {s['questions_same_as_baseline_match_pct']} % |")
         lines += [
@@ -592,26 +651,40 @@ def main(argv: list[str] | None = None) -> int:
         papers = [Paper.from_dict(r["paper"]) for r in ordered]
         texts = {p.id: p.text for p in papers}
 
-        qruns: list[dict[str, Any]] = []
         my_questions = questions
         if method == "baseline" and args.baseline_questions >= 0:
             my_questions = questions[: args.baseline_questions]
-        if my_questions:
-            log(f"== {method}: {len(my_questions)} questions")
+
+        def ask_all(qmethod: str) -> list[dict[str, Any]]:
+            out: list[dict[str, Any]] = []
+            if not my_questions:
+                return out
+            log(f"== {qmethod}: {len(my_questions)} questions")
             with ThreadPoolExecutor(max_workers=args.workers) as pool:
-                futs_q = {pool.submit(run_question, method, q, papers, texts, use_cache): q for q in my_questions}
+                futs_q = {pool.submit(run_question, qmethod, q, papers, texts, use_cache): q for q in my_questions}
                 for fut in as_completed(futs_q):
                     try:
                         qr = fut.result()
                     except Exception as e:
                         log(f"  question ERROR {e}")
                         continue
-                    qruns.append(qr)
+                    out.append(qr)
                     log(f"  {qr['id']} {'OK ' if qr['match'] else 'no '} {qr['answer'][:70]!r}")
-            qruns.sort(key=lambda q: q["id"])
+            out.sort(key=lambda q: q["id"])
+            return out
+
+        qruns = ask_all(method)
         summaries[method] = summarise(method, ordered, scores, qruns)
         details[method] = {"papers": scores, "questions": qruns,
                            "per_paper": {r["paper"]["id"]: {"tokens": r["tokens"], "seconds": r["seconds"], "kind": r["paper"]["kind"]} for r in ordered}}
+        if method == "baseline":
+            # Deuxième ligne de base pour les questions : les mêmes papiers que notre sélection, en texte brut.
+            qr_runs = ask_all("baseline_retrieval")
+            details[method]["questions_retrieval"] = qr_runs
+            summaries[method]["questions_retrieval"] = len(qr_runs)
+            summaries[method]["questions_retrieval_match_pct"] = _pct(sum(int(q["match"]) for q in qr_runs), len(qr_runs))
+            summaries[method]["questions_retrieval_tokens_total"] = sum(q["tokens"]["total_tokens"] for q in qr_runs)
+            log(f"== baseline_retrieval: questions {summaries[method]['questions_retrieval_match_pct']} %")
         s = summaries[method]
         log(f"== {method}: correct {s['correct_pct']} % · invented {s['invented_pct']} % · blank {s['blank_pct']} % · "
             f"questions {s['questions_match_pct']} % · {int(s['tokens_per_paper'])} tok/paper · {s['seconds_per_paper']} s/paper")
