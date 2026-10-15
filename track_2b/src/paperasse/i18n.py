@@ -324,6 +324,45 @@ _S: dict[str, tuple[str, str, str, str]] = {
         "No bill is due on {date}.",
     ),
 
+    # --- Institutions suisses (classes de papiers, pour les règles) ----------
+    "inst.health": ("Caisse-maladie", "Krankenkasse", "Cassa malati", "Health insurer"),
+    "inst.debt": ("Office des poursuites", "Betreibungsamt", "Ufficio esecuzioni", "Debt collection office"),
+    "inst.commune": ("Commune", "Gemeinde", "Comune", "Commune"),
+    "inst.tax": ("Office des impôts", "Steueramt", "Ufficio delle imposte", "Tax office"),
+    "inst.permit": ("Permis de construire", "Baubewilligung", "Permesso di costruzione", "Building permit"),
+    "inst.bank": ("Banque", "Bank", "Banca", "Bank"),
+    "ask.answer.owed_class": (
+        "{inst} : CHF {total} encore dus sur {n} papier(s) — {items}.",
+        "{inst}: CHF {total} noch geschuldet aus {n} Papier(en) — {items}.",
+        "{inst}: CHF {total} ancora dovuti su {n} documento/i — {items}.",
+        "{inst}: CHF {total} still owed over {n} paper(s) — {items}.",
+    ),
+    "ask.answer.owed_class_none": (
+        "{inst} : aucun montant à payer dans vos papiers ({n} papier(s) sans montant : {items}).",
+        "{inst}: kein Betrag zu zahlen in Ihren Papieren ({n} Papier(e) ohne Betrag: {items}).",
+        "{inst}: nessun importo da pagare nei vostri documenti ({n} documento/i senza importo: {items}).",
+        "{inst}: no amount to pay in your papers ({n} paper(s) without an amount: {items}).",
+    ),
+    "ask.answer.deadline_class": (
+        "{inst} : prochain délai le {date} ({who} [{pid}]).",
+        "{inst}: nächste Frist am {date} ({who} [{pid}]).",
+        "{inst}: prossimo termine il {date} ({who} [{pid}]).",
+        "{inst}: next deadline on {date} ({who} [{pid}]).",
+    ),
+    "ask.answer.deadline_class_past": (
+        "{inst} : dernier délai, déjà passé, le {date} ({who} [{pid}]).",
+        "{inst}: letzte Frist, bereits abgelaufen, am {date} ({who} [{pid}]).",
+        "{inst}: ultimo termine, già scaduto, il {date} ({who} [{pid}]).",
+        "{inst}: latest deadline, already past, on {date} ({who} [{pid}]).",
+    ),
+    "ask.answer.deadline_others": (
+        "Autres délais : {items}.",
+        "Weitere Fristen: {items}.",
+        "Altri termini: {items}.",
+        "Other deadlines: {items}.",
+    ),
+    "ask.item.deadline": ("délai", "Frist", "termine", "due"),
+
     # --- Mots comptés (pour les réponses de dénombrement) --------------------
     "what.bills": ("facture(s) reçue(s)", "Rechnung(en) erhalten", "fattura/e ricevuta/e", "bill(s) received"),
     "what.letters": ("lettre(s) reçue(s)", "Brief(e) erhalten", "lettera/e ricevuta/e", "letter(s) received"),

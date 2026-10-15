@@ -68,6 +68,68 @@ DUE_WORDS = ("fällig", "faellig", "échéance", "échéances", "échue", "échu
 DEADLINE_WORDS = ("délai", "delai", "frist", "termine", "deadline", "entro quando", "bis wann", "jusqu'à quand")
 UNTIL_WORDS = ("jusqu'au", "jusqu'à", "jusqu", "avant le", "d'ici", "bis", "bis zum", "bis am", "entro", "by", "before", "until")
 
+# Institutions suisses : les mots qui les nomment dans les quatre langues, le genre de lettre
+# qui leur correspond, et le genre de papier quand ce n'est pas une lettre (banque).
+# Sert à la recherche (un papier porte les mots de sa classe dans toutes les langues) et
+# aux règles (« combien dois-je encore à la caisse-maladie ? »).
+INSTITUTIONS: dict[str, dict[str, Any]] = {
+    "health": {"words": ("caisse-maladie", "caisse maladie", "assurance-maladie", "assurance maladie", "krankenkasse",
+                         "krankenversicherung", "cassa malati", "health insurance", "health insurer"),
+               "letter_kind": "premium_notice"},
+    "debt": {"words": ("office des poursuites", "poursuites", "betreibungsamt", "betreibung", "ufficio esecuzioni",
+                       "ufficio di esecuzione", "esecuzione", "debt collection"),
+             "letter_kind": "payment_summons"},
+    "commune": {"words": ("commune", "gemeinde", "comune", "municipality", "stadt", "ville", "città", "citta"),
+                "letter_kind": "commune_notice"},
+    "tax": {"words": ("impôts", "impots", "contributions", "steueramt", "steuerverwaltung", "steuer", "imposte", "tax"),
+            "letter_kind": "tax_decision"},
+    "permit": {"words": ("permis", "baubewilligung", "bauabteilung", "bauverwaltung", "permesso", "permessi", "urbanisme",
+                         "constructions", "ufficio tecnico", "building permit"),
+               "letter_kind": "permit_decision"},
+    "bank": {"words": ("banque", "bank", "banca", "sparkasse", "cassa di risparmio", "caisse d'épargne", "caisse d'epargne"),
+             "kind": "bank_statement"},
+}
+
+
+# Mots d'administration qui ne distinguent pas une autorité d'une autre (« Office », « Amt »…).
+GENERIC_OFFICE_WORDS: frozenset[str] = frozenset("""
+office ufficio amt service dienst administration amministrazione verwaltung kantonales kantonale kantonal
+cantonal cantonale canton kanton cantone des del delle della dei der die das ag sa sarl gmbh
+""".split())
+
+
+def institution_in(question: str) -> str | None:
+    """La classe d'institution nommée dans la question (le mot le plus long gagne), sinon None."""
+    q = f" {fold(question)} "
+    best, best_len = None, 0
+    for cls, spec in INSTITUTIONS.items():
+        for w in spec["words"]:
+            fw = fold(w)
+            if f" {fw} " in q and len(fw) > best_len:
+                best, best_len = cls, len(fw)
+    return best
+
+
+def institution_classes(paper: Any) -> list[str]:
+    """Les classes auxquelles un papier appartient : genre de lettre, ou mots de son autorité / émetteur / banque."""
+    kind = paper_attr(paper, "kind")
+    lk = field_value(paper, "letter_kind")
+    names = " ".join(fold(field_value(paper, k) or "") for k in ("authority", "issuer", "bank"))
+    out = []
+    for cls, spec in INSTITUTIONS.items():
+        if spec.get("kind") and spec["kind"] == kind:
+            out.append(cls)
+        elif spec.get("letter_kind") and lk == spec["letter_kind"]:
+            out.append(cls)
+        elif kind != "bank_statement" and any(f" {fold(w)} " in f" {names} " for w in spec["words"]):
+            out.append(cls)
+    return out
+
+
+def papers_of_class(papers: list[Any], cls: str) -> list[Any]:
+    return [p for p in papers if cls in institution_classes(p)]
+
+
 _MONTH_INDEX: dict[str, int] = {}
 for _lang, _names in i18n.MONTH_NAMES.items():
     for _i, _n in enumerate(_names, 1):
@@ -125,6 +187,8 @@ def paper_document(paper: Any) -> tuple[str, str]:
     parts: list[str] = [kind.replace("_", " ")]
     parts += {"qr_bill": list(BILL_WORDS), "official_letter": list(LETTER_WORDS),
               "bank_statement": list(STATEMENT_WORDS)}.get(kind, [])
+    for cls in institution_classes(paper):  # les mots de la classe dans les quatre langues
+        parts += list(INSTITUTIONS[cls]["words"])
     for key, f in fields_of(paper).items():
         v = f.get("value") if isinstance(f, dict) else getattr(f, "value", None)
         if v is None or isinstance(v, bool):
@@ -178,6 +242,10 @@ class Index:
     def search(self, question: str, limit: int = TOP_K) -> list[tuple[str, float]]:
         """ids des papiers les plus proches, du meilleur au moins bon (bm25, faits pesant double)."""
         terms = query_terms(question)
+        cls = institution_in(question)
+        if cls:  # « caisse-maladie » doit aussi trouver « Krankenkasse » et « cassa malati »
+            for w in INSTITUTIONS[cls]["words"]:
+                terms += [x for x in query_terms(w) if x not in terms]
         phrases = [f'"{d.isoformat()}"' for d in _dates_in(question)]
         if not terms and not phrases:
             return []
@@ -347,6 +415,20 @@ def answer_from_facts(question: str, papers: list[Any], lang: str = "fr") -> Ans
     month = _month_in(question, papers)
     bills = [p for p in papers if paper_attr(p, "kind") == "qr_bill"]
 
+    cls = institution_in(question)
+
+    # 0. Une classe d'institution (caisse-maladie, Office des poursuites, commune, impôts…)
+    if cls and not _ids_in(question):
+        narrowed = _narrow_to_named(question, papers_of_class(papers, cls), cls)
+        if narrowed and _any(q, DEADLINE_WORDS):
+            a = _class_deadline(narrowed, cls, lang)
+            if a:
+                return a
+        if narrowed and (_any(q, OWE_WORDS) or _any(q, ("combien", "wie viel", "quanto", "how much"))) and not month:
+            a = _class_owed(narrowed, cls, lang)
+            if a:
+                return a
+
     # 1. Délai d'une autorité : « Quel est le délai de {authority} ? »
     if _any(q, DEADLINE_WORDS):
         letters = [p for p in papers if paper_attr(p, "kind") == "official_letter"]
@@ -439,6 +521,66 @@ def answer_from_facts(question: str, papers: list[Any], lang: str = "fr") -> Ans
     return None
 
 
+def _narrow_to_named(question: str, hits: list[Any], cls: str) -> list[Any]:
+    """Si la question nomme une autorité précise de la classe (« Office des poursuites de la Riviera »),
+    on ne garde qu'elle ; un nom qui n'est que le mot générique de la classe ne restreint pas."""
+    q = fold(question)
+    class_words = {w for word in INSTITUTIONS[cls]["words"] for w in fold(word).split()} | GENERIC_OFFICE_WORDS
+    named = []
+    for p in hits:
+        name = field_value(p, "authority") or field_value(p, "issuer") or field_value(p, "bank") or ""
+        fn = fold(name)
+        extra = {w for w in fn.split() if w not in class_words and w not in STOPWORDS and len(w) >= 3}
+        if fn and f" {fn} " in f" {q} " and extra:
+            named.append(p)
+    return named or hits
+
+
+def _who(p: Any) -> str:
+    return str(field_value(p, "authority") or field_value(p, "issuer") or field_value(p, "bank") or paper_attr(p, "id"))
+
+
+def _class_owed(hits: list[Any], cls: str, lang: str) -> Answer | None:
+    """Somme des montants des papiers de la classe qui portent un délai ou une échéance, chacun cité."""
+    dated = [p for p in hits if as_date(field_value(p, "deadline")) or as_date(field_value(p, "due_date"))]
+    if not dated:
+        return None
+    with_amount = [p for p in dated if as_float(field_value(p, "amount_chf")) is not None]
+    inst = t(f"inst.{cls}", lang)
+    if not with_amount:
+        items = ", ".join(f"[{paper_attr(p, 'id')}] {_who(p)}" for p in dated)
+        return Answer(text=t("ask.answer.owed_class_none", lang, inst=inst, n=len(dated), items=items),
+                      cited_ids=[paper_attr(p, "id") for p in dated], grounded=True, value=0.0, by="code")
+    with_amount.sort(key=lambda p: (field_value(p, "deadline") or field_value(p, "due_date") or "", paper_attr(p, "id")))
+    total = round(sum(as_float(field_value(p, "amount_chf")) for p in with_amount), 2)
+    items = ", ".join(
+        f"[{paper_attr(p, 'id')}] {_who(p)} CHF {chf(as_float(field_value(p, 'amount_chf')))} · "
+        f"{t('ask.item.deadline', lang)} {_fmt_date(field_value(p, 'deadline') or field_value(p, 'due_date'), lang)}"
+        for p in with_amount)
+    return Answer(text=t("ask.answer.owed_class", lang, inst=inst, total=chf(total), n=len(with_amount), items=items),
+                  cited_ids=[paper_attr(p, "id") for p in with_amount], grounded=True, value=total, by="code")
+
+
+def _class_deadline(hits: list[Any], cls: str, lang: str) -> Answer | None:
+    """Le prochain délai à venir parmi les papiers de la classe (sinon le dernier passé), tous cités."""
+    dated = [(as_date(field_value(p, "deadline")), p) for p in hits]
+    dated = sorted(((d, p) for d, p in dated if d), key=lambda x: (x[0], paper_attr(x[1], "id")))
+    if not dated:
+        return None
+    today = date.today()
+    future = [(d, p) for d, p in dated if d >= today]
+    d, p = future[0] if future else dated[-1]
+    inst = t(f"inst.{cls}", lang)
+    key = "ask.answer.deadline_class" if future else "ask.answer.deadline_class_past"
+    text = t(key, lang, inst=inst, date=_fmt_date(d, lang), who=_who(p), pid=paper_attr(p, "id"))
+    others = [(dd, pp) for dd, pp in dated if pp is not p]
+    if others:
+        text += " " + t("ask.answer.deadline_others", lang,
+                        items=", ".join(f"[{paper_attr(pp, 'id')}] {_fmt_date(dd, lang)}" for dd, pp in others))
+    return Answer(text=text, cited_ids=[paper_attr(p, "id")] + [paper_attr(pp, "id") for _, pp in others],
+                  grounded=True, value=d.isoformat(), by="code")
+
+
 def _kind_from(q: str) -> tuple[str | None, str, str]:
     if _any(q, BILL_WORDS):
         return "qr_bill", "invoice_date", "what.bills"
@@ -529,6 +671,20 @@ def ask(question: str, papers: list[Any], lang: str = "fr", index: Index | None 
     tokens_used = int(usage.get("total_tokens", 0))
     text = (text or "").strip()
     cited = [i for i in dict.fromkeys(_CITE.findall(text)) if i in by_id]
+    if text and not cited:
+        # Une seule reprise, plus stricte : au moins un id de la liste entre crochets.
+        strict = ask_messages(question, candidates, lang)
+        strict[0]["content"] += (" You MUST cite at least one paper id from the list, in square brackets like [p012], "
+                                 "after the fact it supports. An answer without any [p0xx] is rejected.")
+        try:
+            text2, usage2 = llm.chat(strict, json=False, max_tokens=300, temperature=0)
+            tokens_used += int(usage2.get("total_tokens", 0))
+            text2 = (text2 or "").strip()
+            cited2 = [i for i in dict.fromkeys(_CITE.findall(text2)) if i in by_id]
+            if cited2:
+                text, cited = text2, cited2
+        except Exception:
+            pass
     if not text:
         return Answer(text=t("ask.not_found", lang), grounded=False, note=t("ask.note.model_silent", lang),
                       by="model", model_tokens=tokens_used)

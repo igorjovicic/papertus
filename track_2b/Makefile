@@ -17,8 +17,11 @@ data:
 	$(PY) -m paperasse.generate --out data --seed 42
 
 # Compare le modèle seul (baseline) à notre chaîne vérifiée ; écrit docs/results.md + results.json
+# make eval            → docs/results.md on the configured endpoint
+# make eval TAG=8b     → docs/results-8b.md, separate cache (e.g. a local Apertus 8B server)
+TAG ?=
 eval:
-	$(PY) -m paperasse.eval --data data --out docs
+	$(PY) -m paperasse.eval --data data --out docs $(if $(TAG),--tag $(TAG),)
 
 # Tests unitaires ; les tests qui appellent le modèle sont sautés sans LLM_API_KEY
 test:
