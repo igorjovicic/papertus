@@ -370,6 +370,17 @@ _S: dict[str, tuple[str, str, str, str]] = {
     ),
     "ask.item.deadline": ("délai", "Frist", "termine", "due"),
 
+    # --- Valeurs machine montrées en mots (action demandée, type de lettre) ----
+    "action.pay": ("à payer", "zu zahlen", "da pagare", "to pay"),
+    "action.reply": ("répondre", "antworten", "rispondere", "reply"),
+    "action.submit_documents": ("documents à fournir", "Unterlagen einreichen", "documenti da fornire", "documents to submit"),
+    "action.none": ("", "", "", ""),
+    "letter_kind.tax_decision": ("Décision de taxation", "Steuerveranlagung", "Decisione di tassazione", "Tax decision"),
+    "letter_kind.payment_summons": ("Commandement de payer", "Zahlungsbefehl", "Precetto esecutivo", "Payment summons"),
+    "letter_kind.premium_notice": ("Prime d'assurance-maladie", "Krankenkassenprämie", "Premio cassa malati", "Health insurance premium"),
+    "letter_kind.commune_notice": ("Avis de la commune", "Mitteilung der Gemeinde", "Avviso del Comune", "Commune notice"),
+    "letter_kind.permit_decision": ("Permis", "Bewilligung", "Permesso", "Permit"),
+
     # --- Agenda ----------------------------------------------------------------
     "agenda.fig.due7": ("À payer sous 7 jours", "Zu zahlen in 7 Tagen", "Da pagare entro 7 giorni", "To pay within 7 days"),
     "agenda.fig.overdue": ("En retard", "Überfällig", "In ritardo", "Overdue"),

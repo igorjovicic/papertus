@@ -746,6 +746,8 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
     bank_statement: ['bank','account_iban','holder','period_start','period_end','opening_balance','closing_balance','movements','currency'],
     official_letter: ['authority','recipient','letter_date','subject','letter_kind','amount_chf','deadline','reference_number','action_required']
   };
+  // Une valeur machine (pay, tax_decision…) en mots de la langue ; inconnue → telle quelle.
+  function words(kind, v) { var k = kind + '.' + String(v); var w = S[k]; return (w === undefined) ? String(v) : (w === '' ? '—' : w); }
   function chf(v) { if (v == null || isNaN(v)) return '—'; var s = Math.abs(v).toFixed(2); s = s.replace(/\B(?=(\d{3})+(?!\d))/g, "'"); return (v < 0 ? '-' : '') + s; }
 
   // --- langue ------------------------------------------------------------
@@ -811,7 +813,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
       html += '</td>';
     } else {
       var isAmt = (typeof v === 'number') && AMOUNT_KEYS[key];
-      var shown = (typeof v === 'number') ? chf(v) : String(v);
+      var shown = (typeof v === 'number') ? chf(v) : (key === 'letter_kind' ? words('letter_kind', v) : (key === 'action_required' ? words('action', v) : String(v)));
       html += '<td class="v' + (isAmt ? ' amt num' : '') + '">' + esc(shown) + (st === 'model' && reason ? ' <span class="reason">· ' + esc(reason) + '</span>' : '') +
         (st === 'verified' && f.source ? ' <span class="reason">· ' + esc(f.source) + '</span>' : '') + '</td>';
     }
@@ -924,7 +926,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
         var btn = e.kind === 'bill' ? 'agenda.paid' : 'agenda.done';
         html += '<div class="ev' + (e.done ? ' done' : '') + '" data-id="' + esc(e.id) + '">' +
           '<div class="d">' + esc(fmtDay(e.date)) + '<small>' + esc(e.date.slice(0, 4)) + '</small></div>' +
-          '<div class="k">' + esc(T('agenda.kind.' + e.kind)) + (e.action && e.action !== 'none' ? '<br>' + esc(e.action) : '') + '</div>' +
+          '<div class="k">' + esc(T('agenda.kind.' + e.kind)) + (e.action && e.action !== 'none' ? '<br>' + esc(words('action', e.action)) : '') + '</div>' +
           '<div class="w"><div class="who">' + esc(e.who || '—') + '</div><div class="what">' + esc(e.what || '') + '</div></div>' + amt +
           '<button type="button" class="' + (e.done ? 'on' : '') + '" data-done="' + (e.done ? '0' : '1') + '" title="' + esc(e.done ? T('agenda.undo') : '') + '">' + esc(e.done ? '✓ ' + T(btn) : T(btn)) + '</button>' +
           '<div class="p"><a class="pid" href="#" data-open="' + esc(e.paper_id) + '">' + esc(e.paper_id) + '</a></div></div>';

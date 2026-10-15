@@ -97,4 +97,6 @@ def test_ics_has_the_required_lines(papers):
     assert any(l.startswith("SUMMARY:Relevé Zugerland Bank AG · non vérifié") for l in lines)
     assert ics.count("BEGIN:VALARM") == 8 and "TRIGGER:-P2D" in lines
     assert all(len(l.encode("utf-8")) <= 75 for l in lines)                   # lignes repliées
-    assert "DESCRIPTION:Papertus [p006] · DÉLAI · Pièces · submit_documents" in lines
+    assert "DESCRIPTION:Papertus [p006] · DÉLAI · Pièces · documents à fournir" in lines
+    de = agenda.to_ics(evs, "de")
+    assert "Unterlagen einreichen" in de and "submit_documents" not in de and "ß" not in de

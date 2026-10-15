@@ -107,7 +107,7 @@ Questions, read honestly: the 50 questions are templated from the truth (amounts
 
 ## 7. Reproducibility
 
-- **Commit:** `1fc67ad` (code and data; later commits add only the demo video and this PDF) on https://github.com/igorjovicic/papertus, `track_2b/`.
+- **Commit:** the tag `hackapertus-2026` on https://github.com/igorjovicic/papertus (`track_2b/`), the state submitted on 16 October 2026.
 - **Runtime:** Docker, `python:3.12-slim-bookworm`, no GPU. `make run` builds and starts the app on http://localhost:8640 with the 100 papers pre-read from the shipped cache (`data/cache.json`), so the first screen needs no model call; drop a new PDF to see a live read. The cache is keyed by the reader's source and the model name, so a different model or an edited check simply reads live.
 - **Numbers:** `make data` regenerates the 100 papers byte-for-byte (seed 42); `make eval` reruns baseline and ours on the configured endpoint and rewrites `docs/results.md` (≈ 580 k tokens for both methods on 100 papers and 70 questions, ≈ 11 minutes at 4 workers on the hosted 70B; `make eval TAG=8b` for a local server: about one hour on the laptop for both methods on 100 papers and 90 questions, one request at a time). The evaluation caches raw model answers in `runtime/`, so the checks can be changed and replayed at zero token cost.
 - **Tests:** `make test` runs 83 unit tests (checks, QR payloads, IBAN/QRR/SCOR vectors, report tables, rule answers, the no-call path, the web routes) plus the forbidden-names guard; four live tests run when `LLM_API_KEY` is set.

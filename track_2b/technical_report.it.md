@@ -107,7 +107,7 @@ Le domande, lette onestamente: le 50 domande sono costruite da modelli a partire
 
 ## 7. Riproducibilità
 
-- **Commit:** `1fc67ad` (codice e dati; i commit successivi aggiungono solo il video demo e questo PDF) su https://github.com/igorjovicic/papertus, `track_2b/`.
+- **Commit:** il tag `hackapertus-2026` su https://github.com/igorjovicic/papertus (`track_2b/`), lo stato inviato il 16 ottobre 2026.
 - **Esecuzione:** Docker, `python:3.12-slim-bookworm`, nessuna GPU. `make run` costruisce e avvia l'app su http://localhost:8640 con i 100 documenti già letti dalla cache fornita (`data/cache.json`), perciò la prima schermata non ha bisogno di alcuna chiamata al modello; depositate un nuovo PDF per vedere una lettura dal vivo. La cache è indicizzata per sorgente del lettore e nome del modello, perciò un modello diverso o un controllo modificato legge semplicemente dal vivo.
 - **Numeri:** `make data` rigenera i 100 documenti byte per byte (seme 42); `make eval` riesegue linea di base e nostro sull'endpoint configurato e riscrive `docs/results.md` (≈ 580 k token per i due metodi su 100 documenti e 70 domande, ≈ 11 minuti con 4 processi sul 70B ospitato; `make eval TAG=8b` per un server locale: circa un'ora sul portatile per i due metodi su 100 documenti e 90 domande, una richiesta alla volta). La valutazione mette in cache le risposte grezze del modello in `runtime/`, perciò i controlli possono essere modificati e rieseguiti a costo zero in token.
 - **Test:** `make test` esegue 83 test unitari (controlli, contenuti QR, vettori IBAN/QRR/SCOR, tabelle del rapporto, risposte da regole, il percorso senza chiamata, le rotte web) più la guardia sui nomi vietati; quattro test dal vivo girano quando `LLM_API_KEY` è impostata.

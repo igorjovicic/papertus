@@ -245,7 +245,9 @@ def to_ics(events: list[Event], lang: str = "fr", *, now: datetime | None = None
         desc = f"{i18n.APP_NAME} [{e.paper_id}] · {t(KIND_LABEL[e.kind], lang)}"
         if e.what:
             desc += f" · {e.what}"
-        if e.action:
+        if e.action and t(f"action.{e.action}", lang) not in ("", f"action.{e.action}"):
+            desc += f" · {t(f'action.{e.action}', lang)}"
+        elif e.action and e.action != "none":
             desc += f" · {e.action}"
         if e.kind == "statement" and e.amount is None and e.amount_reason:
             desc += f" · {t('agenda.unverified', lang)}: {e.amount_reason}"

@@ -107,7 +107,7 @@ Fragen, ehrlich gelesen: Die 50 Fragen sind aus der Truth nach Vorlagen gebaut (
 
 ## 7. Reproduzierbarkeit
 
-- **Commit:** `1fc67ad` (Code und Daten; spätere Commits fügen nur das Demo-Video und dieses PDF hinzu) auf https://github.com/igorjovicic/papertus, `track_2b/`.
+- **Commit:** das Tag `hackapertus-2026` auf https://github.com/igorjovicic/papertus (`track_2b/`), der am 16. Oktober 2026 eingereichte Stand.
 - **Laufzeit:** Docker, `python:3.12-slim-bookworm`, keine GPU. `make run` baut und startet die App auf http://localhost:8640 mit den 100 Papieren, vorgelesen aus dem mitgelieferten Cache (`data/cache.json`), so dass der erste Bildschirm keinen Modellaufruf braucht; ein neues PDF ablegen, um eine Live-Lesung zu sehen. Der Cache-Schlüssel ist der Quelltext des Lesers und der Modellname, so dass ein anderes Modell oder eine geänderte Prüfung einfach live liest.
 - **Zahlen:** `make data` erzeugt die 100 Papiere byteweise identisch neu (Seed 42); `make eval` lässt Baseline und unseren Ansatz auf dem konfigurierten Endpunkt erneut laufen und schreibt `docs/results.md` neu (≈ 580 k Tokens für beide Methoden auf 100 Papieren und 70 Fragen, ≈ 11 Minuten mit 4 Workern auf dem gehosteten 70B; `make eval TAG=8b` für einen lokalen Server: etwa eine Stunde auf dem Laptop für beide Methoden auf 100 Papieren und 90 Fragen, eine Anfrage aufs Mal). Die Evaluation cacht die rohen Modellantworten in `runtime/`, so dass die Prüfungen geändert und ohne Token-Kosten wiederholt werden können.
 - **Tests:** `make test` führt 83 Unit-Tests aus (Prüfungen, QR-Nutzlasten, IBAN/QRR/SCOR-Vektoren, Berichtstabellen, Regelantworten, der Pfad ohne Aufruf, die Web-Routen) plus den Wächter gegen verbotene Namen; vier Live-Tests laufen, wenn `LLM_API_KEY` gesetzt ist.
