@@ -382,6 +382,13 @@ _S: dict[str, tuple[str, str, str, str]] = {
     "letter_kind.permit_decision": ("Permis", "Bewilligung", "Permesso", "Permit"),
 
     # --- Agenda ----------------------------------------------------------------
+    "agenda.weekdays": ("Lun Mar Mer Jeu Ven Sam Dim", "Mo Di Mi Do Fr Sa So", "Lun Mar Mer Gio Ven Sab Dom", "Mon Tue Wed Thu Fri Sat Sun"),
+    "agenda.today_btn": ("Aujourd'hui", "Heute", "Oggi", "Today"),
+    "agenda.all": ("Tout", "Alle", "Tutto", "All"),
+    "agenda.prev": ("Mois précédent", "Vormonat", "Mese precedente", "Previous month"),
+    "agenda.next": ("Mois suivant", "Nächster Monat", "Mese successivo", "Next month"),
+    "agenda.week_title": ("Les 7 prochains jours", "Die nächsten 7 Tage", "I prossimi 7 giorni", "The next 7 days"),
+    "agenda.day_filter": ("Événements du", "Ereignisse vom", "Eventi del", "Events on"),
     "agenda.fig.due7": ("À payer sous 7 jours", "Zu zahlen in 7 Tagen", "Da pagare entro 7 giorni", "To pay within 7 days"),
     "agenda.fig.overdue": ("En retard", "Überfällig", "In ritardo", "Overdue"),
     "agenda.fig.deadlines": ("Délais ce mois", "Fristen diesen Monat", "Termini questo mese", "Deadlines this month"),

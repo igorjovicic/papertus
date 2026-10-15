@@ -181,8 +181,65 @@ def today_line(events: list[Event], today: date, lang: str) -> str:
     return ", ".join(parts) + "."
 
 
-def build_agenda(papers: list[Any], today: date, done: set[str] | None = None, lang: str = "fr") -> dict[str, Any]:
-    """La structure complète pour la page et l'API : chiffres, ligne du jour, groupes d'événements."""
+def _month_of(month: str | None, today: date) -> tuple[int, int]:
+    if month:
+        try:
+            y, m = (int(x) for x in month.split("-")[:2])
+            if 1 <= m <= 12:
+                return y, m
+        except ValueError:
+            pass
+    return today.year, today.month
+
+
+def month_grid(today: date, events: list[Event], month: str | None = None) -> dict[str, Any]:
+    """Le mois en 6 semaines × 7 jours (lundi → dimanche) : pour chaque jour, ses événements (ouverts
+    d'abord, par genre), la somme des factures ouvertes, le nombre de retards, et ses drapeaux
+    (dans le mois, week-end, aujourd'hui). Toujours 42 cases pour une grille stable."""
+    y, m = _month_of(month, today)
+    first = date(y, m, 1)
+    start = first - timedelta(days=first.weekday())  # le lundi de la première semaine
+    by_day: dict[str, list[Event]] = {}
+    for e in events:
+        by_day.setdefault(e.date, []).append(e)
+    order = {"bill": 0, "deadline": 1, "statement": 2}
+    weeks: list[list[dict[str, Any]]] = []
+    for w in range(6):
+        row = []
+        for d in range(7):
+            day = start + timedelta(days=w * 7 + d)
+            evs = sorted(by_day.get(day.isoformat(), []), key=lambda e: (e.done, order.get(e.kind, 9), e.paper_id))
+            open_bills = [e for e in evs if e.kind == "bill" and not e.done]
+            row.append({
+                "date": day.isoformat(), "day": day.day, "in_month": day.month == m, "weekend": day.weekday() >= 5,
+                "today": day == today,
+                "events": [dict(e.to_dict(), overdue=(not e.done and day < today and e.kind in ("bill", "deadline"))) for e in evs],
+                "open_bills_total": round(sum(e.amount or 0.0 for e in open_bills), 2),
+                "open_count": sum(1 for e in evs if not e.done),
+                "overdue_count": sum(1 for e in evs if not e.done and day < today and e.kind in ("bill", "deadline")),
+            })
+        weeks.append(row)
+    prev_m = date(y, m, 1) - timedelta(days=1)
+    next_m = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
+    return {"month": f"{y}-{m:02d}", "prev": prev_m.strftime("%Y-%m"), "next": next_m.strftime("%Y-%m"),
+            "start": start.isoformat(), "weeks": weeks}
+
+
+def week_strip(today: date, events: list[Event]) -> list[dict[str, Any]]:
+    """Les sept prochains jours à partir d'aujourd'hui : nombre et somme des éléments ouverts."""
+    out = []
+    for i in range(WEEK_DAYS):
+        day = today + timedelta(days=i)
+        evs = [e for e in events if e.date == day.isoformat() and not e.done]
+        out.append({"date": day.isoformat(), "day": day.day, "weekday": day.weekday(), "today": i == 0,
+                    "count": len(evs),
+                    "sum": round(sum(e.amount or 0.0 for e in evs if e.kind in ("bill", "deadline")), 2)})
+    return out
+
+
+def build_agenda(papers: list[Any], today: date, done: set[str] | None = None, lang: str = "fr",
+                 month: str | None = None) -> dict[str, Any]:
+    """La structure complète pour la page et l'API : chiffres, ligne du jour, mois, semaine, groupes."""
     lang = i18n.norm_lang(lang)
     events = events_from_papers(papers, done)
     groups = group_events(events, today)
@@ -191,6 +248,8 @@ def build_agenda(papers: list[Any], today: date, done: set[str] | None = None, l
         "lang": lang,
         "line": today_line(events, today, lang),
         "figures": figures(events, papers, today),
+        "month": month_grid(today, events, month),
+        "week": week_strip(today, events),
         "groups": {g: [e.to_dict() for e in evs] for g, evs in groups.items()},
         "counts": {g: len(evs) for g, evs in groups.items()},
     }

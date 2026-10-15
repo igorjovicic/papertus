@@ -100,3 +100,41 @@ def test_ics_has_the_required_lines(papers):
     assert "DESCRIPTION:Papertus [p006] · DÉLAI · Pièces · documents à fournir" in lines
     de = agenda.to_ics(evs, "de")
     assert "Unterlagen einreichen" in de and "submit_documents" not in de and "ß" not in de
+
+
+def test_month_grid_six_weeks_monday_first(papers):
+    evs = agenda.events_from_papers(papers, done={"p002:bill"})
+    agenda.group_events(evs, TODAY)
+    g = agenda.month_grid(TODAY, evs, "2026-10")
+    assert g["month"] == "2026-10" and g["prev"] == "2026-09" and g["next"] == "2026-11"
+    assert len(g["weeks"]) == 6 and all(len(w) == 7 for w in g["weeks"])
+    assert g["weeks"][0][0]["date"] == "2026-09-28" and g["weeks"][0][0]["in_month"] is False   # lundi avant le 1er
+    cells = {c["date"]: c for w in g["weeks"] for c in w}
+    assert cells["2026-10-01"]["today"] is True and cells["2026-10-03"]["weekend"] is True
+    oct3 = cells["2026-10-03"]
+    assert [e["id"] for e in oct3["events"]] == ["p001:bill"] and oct3["open_bills_total"] == 2276.96 and oct3["open_count"] == 1
+    sep30 = cells["2026-09-30"]
+    assert {e["id"] for e in sep30["events"]} == {"p007:statement", "p009:statement"} and sep30["open_bills_total"] == 0
+    sep20 = agenda.month_grid(TODAY, evs, "2026-09")
+    c = {c["date"]: c for w in sep20["weeks"] for c in w}["2026-09-20"]
+    assert c["events"][0]["id"] == "p002:bill" and c["events"][0]["done"] is True and c["overdue_count"] == 0  # payé : plus en retard
+    bad = agenda.month_grid(TODAY, evs, "nope")
+    assert bad["month"] == "2026-10"
+
+
+def test_month_grid_flags_overdue_open_events(papers):
+    evs = agenda.events_from_papers(papers)
+    g = agenda.month_grid(TODAY, evs, "2026-09")
+    c = {c["date"]: c for w in g["weeks"] for c in w}["2026-09-20"]
+    assert c["events"][0]["overdue"] is True and c["overdue_count"] == 1 and c["open_bills_total"] == 500.0
+
+
+def test_week_strip(papers):
+    evs = agenda.events_from_papers(papers)
+    w = agenda.week_strip(TODAY, evs)
+    assert [d["date"] for d in w][:2] == ["2026-10-01", "2026-10-02"] and len(w) == 7 and w[0]["today"] is True
+    by = {d["date"]: d for d in w}
+    assert (by["2026-10-03"]["count"], by["2026-10-03"]["sum"]) == (1, 2276.96)
+    assert (by["2026-10-05"]["count"], by["2026-10-05"]["sum"]) == (1, 1932.5)
+    assert by["2026-10-02"]["count"] == 0
+    assert "month" in agenda.build_agenda(papers, TODAY, None, "fr", "2026-11") and agenda.build_agenda(papers, TODAY, None, "fr", "2026-11")["month"]["month"] == "2026-11"

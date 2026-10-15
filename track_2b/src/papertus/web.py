@@ -423,10 +423,12 @@ def _today(today: str | None) -> date:
 
 
 @app.get("/api/agenda")
-def api_agenda(today: str | None = None, lang: str = "fr") -> dict[str, Any]:
+def api_agenda(today: str | None = None, lang: str = "fr", month: str | None = None) -> dict[str, Any]:
+    if month and not _MONTH_RE.match(month):
+        raise HTTPException(400, "month must be YYYY-MM")
     with STORE.lock:
         done = set(STORE.done)
-    return agenda_mod.build_agenda(STORE.ordered(), _today(today), done, i18n.norm_lang(lang))
+    return agenda_mod.build_agenda(STORE.ordered(), _today(today), done, i18n.norm_lang(lang), month)
 
 
 @app.post("/api/agenda/done")
@@ -562,8 +564,47 @@ input[type=file] { display:none; }
 .panel { display:none; grid-column:1 / span 12; } .panel.on { display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:var(--s3); }
 
 /* agenda */
-.agenda .today { grid-column:1 / span 10; font-size:24px; line-height:1.3; letter-spacing:-.015em; margin:0 0 var(--s4); }
-.agenda .today b { font-weight:400; color:var(--grey); display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:var(--s1); line-height:1.4; }
+.agenda p.today { grid-column:1 / span 10; font-size:24px; line-height:1.3; letter-spacing:-.015em; margin:0 0 var(--s4); }
+.agenda p.today b { font-weight:400; color:var(--grey); display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:var(--s1); line-height:1.4; }
+.cal { grid-column:1 / span 12; border:1px solid var(--ink); margin-bottom:var(--s3); background:var(--paper); }
+.cal-head { background:var(--red); color:#fff; display:flex; align-items:center; gap:var(--s1); padding:var(--s1) var(--s2); min-height:56px; }
+.cal-head h2 { flex:1; margin:0; font-size:20px; font-weight:700; letter-spacing:-.01em; color:#fff; line-height:1.2; }
+.cal-head button { border:1px solid #fff; color:#fff; background:transparent; min-width:40px; min-height:40px; padding:0 12px; font-size:18px; line-height:1; }
+.cal-head button.today { font-size:13px; padding:0 var(--s2); }
+.cal-head button:hover { background:rgba(255,255,255,.14); }
+.cal-head button:focus-visible { outline-color:#fff; }
+.cal-days { display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); border-bottom:1px solid var(--ink); }
+.cal-days span { padding:var(--s1) 12px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
+.cal-grid { display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); }
+.cell { min-height:96px; padding:var(--s1); border-right:1px solid var(--hair); border-bottom:1px solid var(--hair); display:flex; flex-direction:column; align-items:stretch; gap:3px; cursor:pointer; background:var(--paper); min-width:0; overflow:hidden; text-align:left; font:inherit; color:inherit; }
+.cell:nth-child(7n) { border-right:none; }
+.cal-grid .cell:nth-last-child(-n+7) { border-bottom:none; }
+.cell.we { background:#fafafa; }
+.cell.out { color:#b5b5b5; }
+.cell.out .chip { opacity:.55; }
+.cell.sel { box-shadow:inset 0 0 0 2px var(--ink); }
+.cell .dn { font-size:16px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; align-self:flex-start; }
+.cell.today .dn { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; margin:-4px 0 0 -4px; border-radius:50%; background:var(--red); color:#fff; }
+.chip { display:block; width:100%; max-width:100%; font-size:12px; line-height:18px; padding:0 6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border-left:2px solid transparent; min-width:0; text-align:left; }
+.chip.bill { background:#f3f3f3; color:var(--ink); }
+.chip.deadline { background:var(--ink); color:#fff; }
+.chip.statement { border:1px solid #b5b5b5; border-left:2px solid transparent; color:var(--grey); line-height:16px; }
+.chip.late { border-left-color:var(--red); }
+.chip.done { text-decoration:line-through; opacity:.5; }
+.chip.more { color:var(--grey); padding-left:0; }
+.cell .sum { margin-top:auto; align-self:flex-end; font-size:12px; font-variant-numeric:tabular-nums; color:var(--ink); }
+.cell .dots { display:none; }
+.wk-title { grid-column:1 / span 12; margin-bottom:var(--s1); }
+.wk { grid-column:1 / span 12; display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); border:1px solid var(--ink); margin-bottom:var(--s3); }
+.wk .wd { padding:12px var(--s2) var(--s2); border-left:1px solid var(--hair); min-width:0; }
+.wk .wd:first-child { border-left:none; }
+.wk .wd .m { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
+.wk .wd .n { font-size:28px; font-weight:700; letter-spacing:-.03em; line-height:1.1; font-variant-numeric:tabular-nums; margin:2px 0 6px; }
+.wk .wd.today .n { color:var(--red); }
+.wk .wd .c { font-size:12px; color:var(--grey); font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.wk .wd .c b { color:var(--ink); font-weight:600; }
+.events .dayfilter { display:flex; align-items:center; gap:var(--s2); margin:var(--s3) 0 0; padding-bottom:12px; border-bottom:1px solid var(--rule); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--grey); }
+.events .dayfilter a { color:var(--ink); }
 .figs { grid-column:1 / span 12; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); border:1px solid var(--ink); padding:var(--s2) 0; margin-bottom:var(--s3); }
 .fig { position:relative; padding:var(--s1) var(--s3); }
 .fig + .fig::before { content:""; position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--hair); }
@@ -674,7 +715,19 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   .list { max-height:36vh; margin-bottom:var(--s3); }
   .facts col.c1 { width:120px; }
   .facts td.v.amt { font-size:22px; }
-  .agenda .today { grid-column:1 / span 12; font-size:19px; }
+  .agenda p.today { grid-column:1 / span 12; font-size:19px; }
+  .cal-head { padding:var(--s1) 12px; } .cal-head h2 { font-size:17px; }
+  .cal-days span { padding:6px 4px; font-size:10px; letter-spacing:.04em; text-align:center; }
+  .cell { min-height:52px; padding:4px; gap:4px; align-items:center; }
+  .cell .dn { font-size:14px; align-self:center; }
+  .cell.today .dn { width:24px; height:24px; margin:0; }
+  .chip, .cell .sum { display:none; }
+  .cell .dots { display:flex; gap:3px; justify-content:center; flex-wrap:wrap; }
+  .dot { width:6px; height:6px; border-radius:50%; }
+  .dot.bill { background:#b5b5b5; } .dot.deadline { background:var(--ink); } .dot.statement { border:1px solid #b5b5b5; }
+  .dot.late { background:var(--red); border-color:var(--red); }
+  .wk { display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .wk .wd { flex:0 0 112px; }
   .figs { grid-template-columns:repeat(2, minmax(0,1fr)); padding:var(--s2) 0; }
   .fig { padding:var(--s1) var(--s2); }
   .fig:nth-child(3)::before { display:none; }
@@ -721,6 +774,18 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
 
     <section class="panel agenda on" id="panel-agenda">
       <p class="today" id="agenda-line"></p>
+      <div class="cal" id="cal">
+        <div class="cal-head">
+          <h2 id="cal-title"></h2>
+          <button type="button" id="cal-prev" aria-label="prev">‹</button>
+          <button type="button" id="cal-next" aria-label="next">›</button>
+          <button type="button" id="cal-today" class="today" data-i18n="agenda.today_btn"></button>
+        </div>
+        <div class="cal-days" id="cal-days"></div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="wk-title"><span class="label" data-i18n="agenda.week_title"></span></div>
+      <div class="wk" id="wk"></div>
       <div class="figs" id="agenda-figs"></div>
       <div class="events" id="agenda-events"></div>
       <div class="reminders">
@@ -760,7 +825,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
 <script>
 (function () {
   var S = {};                       // chaînes de la langue courante
-  var state = { lang: 'fr', papers: [], selected: null, tab: 'agenda', today: null };
+  var state = { lang: 'fr', papers: [], selected: null, tab: 'agenda', today: null, month: null, day: null, agenda: null };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -928,11 +993,47 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   // --- agenda : tout vient de /api/agenda, calculé par le code ------------------
   function fmtDay(iso) { var p = iso.split('-'); return p[2] + '.' + p[1]; }
   function loadAgenda() {
-    var url = '/api/agenda?lang=' + state.lang + (state.today ? '&today=' + state.today : '');
+    var url = '/api/agenda?lang=' + state.lang + (state.today ? '&today=' + state.today : '') + (state.month ? '&month=' + state.month : '');
     $('ics').href = '/api/agenda.ics?lang=' + state.lang + (state.today ? '&today=' + state.today : '');
     fetch(url).then(function (r) { return r.json(); }).then(renderAgenda).catch(function () { $('agenda-line').textContent = T('error'); });
   }
+  var MONTHS = { fr: ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],
+    de: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    it: ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'] };
+  function monthLabel(ym) { var p = ym.split('-'); var n = MONTHS[state.lang][parseInt(p[1], 10) - 1]; return n.charAt(0).toUpperCase() + n.slice(1) + ' ' + p[0]; }
+  function renderCalendar(a) {
+    var m = a.month, days = T('agenda.weekdays').split(' ');
+    $('cal-title').textContent = monthLabel(m.month);
+    $('cal-days').innerHTML = days.map(function (d) { return '<span>' + esc(d) + '</span>'; }).join('');
+    var html = '';
+    m.weeks.forEach(function (week) { week.forEach(function (c) {
+      var cls = 'cell' + (c.in_month ? '' : ' out') + (c.weekend ? ' we' : '') + (c.today ? ' today' : '') + (state.day === c.date ? ' sel' : '');
+      var shown = c.events.slice(0, 3), more = c.events.length - shown.length;
+      var chips = shown.map(function (e) {
+        return '<span class="chip ' + e.kind + (e.overdue ? ' late' : '') + (e.done ? ' done' : '') + '" title="' + esc((e.who || '') + (e.amount != null ? ' · CHF ' + chf(e.amount) : '')) + '">' + esc(e.who || e.paper_id) + '</span>'; }).join('') +
+        (more > 0 ? '<span class="chip more">+' + more + '</span>' : '');
+      var kinds = []; c.events.forEach(function (e) { var k = e.kind + (e.overdue ? ' late' : ''); if (kinds.indexOf(k) < 0) kinds.push(k); });
+      var dots = '<span class="dots">' + kinds.slice(0, 3).map(function (k) { return '<i class="dot ' + k + '"></i>'; }).join('') + '</span>';
+      html += '<button type="button" class="' + cls + '" data-day="' + c.date + '"><span class="dn">' + c.day + '</span>' + chips + dots +
+        (c.open_bills_total ? '<span class="sum">' + chf(c.open_bills_total) + '</span>' : '') + '</button>';
+    }); });
+    $('cal-grid').innerHTML = html;
+    $('cal-grid').querySelectorAll('.cell').forEach(function (b) { b.onclick = function () {
+      var d = b.getAttribute('data-day'); state.day = (state.day === d) ? null : d; renderCalendar(a); renderEvents(a); }; });
+    $('cal-prev').onclick = function () { state.month = m.prev; state.day = null; loadAgenda(); };
+    $('cal-next').onclick = function () { state.month = m.next; state.day = null; loadAgenda(); };
+    $('cal-today').onclick = function () { state.month = null; state.day = null; loadAgenda(); };
+  }
+  function renderWeek(a) {
+    var days = T('agenda.weekdays').split(' ');
+    $('wk').innerHTML = a.week.map(function (d) {
+      return '<div class="wd' + (d.today ? ' today' : '') + '"><div class="m">' + esc(days[d.weekday]) + '</div><div class="n">' + d.day + '</div>' +
+        '<div class="c">' + (d.count ? '<b>' + d.count + '</b>' + (d.sum ? ' · ' + chf(d.sum) : '') : '—') + '</div></div>'; }).join('');
+  }
   function renderAgenda(a) {
+    state.agenda = a;
+    renderCalendar(a); renderWeek(a);
     var f = a.figures;
     $('agenda-line').innerHTML = '<b>' + esc(T('agenda.today.label')) + ' · ' + esc(a.today) + '</b>' + esc(a.line);
     var plural = function (k, n) { return T(n === 1 ? k + '_1' : k + '_n').replace('{n}', n); };
@@ -941,10 +1042,19 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
       '<div class="fig' + (f.overdue_count ? ' red' : '') + '"><div class="n">' + chf(f.overdue_total) + '</div><div class="u">' + esc(T('agenda.fig.overdue')) + ' · ' + esc(plural('agenda.fig.count', f.overdue_count)) + '</div></div>' +
       '<div class="fig"><div class="n">' + f.deadlines_month + '</div><div class="u">' + esc(T('agenda.fig.deadlines')) + '</div></div>' +
       '<div class="fig"><div class="n">' + chf(f.balance_total) + '</div><div class="u">' + esc(T('agenda.fig.balance')) + (f.balance_blank ? ' · ' + esc(plural('agenda.fig.blank', f.balance_blank)) : '') + '</div></div>';
+    renderEvents(a);
+  }
+  function renderEvents(a) {
     var html = '', any = false;
-    ['overdue', 'week', 'month', 'later', 'done'].forEach(function (g) {
+    var groups = ['overdue', 'week', 'month', 'later', 'done'];
+    if (state.day) {
+      var all = []; groups.forEach(function (g) { (a.groups[g] || []).forEach(function (e) { if (e.date === state.day) all.push(e); }); });
+      html += '<div class="dayfilter"><span>' + esc(T('agenda.day_filter')) + ' ' + esc(fmtDay(state.day)) + '.' + esc(state.day.slice(0, 4)) + ' · ' + all.length + '</span><a href="#" id="day-all">' + esc(T('agenda.all')) + '</a></div>';
+      a = { groups: { day: all } }; groups = ['day']; any = all.length > 0;
+    }
+    groups.forEach(function (g) {
       var evs = a.groups[g] || []; if (!evs.length) return; any = true;
-      html += '<h3 class="' + (g === 'overdue' ? 'red' : '') + '">' + esc(T('agenda.group.' + g)) + ' · ' + evs.length + '</h3>';
+      if (g !== 'day') html += '<h3 class="' + (g === 'overdue' ? 'red' : '') + '">' + esc(T('agenda.group.' + g)) + ' · ' + evs.length + '</h3>';
       evs.forEach(function (e) {
         var amt = e.amount == null
           ? '<div class="a blank">' + esc(e.kind === 'statement' ? T('agenda.unverified') : '—') + '</div>'
@@ -968,6 +1078,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
       };
     });
     $('agenda-events').querySelectorAll('a[data-open]').forEach(function (l) { l.onclick = function (e) { e.preventDefault(); openPaper(l.getAttribute('data-open')); }; });
+    var all = $('day-all'); if (all) all.onclick = function (e) { e.preventDefault(); state.day = null; renderCalendar(state.agenda); renderEvents(state.agenda); };
   }
   $('tab-report').onclick = function () { showTab('report'); if (!$('report').innerHTML) genReport(); };
 
@@ -1024,6 +1135,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   if (LANGS.indexOf(saved) < 0) saved = 'fr';
   if (params.get('paper')) state.selected = params.get('paper');
   state.today = /^\d{4}-\d{2}-\d{2}$/.test(params.get('today') || '') ? params.get('today') : null;
+  state.month = /^\d{4}-\d{2}$/.test(params.get('month') || '') ? params.get('month') : null;
   setLang(saved, true);
   loadPapers().then(function () {
     var tab = params.get('tab');
