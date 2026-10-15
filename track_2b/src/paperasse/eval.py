@@ -32,6 +32,13 @@ from .schema import DATE_KEYS, NUMERIC_KEYS, Paper, Truth, load_truth, scored_ke
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RUNTIME = os.path.join(ROOT, "runtime", "cache")  # changé par --tag (runtime/cache-<tag>)
 NO_NEW_CALLS = False  # --no-new-calls : rejouer les contrôles sur le cache, sans appel au modèle
+_blocked = threading.local()  # drapeau par fil : « ask aurait eu besoin du modèle »
+
+
+def _blocked_chat(*args: Any, **kwargs: Any) -> tuple[str, dict[str, int]]:
+    """Remplace llm.chat sous --no-new-calls : aucun appel ne part, on note que le modèle manquait."""
+    _blocked.hit = True
+    raise llm.ModelError("model call blocked by --no-new-calls")
 TOP_PAPERS = 6
 NOT_FOUND = {
     "fr": "Je ne trouve pas ce chiffre dans vos papiers.",
@@ -503,6 +510,26 @@ def run_question(method: str, q: dict[str, Any], papers: list[Paper], texts: dic
     contexte borné), 'baseline_retrieval' (les MÊMES papiers que notre sélection, en texte brut,
     réponse libre, aucun contrôle)."""
     selected = select_papers(q["question"], papers) if method != "baseline" else []
+    if method == "ours_product" and NO_NEW_CALLS:
+        # Le chemin produit est rejoué sur les faits en cache : les règles répondent ; si ask
+        # avait besoin du modèle, la ligne est « none » (réponse vide), sans aucun appel.
+        _blocked.hit = False
+        t0 = time.time()
+        a = ask.ask(q["question"], papers, q.get("language", "fr"))
+        if getattr(_blocked, "hit", False):
+            out = {"id": q["id"], "question": q["question"], "truth": q.get("truth"), "type": q.get("type"),
+                   "answer": "", "match": question_match(q, ""), "papers_seen": [], "by": "none",
+                   "note": "model needed, blocked by --no-new-calls", "cited_ids": [], "grounded": False, "value": None,
+                   "tokens": {"total_tokens": 0}, "seconds": round(time.time() - t0, 2), "replayed": True}
+        else:
+            value = a.value if isinstance(a.value, (int, float, str, list)) else None
+            out = {"id": q["id"], "question": q["question"], "truth": q.get("truth"), "type": q.get("type"),
+                   "answer": a.text, "match": question_match(q, a.text, value), "papers_seen": [], "by": a.by,
+                   "note": a.note, "cited_ids": list(a.cited_ids), "grounded": a.grounded, "value": value,
+                   "tokens": {"total_tokens": 0}, "seconds": round(time.time() - t0, 2), "replayed": True}
+        key = hashlib.sha256((q["question"] + "|" + _facts_stamp(papers)).encode()).hexdigest()[:20]
+        _cache_put(method + "_q", key, os.getenv("LLM_NAME") or llm.DEFAULT_MODEL, out)
+        return out
     if method == "ours_product":
         # Le produit (ask.py) regarde tous les papiers : la clé suit l'ensemble des faits.
         key_src = q["question"] + "|" + _facts_stamp(papers)
@@ -695,6 +722,8 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     global RUNTIME, NO_NEW_CALLS
     NO_NEW_CALLS = args.no_new_calls
+    if NO_NEW_CALLS:
+        llm.chat = _blocked_chat  # rien ne part vers le point d'accès pendant un rejeu
     if args.tag:
         RUNTIME = os.path.join(ROOT, "runtime", f"cache-{args.tag}")
     use_cache = not args.no_cache

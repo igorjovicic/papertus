@@ -98,6 +98,12 @@ _S: dict[str, tuple[str, str, str, str]] = {
     "paper.pages": ("pages", "Seiten", "pagine", "pages"),
     "paper.text": ("Texte extrait", "Extrahierter Text", "Testo estratto", "Extracted text"),
     "paper.qr": ("Code QR lu", "QR-Code gelesen", "Codice QR letto", "QR code read"),
+    "paper.read_with": (
+        "lu avec {model}",
+        "gelesen mit {model}",
+        "letto con {model}",
+        "read with {model}",
+    ),
     "paper.select": (
         "Choisissez un papier dans la liste.",
         "Wählen Sie ein Papier in der Liste.",

@@ -57,3 +57,22 @@ def test_strings_in_four_languages(client):
         got = client.get(f"/api/strings?lang={lang}").json()
         assert got["tab.report"] == word and got["_app"] == i18n.APP_NAME and "Apertus" in got["_badge"]
     assert "ß" not in "".join(client.get("/api/strings?lang=de").json().values())
+
+
+def test_seed_is_model_independent_but_runtime_cache_is_not(client, monkeypatch, tmp_path):
+    """La graine livrée sert quel que soit LLM_NAME ; le cache d'exécution est propre au modèle."""
+    pdf = web.PAPERS_DIR / "p777.pdf"
+    web.PAPERS_DIR.mkdir(parents=True, exist_ok=True)
+    pdf.write_bytes(b"%PDF-1.4 seed test")
+    digest = web.file_hash(pdf)
+    entry = Paper(id="p777", file="p777.pdf", kind="qr_bill", language="fr", text="x",
+                  facts=Facts(fields={"amount_chf": Field(12.5, "verified", source="qr")})).to_dict()
+    entry["read_with"] = {"model": "swiss-ai/Apertus-v1.5-70B", "size": "70B", "local": False}
+    web.STORE.seed = {web.seed_key(digest): entry}
+    monkeypatch.setenv("LLM_NAME", "someone/other-model-8B")
+    assert web.seed_key(digest).count(":") == 1 and "other" not in web.seed_key(digest)
+    web.STORE.read_one(pdf)                      # trouvé dans la graine : aucune lecture, aucun modèle
+    p = client.get("/api/paper/p777").json()
+    assert p["facts"]["amount_chf"]["value"] == 12.5 and p["read_with"]["size"] == "70B"
+    assert web.cache_key(digest) in web.STORE.cache  # recopié dans le cache d'exécution, clé avec le modèle
+    assert web.reader_stamp() != web.reader_hash()

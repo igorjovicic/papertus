@@ -366,6 +366,17 @@ def _ids_in(question: str) -> list[str]:
     return [m.group(0) for m in _NUMBER_TOKEN.finditer(question)]
 
 
+_DATE_SPANS = re.compile(r"\b\d{1,2}[./]\d{1,2}[./]\d{4}\b|\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}\.?\s+[^\W\d_]+\s+\d{4}\b")
+
+
+def _account_suffix(question: str) -> str | None:
+    """Les derniers chiffres d'un compte cités dans la question (« compte se terminant par 5840 »,
+    « Konto endend auf 2449 ») : un groupe de 4 chiffres ou plus qui ne fait pas partie d'une date."""
+    rest = _DATE_SPANS.sub(" ", question)
+    found = re.findall(r"(?<![\d-])\d{4,}(?![\d-])", rest)
+    return found[-1] if found else None
+
+
 def _with_id(papers: list[Any], key: str, ids: list[str]) -> list[Any]:
     """Les papiers dont le champ `key` est l'un des numéros donnés (comparaison sans espaces, sans casse)."""
     wanted = {re.sub(r"\s+", "", i).lower() for i in ids}
@@ -467,6 +478,11 @@ def answer_from_facts(question: str, papers: list[Any], lang: str = "fr") -> Ans
         bank, named = _best_named(question, hits, "bank_statement", "bank")
         if named:
             hits = named
+        suffix = _account_suffix(question)
+        if suffix:  # « compte se terminant par 5840 » : un seul compte, une seule valeur
+            by_suffix = [p for p in hits if re.sub(r"\s+", "", str(field_value(p, "account_iban") or "")).endswith(suffix)]
+            if by_suffix:
+                hits = by_suffix[:1]
         if hits:
             lines, ids, values, grounded = [], [], [], True
             for p in hits:

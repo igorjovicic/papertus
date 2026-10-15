@@ -45,6 +45,21 @@ def test_rule_balance_at_date(papers):
     assert b.value is None and "arithmetic" in b.text and "leer" in b.text
 
 
+def test_rule_balance_narrows_to_the_account_suffix(papers):
+    """Deux relevés de la même banque, même date : le suffixe du compte choisit un seul relevé, une seule valeur."""
+    papers.append(mk("p006", "bank_statement", "fr", bank="Banque Alpina", account_iban="CH56 0483 5012 3456 7800 9",
+                     period_start="2026-09-01", period_end="2026-09-30", opening_balance=50.0, closing_balance=120.0,
+                     movements=[{"date": "2026-09-10", "label": "Prime", "amount": 70.0}]))
+    both = ask.answer_from_facts("Quel est le solde du compte chez Banque Alpina au 30.09.2026 ?", papers, "fr")
+    assert both.value == [900.0, 120.0] and both.cited_ids == ["p004", "p006"]
+    one = ask.answer_from_facts("Quel est le solde du compte chez Banque Alpina (compte se terminant par 8009) au 30.09.2026 ?", papers, "fr")
+    assert one.value == 120.0 and one.cited_ids == ["p006"]
+    other = ask.answer_from_facts("Wie hoch ist der Saldo bei Banque Alpina (Konto endend auf 2957) am 30.09.2026?", papers, "de")
+    assert other.value == 900.0 and other.cited_ids == ["p004"]
+    assert ask._account_suffix("Qual è il saldo al 30.09.2026?") is None  # l'année d'une date n'est pas un suffixe
+    assert ask._account_suffix("conto che termina con 0275 al 10.10.2026") == "0275"
+
+
 def test_rule_due_on_date_lists_ids(papers):
     a = ask.answer_from_facts("Welche Rechnungen sind am 20. Oktober 2026 fällig?", papers, "de")
     assert a.value == ["p002"] and "Garage Keller AG" in a.text

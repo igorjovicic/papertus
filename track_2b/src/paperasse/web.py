@@ -62,7 +62,9 @@ class Store:
         self.papers: dict[str, Paper] = {}
         self.paths: dict[str, Path] = {}
         self.hashes: dict[str, str] = {}          # id → empreinte
-        self.cache: dict[str, dict[str, Any]] = {}  # empreinte → Paper.to_dict()
+        self.cache: dict[str, dict[str, Any]] = {}  # clé d'exécution → Paper.to_dict() (+ read_with)
+        self.seed: dict[str, dict[str, Any]] = {}   # clé de graine → Paper.to_dict() (+ read_with), jamais réécrite
+        self.read_with: dict[str, dict[str, Any]] = {}  # id → {model, size, local}
         self.queue: "queue.Queue[Path | None]" = queue.Queue()
         self.status: dict[str, Any] = {"total": 0, "done": 0, "running": False, "current": None, "errors": []}
         self.index: ask_mod.Index | None = None
@@ -70,13 +72,13 @@ class Store:
 
     # --- cache ---------------------------------------------------------------
     def load_cache(self) -> None:
-        """Le cache propre, complété par la graine livrée dans data/ (jamais écrasée)."""
-        self.cache = {}
-        for path in (SEED_CACHE, CACHE_FILE):
+        """Le cache d'exécution (runtime/) et la graine livrée (data/cache.json), lue mais jamais écrite."""
+        self.cache, self.seed = {}, {}
+        for path, target in ((CACHE_FILE, self.cache), (SEED_CACHE, self.seed)):
             try:
                 got = json.loads(path.read_text(encoding="utf-8"))
                 if isinstance(got, dict):
-                    self.cache.update(got)
+                    target.update(got)
             except (OSError, ValueError):
                 continue
 
@@ -111,11 +113,12 @@ class Store:
         return f"p{n:03d}"
 
     # --- ajout -----------------------------------------------------------------
-    def add_paper(self, paper: Paper, path: Path, digest: str) -> None:
+    def add_paper(self, paper: Paper, path: Path, digest: str, read_with: dict[str, Any] | None = None) -> None:
         with self.lock:
             self.papers[paper.id] = paper
             self.paths[paper.id] = path
             self.hashes[paper.id] = digest
+            self.read_with[paper.id] = dict(read_with or {})
             if self.index is not None:
                 self.index.add(paper)
 
@@ -141,16 +144,16 @@ class Store:
             known = next((pid for pid, h in self.hashes.items() if h == digest), None)
         if known:
             return  # même fichier déjà lu (doublon)
-        cached = self.cache.get(cache_key(digest)) or self.from_eval_cache(path, digest)
+        cached = self.cache.get(cache_key(digest)) or self.seed.get(seed_key(digest)) or self.from_eval_cache(path, digest)
         if cached:
             paper = Paper.from_dict(cached)
             with self.lock:
                 if paper.id in self.papers:
                     paper.id = self.new_id(path)
-            self.add_paper(paper, path, digest)
+            self.add_paper(paper, path, digest, cached.get("read_with") or read_with_now())
             with self.lock:
                 if cache_key(digest) not in self.cache:
-                    self.cache[cache_key(digest)] = paper.to_dict()
+                    self.cache[cache_key(digest)] = dict(paper.to_dict(), read_with=self.read_with[paper.id])
                     self.save_cache()
             return
         from . import read  # import tardif : pymupdf/zxing seulement quand on lit vraiment
@@ -158,9 +161,9 @@ class Store:
             pid = self.new_id(path)
         paper = read.read_paper(str(path), paper_id=pid, rel_file=path.name)
         paper.file = path.name
-        self.add_paper(paper, path, digest)
+        self.add_paper(paper, path, digest, read_with_now())
         with self.lock:
-            self.cache[cache_key(digest)] = paper.to_dict()
+            self.cache[cache_key(digest)] = dict(paper.to_dict(), read_with=self.read_with[paper.id])
             self.save_cache()
 
     def worker(self) -> None:
@@ -199,20 +202,37 @@ def file_hash(path: Path) -> str:
     return h.hexdigest()
 
 
-def reader_stamp() -> str:
-    """Empreinte du code de lecture (read.py + verify.py) et du nom du modèle : une lecture
-    en cache ne vaut que pour le code et le modèle qui l'ont produite."""
+def reader_hash() -> str:
+    """Empreinte du code de lecture (read.py + verify.py + schema.py) : une lecture en cache ne vaut
+    que pour le code qui l'a produite. Ne dépend PAS du modèle."""
     h = hashlib.sha256()
     for name in ("read.py", "verify.py", "schema.py"):
         try:
             h.update((Path(__file__).parent / name).read_bytes())
         except OSError:
             continue
-    h.update((os.getenv("LLM_NAME") or "").encode())
     return h.hexdigest()[:12]
 
 
+def reader_stamp() -> str:
+    """Empreinte du code de lecture ET du nom du modèle (clé du cache d'exécution)."""
+    h = hashlib.sha256((reader_hash() + "|" + (os.getenv("LLM_NAME") or "")).encode())
+    return h.hexdigest()[:12]
+
+
+def seed_key(digest: str) -> str:
+    """Clé de la graine livrée (data/cache.json) : fichier + code de lecture, quel que soit le modèle."""
+    return f"{digest}:{reader_hash()}"
+
+
+def read_with_now() -> dict[str, Any]:
+    """Avec quoi une lecture faite maintenant est faite : nom du modèle, taille, local ou cloud."""
+    d = report_mod.deployment()
+    return {"model": os.getenv("LLM_NAME") or "", "size": d["size"], "local": d["local"]}
+
+
 def cache_key(digest: str) -> str:
+    """Clé du cache d'exécution : fichier + code de lecture + modèle."""
     return f"{digest}:{reader_stamp()}"
 
 
@@ -257,6 +277,7 @@ def paper_json(p: Paper, *, full: bool = False) -> dict[str, Any]:
     if not full and len(d.get("text", "")) > TEXT_PREVIEW:
         d["text"] = d["text"][:TEXT_PREVIEW] + " …"
     d["file"] = STORE.paths.get(p.id, Path(p.file)).name
+    d["read_with"] = STORE.read_with.get(p.id, {})
     return d
 
 
@@ -471,7 +492,8 @@ input[type=file] { display:none; }
 
 .facts { grid-column:5 / span 8; }
 .facts h2 { font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0 0 4px; }
-.facts .meta { color:var(--grey); font-size:13px; margin-bottom:24px; display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; }
+.facts .meta { color:var(--grey); font-size:13px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; }
+.facts .readwith { color:var(--grey); font-size:12px; margin:0 0 20px; }
 table { border-collapse:collapse; width:100%; font-size:15px; }
 th, td { text-align:left; padding:10px 12px 10px 0; border-bottom:1px solid var(--hair); vertical-align:top; }
 thead th { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); font-weight:400; border-bottom:1px solid var(--rule); }
@@ -689,6 +711,8 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
     el.innerHTML = '<span class="label">' + esc(T('kind.' + p.kind)) + '</span><h2>' + esc(p.id) + '</h2>' +
       '<div class="meta"><span>' + esc(p.file) + '</span><span>' + esc(p.language) + ' · ' + p.pages + ' ' + esc(T('paper.pages')) + '</span>' +
       '<a class="btn" href="/api/paper/' + esc(p.id) + '/file" target="_blank">' + esc(T('paper.open')) + '</a></div>' +
+      (p.read_with && p.read_with.size ? '<p class="readwith">' + esc(T('paper.read_with').replace('{model}',
+        T(p.read_with.local ? 'status.local' : 'status.cloud').replace('{size}', p.read_with.size))) + '</p>' : '') +
       '<table>' + rows + '</table>' +
       '<div class="legend"><span><span class="g verified">✓</span> ' + esc(T('status.verified')) + '</span>' +
       '<span><span class="g model">•</span> ' + esc(T('status.model')) + '</span>' +

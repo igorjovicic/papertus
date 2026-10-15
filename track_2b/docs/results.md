@@ -18,9 +18,9 @@ Champs comptés : montants, dates, IBAN, références, numéros (les clés de `s
 | Ours | fields invented (headline, lower is better) | 0.0 % |
 | Ours | fields blank | 0.0 % |
 | Ours | kind correct | 100.0 % |
-| Ours | questions exact match (50 q, product path: ask.py rules first, model for the rest) | 88.0 % |
+| Ours | questions exact match (50 q, product path: ask.py rules first, model for the rest) | 100.0 % |
 | Ours | questions answered by rules / by model / none | 50 / 0 / 0 |
-| Ours | questions exact match on the Baseline's 20 q | 75.0 % |
+| Ours | questions exact match on the Baseline's 20 q | 100.0 % |
 | Ours | tokens per paper | 1111 |
 | Ours | seconds per paper | 6.4 |
 

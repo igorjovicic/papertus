@@ -31,7 +31,8 @@ test:
 dev:
 	PAPERS_DIR=$${PAPERS_DIR:-./papers} $(PY) -m uvicorn paperasse.web:app --reload --port 8640 --app-dir src
 
-# Livre les lectures déjà faites avec les papiers d'exemple : `make run` les montre alors
-# tout de suite, sans relire les 100 papiers (chaque autre papier est lu normalement).
+# Construit la graine livrée (data/cache.json) : les réponses brutes du modèle gardées par
+# l'évaluation (runtime/cache/ours_raw) rejouées par le verify.py ACTUEL, sans appel au modèle.
+# `make run` montre alors les 100 papiers tout de suite, quel que soit le modèle configuré.
 seed:
-	cp runtime/cache.json data/cache.json
+	$(PY) scripts/seed_from_eval.py --raw runtime/cache/ours_raw --papers data/papers --out data/cache.json
