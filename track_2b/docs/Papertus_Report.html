@@ -1,0 +1,300 @@
+<!doctype html><html><head><meta charset='utf-8'><title>technical_report</title><style>
+@page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+body { font-family: Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.38; color: #111; max-width: 100%; }
+h1 { font-size: 20pt; margin: 0 0 4pt; } h2 { font-size: 13.5pt; margin: 14pt 0 4pt; border-bottom: 1px solid #ccc; padding-bottom: 2pt; }
+h3 { font-size: 11pt; margin: 10pt 0 3pt; } p { margin: 4pt 0 6pt; text-align: justify; }
+ul, ol { margin: 2pt 0 6pt 16pt; padding: 0; } li { margin: 1.5pt 0; }
+table { border-collapse: collapse; margin: 6pt 0 8pt; font-size: 9.5pt; width: 100%; }
+th, td { border: 1px solid #bbb; padding: 2.5pt 5pt; text-align: left; vertical-align: top; } th { background: #f1f1f1; }
+code { font-family: Menlo, monospace; font-size: 9pt; background: #f4f4f4; padding: 0 2pt; }
+img { max-width: 100%; height: auto; margin: 6pt 0; } strong { color: #000; }
+a { color: #111; text-decoration: none; }
+</style></head><body><h1 id="technical-report-papertus">Technical report — Papertus</h1>
+<p>Talk to your own papers, on your own laptop, with a small Swiss model. Built with Apertus 1.5.</p>
+<ul>
+<li><strong>Track:</strong> Track 2B — Papertus</li>
+<li><strong>Event:</strong> Online</li>
+<li><strong>Team:</strong> Papertus — Igor Jovicic</li>
+<li><strong>Demo:</strong> https://github.com/igorjovicic/papertus/blob/main/track_2b/docs/papertus-demo.mp4 (1 min 57 s)</li>
+<li><strong>Repository:</strong> https://github.com/igorjovicic/papertus (<code>track_2b/</code>)</li>
+</ul>
+<h2 id="1-summary">1. Summary</h2>
+<p>Swiss administrative papers carry their own truth: a QR-bill encodes the amount, the IBAN and a reference with a check digit; a bank statement must add up; a letter from the canton names a deadline in a fixed format. Language models read these papers well and still invent figures: a deposit subtracted from a total, an invoice number taken for a payment reference, a closing balance "corrected" to look plausible. Papertus separates the two jobs. Apertus 1.5 reads the words and writes the language; plain code decodes the QR, checks every checksum, redoes every sum and compares every date, so that each figure shown points back to the paper it came from, and a field the code cannot confirm stays <strong>blank with its reason</strong> instead of becoming a guess. On the verified facts, code builds the month's report in French, German, Italian or English with one short paragraph by Apertus whose every number is checked, and answers questions with the paper cited. The point of the design is that it works with a <strong>small model on an ordinary laptop</strong>: the 8B does the reading, the code does the proving, and nothing leaves the machine. On 100 synthetic Swiss papers with ground truth (40 QR-bills, 30 bank statements, 30 official letters, fr/de/it, with planted traps), Apertus 1.5 70B alone invents 4.5 % of the figures; Papertus with the same 70B invents <strong>0.0 %</strong> (100 % correct, nothing left blank). With Apertus 1.5 8B running locally on a laptop (8-bit weights, no internet), the model alone invents 8.9 % of the figures; Papertus with the 8B invents <strong>0.0 %</strong> (99.3 % correct, 0.7 % blank with a reason), at about ten seconds per paper. The small model reads; the code proves. One container, <code>make run</code>, and a status line that tells you which it is: « Apertus 8B · sur cette machine · rien ne sort ».</p>
+<h2 id="2-architecture">2. Architecture</h2>
+<svg style="width:100%;height:auto;max-height:260pt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 420" width="980" height="420" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <rect width="980" height="420" fill="#ffffff"/>
+  <!-- titre -->
+  <text x="20" y="30" font-size="18" font-weight="700" fill="#111">Papertus : des papiers suisses → des faits vérifiés → un rapport → une conversation</text>
+  <text x="20" y="50" fill="#555">Le code fait les chiffres. Apertus fait la langue. Un chiffre non vérifié reste vide.</text>
+
+  <!-- colonne 1 : papiers -->
+  <rect x="20" y="80" width="190" height="300" rx="8" fill="#fafafa" stroke="#bbb"/>
+  <text x="115" y="105" text-anchor="middle" font-weight="700" fill="#111">Papiers (PDF)</text>
+  <text x="115" y="130" text-anchor="middle" fill="#333">Factures QR</text>
+  <text x="115" y="150" text-anchor="middle" fill="#333">Relevés bancaires</text>
+  <text x="115" y="170" text-anchor="middle" fill="#333">Lettres officielles</text>
+  <text x="115" y="200" text-anchor="middle" fill="#777">fr · de · it</text>
+  <text x="115" y="240" text-anchor="middle" fill="#777">dossier ./papers</text>
+  <text x="115" y="260" text-anchor="middle" fill="#777">(ou 100 papiers synthétiques)</text>
+
+  <!-- flèche -->
+  <line x1="210" y1="230" x2="250" y2="230" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 2 : lecture (code) -->
+  <rect x="250" y="80" width="200" height="300" rx="8" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+  <text x="350" y="105" text-anchor="middle" font-weight="700" fill="#111">Lecture (code)</text>
+  <text x="350" y="130" text-anchor="middle" fill="#333">texte PDF (pymupdf)</text>
+  <text x="350" y="150" text-anchor="middle" fill="#333">QR suisse décodé (zxing)</text>
+  <text x="350" y="170" text-anchor="middle" fill="#333">type du papier (règles)</text>
+  <text x="350" y="210" text-anchor="middle" font-weight="700" fill="#d52b1e">Vérification (code)</text>
+  <text x="350" y="232" text-anchor="middle" fill="#333">QR ⇄ texte · IBAN mod 97</text>
+  <text x="350" y="252" text-anchor="middle" fill="#333">référence QRR/SCOR</text>
+  <text x="350" y="272" text-anchor="middle" fill="#333">solde = ouverture + Σ mouvements</text>
+  <text x="350" y="292" text-anchor="middle" fill="#333">dates · montants dans le texte</text>
+  <text x="350" y="330" text-anchor="middle" fill="#777">✓ vérifié · • modèle seul · ␣ vide + raison</text>
+
+  <!-- flèche bidirectionnelle vers Apertus -->
+  <line x1="450" y1="160" x2="500" y2="160" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="500" y1="190" x2="450" y2="190" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 3 : Apertus -->
+  <rect x="500" y="80" width="200" height="140" rx="8" fill="#fff5f4" stroke="#d52b1e" stroke-width="1.5"/>
+  <text x="600" y="105" text-anchor="middle" font-weight="700" fill="#d52b1e">Apertus 1.5</text>
+  <text x="600" y="128" text-anchor="middle" fill="#333">extraction → JSON</text>
+  <text x="600" y="148" text-anchor="middle" fill="#333">prose du rapport</text>
+  <text x="600" y="168" text-anchor="middle" fill="#333">réponse aux questions</text>
+  <text x="600" y="198" text-anchor="middle" fill="#777">70B cloud suisse · 8B local</text>
+
+  <!-- colonne 3 bas : faits -->
+  <rect x="500" y="240" width="200" height="140" rx="8" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+  <text x="600" y="265" text-anchor="middle" font-weight="700" fill="#111">Faits (JSON)</text>
+  <text x="600" y="290" text-anchor="middle" fill="#333">chaque champ : valeur,</text>
+  <text x="600" y="310" text-anchor="middle" fill="#333">statut, source, raison</text>
+  <text x="600" y="340" text-anchor="middle" fill="#777">index SQLite FTS5</text>
+  <line x1="450" y1="310" x2="500" y2="310" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- flèche vers sorties -->
+  <line x1="700" y1="310" x2="750" y2="310" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 4 : sorties -->
+  <rect x="750" y="80" width="210" height="300" rx="8" fill="#fafafa" stroke="#bbb"/>
+  <text x="855" y="105" text-anchor="middle" font-weight="700" fill="#111">Sorties</text>
+  <text x="855" y="135" text-anchor="middle" fill="#333">Rapport du mois</text>
+  <text x="855" y="155" text-anchor="middle" fill="#777">tables par le code,</text>
+  <text x="855" y="173" text-anchor="middle" fill="#777">une phrase par Apertus,</text>
+  <text x="855" y="191" text-anchor="middle" fill="#777">chaque chiffre contrôlé</text>
+  <text x="855" y="225" text-anchor="middle" fill="#333">Questions</text>
+  <text x="855" y="245" text-anchor="middle" fill="#777">réponse citée [p0xx]</text>
+  <text x="855" y="263" text-anchor="middle" fill="#777">chiffres contrôlés</text>
+  <text x="855" y="300" text-anchor="middle" fill="#333">Évaluation</text>
+  <text x="855" y="320" text-anchor="middle" fill="#777">Apertus seul vs Papertus</text>
+  <text x="855" y="338" text-anchor="middle" fill="#777">100 papiers, 50 questions</text>
+
+  <!-- pied -->
+  <text x="20" y="405" fill="#555">Rien ne sort de la machine sauf l'appel au modèle : cloud souverain suisse (Infomaniak) ou serveur local Apertus 8B (hors ligne).</text>
+
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#111"/>
+    </marker>
+  </defs>
+</svg>
+
+<p>Everything runs in one Python 3.12 container (FastAPI, port 8640) on the user's machine. Data flow, left to right:</p>
+<ol>
+<li><strong>Papers</strong> — PDFs in a drop folder (<code>./papers</code>), or the 100 shipped synthetic papers.</li>
+<li><strong>Reading (code)</strong> — text extraction with PyMuPDF; each page rendered at 200 dpi and scanned for a Swiss QR code with zxing-cpp; the Swiss QR payload (SPC/0200) parsed by our own <code>swissqr</code> module; the paper kind decided by rules (a SPC payload → QR-bill; statement vocabulary in fr/de/it → bank statement; else official letter), with a model fallback only when the rules are ambiguous (never needed on the 100 papers).</li>
+<li><strong>Apertus</strong> — one call per paper: the paper's text and the list of keys for its kind, answer as JSON, "unknown = null, never a guess". No tools, no agent loop.</li>
+<li><strong>Verification (code, <code>verify.py</code>)</strong> — the QR payload wins over the model for amount, IBAN, reference and creditor; IBAN mod-97, QRR modulo-10 recursive and SCOR (ISO 11649) check digits; every amount must appear in the text in a Swiss format (<code>1'234.50</code>, <code>1 234.50</code>, <code>1234.—</code>); dates must be valid and the due date after the invoice date; a statement's opening balance plus its movements must equal the printed closing balance to the centime, and the sums of debits and credits must equal the statement's printed totals line (a single sign error on exactly one movement is repaired from those totals; two candidates → refused); an IBAN the model truncated is completed from the text only if the completed form passes mod-97. Each field gets a status: <strong>verified</strong> (with its source: qr, iban, qrr, text, arithmetic, date), <strong>model</strong> (read by Apertus, not provable by code) or <strong>blank</strong> (with the failed check as reason).</li>
+<li><strong>Facts</strong> — JSON per paper, cached by file hash, indexed in SQLite FTS5 (no vector database, no embedding model).</li>
+<li><strong>Outputs</strong> — the month's report (tables computed by code; one ≤ 80-word paragraph by Apertus from the tables as JSON, every sentence passed through <code>numbers_grounded</code>, which drops any sentence carrying a number absent from the tables), and questions (rules first for sums, balances, counts and deadlines; otherwise the facts of the top six papers go to Apertus, which must cite <code>[p0xx]</code>; every number in the answer is checked against the cited facts, and an ungrounded answer is replaced by "I can't find that figure in your papers"; no retrieval hit → no model call).</li>
+</ol>
+<p>The page follows the Swiss International Style (one typeface, a grid, black on white, one red for what is proven) and states in its header which model is answering and where it runs. The evaluation harness (<code>eval.py</code>) runs the same pipeline and a baseline on the shipped papers and writes <code>docs/results.md</code>.</p>
+<h3 id="target-architecture-mandatory">Target architecture (mandatory)</h3>
+<ul>
+<li><strong>b) Air-gapped — the intended deployment.</strong> The container plus an Apertus 1.5 8B server on the same machine or network (vLLM or a GGUF server, both OpenAI-compatible; the numbers in § 5 were measured with the 8-bit weights served locally on a laptop). No other network access exists at runtime: no CDN, no fonts, no telemetry, no package download. The header shows « Apertus 8B · on this machine · nothing leaves » whenever <code>LLM_BASE_URL</code> points at the local machine.</li>
+<li><strong>c) Sovereign Swiss cloud — the alternative.</strong> The same container with <code>LLM_BASE_URL</code> on Apertus 1.5 70B served by Infomaniak (Geneva) through the OpenAI-compatible API. Only the text of the papers reaches that endpoint; the header then says « Apertus 70B · cloud suisse ».</li>
+<li><strong>a) On-premise</strong> follows from (b).</li>
+</ul>
+<p><strong>Dependencies.</strong> Build time: the <code>python:3.12-slim-bookworm</code> image and the pinned packages of <code>requirements.txt</code> (fastapi, uvicorn, httpx, pymupdf, zxing-cpp, segno, reportlab, pillow, python-multipart, pytest). Runtime: only the configured <code>LLM_BASE_URL</code>. No database server, no GPU in the container. The three variables <code>LLM_NAME</code>, <code>LLM_BASE_URL</code>, <code>LLM_API_KEY</code> come from <code>.env</code> or from the shell.</p>
+<h2 id="3-use-of-apertus">3. Use of Apertus</h2>
+<ul>
+<li><strong>Models:</strong> <code>swiss-ai/Apertus-v1.5-8B</code> (the laptop configuration, 8-bit weights, served locally) and <code>swiss-ai/Apertus-v1.5-70B</code> (development and the cloud configuration).</li>
+<li><strong>How it is used:</strong> inference only, three narrow jobs: (1) structured extraction of a paper's facts to JSON, (2) one paragraph of report prose from tables, (3) a cited answer to a question from the facts of at most six papers. No fine-tuning, no agent loop, no tools.</li>
+<li><strong>Where it runs:</strong> the 8B on the user's machine behind an OpenAI-compatible server; the 70B on a Swiss sovereign cloud (Infomaniak).</li>
+<li><strong>Prompts:</strong> short English system prompts with the paper text verbatim (<code>src/*/read.py</code>, <code>report.py</code>, <code>ask.py</code>). Temperature 0. JSON is requested in the prompt; <code>response_format</code> and <code>chat_template_kwargs: {enable_thinking: false}</code> are each tried once and dropped when a server rejects them (the hosted endpoint rejects the first; the local server needs the second or Apertus 1.5 answers with a reasoning block, which the client also strips). Truncated JSON is repaired by code (closing open strings and brackets) before parsing. One retry chain with back-off on 429/5xx/timeouts.</li>
+<li><strong>No other model</strong> is used anywhere, not even as a judge: all scoring is exact comparison with the ground truth by code. A test (<code>tests/test_guard.py</code>) fails if any other model family is named in the repository.</li>
+</ul>
+<h2 id="4-data">4. Data</h2>
+<ul>
+<li><strong>Papers:</strong> 100 synthetic PDFs generated by <code>src/*/generate.py</code> (<code>make data</code>, seed 42, byte-reproducible): 40 QR-bills (32 with a real Swiss QR code, 27 QRR on QR-IBANs, 3 SCOR, 2 without reference; 8 without QR), 30 bank statements (5 deliberately unbalanced), 30 official letters (tax decisions, payment summonses from an Office des poursuites, health-insurance premium notices, commune notices, permit decisions). Languages: 40 fr, 40 de, 20 it. Dates August–October 2026. Each paper carries <strong>planted traps</strong> recorded in its truth file: a second amount in the text (deposit already paid, net vs. gross), a footer date that is not the invoice date, a creditor name in the text that drifts from the QR, Swiss number formats, letters without any amount, bills without QR. 1.5 MB in total, including a shipped cache of the 100 readings so that <code>make run</code> shows the papers at once without a model call.</li>
+<li><strong>Ground truth:</strong> one JSON per paper (<code>data/truth/</code>), plain values; <code>balanced: false</code> on the five unbalanced statements, where the correct answer for the closing balance is a blank.</li>
+<li><strong>Questions:</strong> <code>data/questions.json</code>, 50 questions in fr/de/it built from the truth (amounts owed, balances at a date, bills due by a date, counts and totals per month, deadlines of an authority), each with its expected value and the ids of the papers that answer it.</li>
+<li><strong>Source and licence:</strong> everything is generated; every person, company, address, IBAN and reference is fictitious (IBANs and references have valid check digits so the checks are real, but no account exists). No personal data, no real document, no human subjects. Data: CDLA-Permissive-2.0. Code: Apache-2.0. Documentation: CC-BY-4.0.</li>
+<li><strong>What is not in the repository:</strong> the author's own papers, which were never used; the runtime cache; any key.</li>
+</ul>
+<h2 id="5-evaluation">5. Evaluation</h2>
+<p><strong>Task.</strong> For each paper, extract the fields of its kind (amount, IBAN, reference, dates, balances, movements, deadline…) and compare with the truth: floats within 0.01, dates exact, identifiers without spaces and case. A field is <strong>correct</strong>, <strong>invented</strong> (a non-null value that differs from the truth) or <strong>blank</strong> (null, or blank with a reason). The headline metric is the invented rate: an invented figure on an administrative paper is the costly failure; a blank is a visible one. For the five unbalanced statements, the correct closing balance is a blank. For questions, exact match of the number, date, count or list with the truth; a "not found" answer counts as correct only when the truth itself expects a blank.</p>
+<p><strong>Baseline.</strong> The same Apertus model, same temperature, given the raw text of the paper and the same keys, with no QR decoding and no checks; whatever it answers is taken as is. For questions, two baselines: the raw text of all papers in one prompt (capped at 28 000 characters, so most papers are absent) and, fairer, the raw text of the same papers our retrieval selects, with no citation requirement and no checks.</p>
+<p><strong>Results with Apertus 1.5 70B</strong> (100 papers, Infomaniak endpoint, 4 parallel workers; full tables in <code>docs/results.md</code>, raw numbers in <code>docs/results.json</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Setup</th>
+<th>Metric</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td>fields correct</td>
+<td>88.9 %</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td><strong>fields invented</strong></td>
+<td><strong>4.5 %</strong></td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>fields blank</td>
+<td>6.5 %</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>paper kind correct</td>
+<td>91.0 %</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>statement movement lists correct</td>
+<td>2 / 30</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>questions exact, all texts in one prompt, capped at 28 000 chars (20 q)</td>
+<td>30.0 %</td>
+</tr>
+<tr>
+<td>Baseline + retrieval</td>
+<td>questions exact, same papers as ours as raw text, free-form (20 q)</td>
+<td>95.0 %</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>fields correct</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td><strong>fields invented</strong></td>
+<td><strong>0.0 %</strong></td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>fields blank (with reason)</td>
+<td>0.0 %</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>paper kind correct (rules, no model call)</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>statement movement lists correct</td>
+<td>30 / 30</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>questions exact (50 q, product path: all 50 answered by rules, 0 model calls)</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td>Ours</td>
+<td>questions exact on the baseline's 20 q</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td>Baseline / Ours</td>
+<td>tokens per paper</td>
+<td>1 456 / 1 111</td>
+</tr>
+<tr>
+<td>Baseline / Ours</td>
+<td>seconds per paper</td>
+<td>6.1 / 6.4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Results with Apertus 1.5 8B on a laptop</strong> (same 100 papers and questions, 8-bit weights served locally, one request at a time; <code>docs/results-8b.md</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Setup</th>
+<th>Metric</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline 8B</td>
+<td>fields correct / invented / blank</td>
+<td>89.6 % / <strong>8.9 %</strong> / 1.5 %</td>
+</tr>
+<tr>
+<td>Ours 8B</td>
+<td>fields correct / invented / blank</td>
+<td>99.3 % / <strong>0.0 %</strong> / 0.7 %</td>
+</tr>
+<tr>
+<td>Baseline 8B / Ours 8B</td>
+<td>statement movement lists correct</td>
+<td>5 / 30 → 24 / 30 (the other 6 blank with their reason)</td>
+</tr>
+<tr>
+<td>Baseline 8B (all texts) / + retrieval / Ours 8B (product path)</td>
+<td>questions exact</td>
+<td>25 % / 100 % / 100 %</td>
+</tr>
+<tr>
+<td>Baseline 8B / Ours 8B</td>
+<td>seconds per paper on the laptop (one request at a time)</td>
+<td>9.1 / 10.6</td>
+</tr>
+</tbody>
+</table>
+<p>Per kind with the 70B (correct / invented / blank): QR-bills baseline 93.2 / 6.8 / 0 → ours 100 / 0 / 0; bank statements 96.0 / 4.0 / 0 → 100 / 0 / 0; official letters 70.0 / 0 / 30.0 → 100 / 0 / 0.</p>
+<p>What the baseline invents: a closing balance on five statements (it "corrects" the printed figure or copies the opening one), a reference and reference type on the ten bills without QR (it promotes the invoice number), one IBAN; its movement lists include the balance rows on 28 of 30 statements. What our checks catch: the QR overrides fourteen drifted creditor names and every amount; the arithmetic rule blanks the five unbalanced statements with the explicit reason ("opening 10'419.90 + movements = 1'988.80, statement says 2'051.40"); the totals line catches movement sign errors and repairs the unique ones; the letters without an amount stay blank. With the 70B nothing is left blank: the one statement where the model lost two signs is solved by the sign solver, because exactly one sign assignment reproduces the printed debit and credit totals. With the 8B, which returns several statements with all amounts positive or one amount misread, six statements keep their movements and closing balance blank with the reason printed ("movement_totals: debits 3352.10 / credits 6180.10, printed 3374.20 / 6158.00"): honest blanks, nothing invented. The per-field table of the 8B shows where a small model differs from a large one before the checks: it invents the reference type on 34 of 40 bills and the movement lists on 25 of 30 statements; after the checks, 0 and 0.</p>
+<p>Questions, read honestly: the 50 questions are templated from the truth (amounts owed, balances, due lists, counts, deadlines), and the rule answers were built for those types, so 100 % measures retrieval and grounding over 100 papers, not open question answering. The fair comparison is the "Baseline + retrieval" row: with the right papers in hand, Apertus alone answers 95 % (its one miss picked a neighbouring statement's balance); Papertus adds the last 5 %, the citation, and the guarantee that an answer never carries a number absent from a verified fact. The decisive gaps are extraction (invented 4.5 % → 0 %, movement lists 2/30 → 29/30) and retrieval (30 % → 100 % when the papers are not handed over). The same holds with the 8B: all 50 questions are answered by the rules on the verified facts, with no model call at all, so the question score does not depend on the model's size; the model's size shows only in how many facts the checks could verify (0.7 % blank with the 8B against 0 % with the 70B).</p>
+<h2 id="6-limitations">6. Limitations</h2>
+<ul>
+<li><strong>Synthetic papers.</strong> The traps are the ones we know from real Swiss papers, but layouts are ours and the text is born digital. Scanned papers need an OCR step in front (the checks apply unchanged to OCR text, and the QR decoder already works on rendered images).</li>
+<li><strong>Text extraction loses columns.</strong> Debit/credit columns come out as one amount per line; the model infers the sign from the label and gets it wrong about once in fifteen movements with the 70B. The totals-line check catches it; the repair is only attempted when exactly one movement can explain the difference.</li>
+<li><strong>Three kinds of paper.</strong> Payslips, insurance policies, contracts and e-mails are not modelled; an unknown paper is treated as an official letter and most of its fields will be blank or model-only.</li>
+<li><strong>One page per paper</strong> in the test set; multi-page statements are read page by page but were not measured.</li>
+<li><strong>Question coverage.</strong> The rule answers cover sums, balances, counts and deadlines; open questions go to the model with six papers of context and are only as good as retrieval over FTS5 (no synonyms across languages beyond our stopword lists and date spellings).</li>
+<li><strong>The laptop run</strong> used one machine (Apple silicon, 8-bit MLX weights); other serving stacks and quantisations were not measured and will move the numbers.</li>
+<li><strong>No security review</strong> of the upload path beyond PDF-only, size and hash de-duplication; the app is meant for one person's machine, bound to localhost.</li>
+</ul>
+<h2 id="7-reproducibility">7. Reproducibility</h2>
+<ul>
+<li><strong>Commit:</strong> <code>1fc67ad</code> (code and data; later commits add only the demo video and this PDF) on https://github.com/igorjovicic/papertus, <code>track_2b/</code>.</li>
+<li><strong>Runtime:</strong> Docker, <code>python:3.12-slim-bookworm</code>, no GPU. <code>make run</code> builds and starts the app on http://localhost:8640 with the 100 papers pre-read from the shipped cache (<code>data/cache.json</code>), so the first screen needs no model call; drop a new PDF to see a live read. The cache is keyed by the reader's source and the model name, so a different model or an edited check simply reads live.</li>
+<li><strong>Numbers:</strong> <code>make data</code> regenerates the 100 papers byte-for-byte (seed 42); <code>make eval</code> reruns baseline and ours on the configured endpoint and rewrites <code>docs/results.md</code> (≈ 580 k tokens for both methods on 100 papers and 70 questions, ≈ 11 minutes at 4 workers on the hosted 70B; <code>make eval TAG=8b</code> for a local server: about one hour on the laptop for both methods on 100 papers and 90 questions, one request at a time). The evaluation caches raw model answers in <code>runtime/</code>, so the checks can be changed and replayed at zero token cost.</li>
+<li><strong>Tests:</strong> <code>make test</code> runs 83 unit tests (checks, QR payloads, IBAN/QRR/SCOR vectors, report tables, rule answers, the no-call path, the web routes) plus the forbidden-names guard; four live tests run when <code>LLM_API_KEY</code> is set.</li>
+<li><strong>Endpoints used for the reported numbers:</strong> Infomaniak AI tools, <code>swiss-ai/Apertus-v1.5-70B</code>, temperature 0, 14–15 October 2026; a local OpenAI-compatible server with the 8-bit MLX conversion of <code>swiss-ai/Apertus-v1.5-8B</code> on an Apple-silicon laptop, 15 October 2026, <code>chat_template_kwargs: {enable_thinking: false}</code>.</li>
+<li><strong>Tooling disclosure:</strong> the code was written during the hackathon period with an AI coding assistant from Anthropic under the author's direction; the design, the checks, the tests and every reported number were run and verified by the author.</li>
+</ul>
+<h2 id="8-next-steps">8. Next steps</h2>
+<p>With another month: an OCR front door for photographed and scanned papers (the checks already work on any text); payslips, insurance policies and tax statements (eCH-0196) as new kinds with their own arithmetic; a Swiss open-data layer so the report can say what a deadline means (LPC, LAMal premiums by canton, tax calendars); a one-click installer that ships the 8B weights with the container for a 16 GB laptop; a year view (what came in, what went out, what is still open) that a fiduciary can hand to a client; and a public evaluation dataset on Hugging Face so that other Apertus projects can be measured on the same Swiss papers.</p>
+<h2 id="license">License</h2>
+<p>Creative Commons Attribution 4.0 (CC-BY-4.0) for this report and the documentation. Code Apache-2.0, data CDLA-Permissive-2.0. All HackApertus projects are open-sourced.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Swiss Payment Standards, <em>Swiss Implementation Guidelines QR-bill</em>, SIX, version 2.3 (QR payload, QRR and SCOR references).</li>
+<li>ISO 7064 MOD 97-10 (IBAN and SCOR check digits); ISO 11649 (creditor reference).</li>
+<li>Swiss AI Initiative, <em>Apertus v1.5</em> model cards, huggingface.co/swiss-ai, 2026.</li>
+<li>PyMuPDF, zxing-cpp, segno, reportlab, FastAPI (see <code>requirements.txt</code> for versions and licences).</li>
+</ul></body></html>
