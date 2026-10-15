@@ -12,6 +12,8 @@ sovereign cloud; the code is the same.
 
 ![Architecture](docs/architecture.svg)
 
+Technical report: [`technical_report.md`](technical_report.md) — as PDF in [English](docs/Papertus_Report.pdf), [français](docs/Papertus_Report.fr.pdf), [Deutsch](docs/Papertus_Report.de.pdf) and [italiano](docs/Papertus_Report.it.pdf) (same content, one language each). Demo video: [`docs/papertus-demo.mp4`](docs/papertus-demo.mp4) (1 min 57 s).
+
 | The facts of a bank statement | The September report | At 375 px |
 |---|---|---|
 | ![Facts](docs/screenshot-facts.png) | ![Report](docs/screenshot-rapport.png) | ![Mobile](docs/screenshot-mobile.png) |

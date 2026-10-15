@@ -6,6 +6,6 @@ Drop a folder of Swiss papers (QR-bills, bank statements, official letters, in F
 
 On 100 synthetic Swiss papers, Apertus 1.5 70B alone invents 4.5 % of the figures. Papertus: 0.0 %.
 
-The project lives in [`track_2b/`](track_2b/) (the hackathon's template layout): [README](track_2b/README.md) for the quick start (`make run`), [technical report](track_2b/technical_report.md) for the architecture and the numbers, [results](track_2b/docs/results.md) for the full tables.
+The project lives in [`track_2b/`](track_2b/) (the hackathon's template layout): [README](track_2b/README.md) for the quick start (`make run`), [technical report](track_2b/technical_report.md) for the architecture and the numbers (PDF in [English](track_2b/docs/Papertus_Report.pdf), [français](track_2b/docs/Papertus_Report.fr.pdf), [Deutsch](track_2b/docs/Papertus_Report.de.pdf), [italiano](track_2b/docs/Papertus_Report.it.pdf), one language each), [results](track_2b/docs/results.md) for the full tables.
 
 Licences: code Apache-2.0, documentation CC-BY-4.0, data CDLA-Permissive-2.0.

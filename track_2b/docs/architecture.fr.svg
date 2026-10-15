@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 420" width="980" height="420" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <rect width="980" height="420" fill="#ffffff"/>
+  <!-- titre -->
+  <text x="20" y="30" font-size="18" font-weight="700" fill="#111">Papertus : des papiers suisses → des faits vérifiés → un rapport → une conversation</text>
+  <text x="20" y="50" fill="#555">Le code fait les chiffres. Apertus fait la langue. Un chiffre non vérifié reste vide.</text>
+
+  <!-- colonne 1 : papiers -->
+  <rect x="20" y="80" width="190" height="300" rx="8" fill="#fafafa" stroke="#bbb"/>
+  <text x="115" y="105" text-anchor="middle" font-weight="700" fill="#111">Papiers (PDF)</text>
+  <text x="115" y="130" text-anchor="middle" fill="#333">Factures QR</text>
+  <text x="115" y="150" text-anchor="middle" fill="#333">Relevés bancaires</text>
+  <text x="115" y="170" text-anchor="middle" fill="#333">Lettres officielles</text>
+  <text x="115" y="200" text-anchor="middle" fill="#777">fr · de · it</text>
+  <text x="115" y="240" text-anchor="middle" fill="#777">dossier ./papers</text>
+  <text x="115" y="260" text-anchor="middle" fill="#777">(ou 100 papiers synthétiques)</text>
+
+  <!-- flèche -->
+  <line x1="210" y1="230" x2="250" y2="230" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 2 : lecture (code) -->
+  <rect x="250" y="80" width="200" height="300" rx="8" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+  <text x="350" y="105" text-anchor="middle" font-weight="700" fill="#111">Lecture (code)</text>
+  <text x="350" y="130" text-anchor="middle" fill="#333">texte PDF (pymupdf)</text>
+  <text x="350" y="150" text-anchor="middle" fill="#333">QR suisse décodé (zxing)</text>
+  <text x="350" y="170" text-anchor="middle" fill="#333">type du papier (règles)</text>
+  <text x="350" y="210" text-anchor="middle" font-weight="700" fill="#d52b1e">Vérification (code)</text>
+  <text x="350" y="232" text-anchor="middle" fill="#333">QR ⇄ texte · IBAN mod 97</text>
+  <text x="350" y="252" text-anchor="middle" fill="#333">référence QRR/SCOR</text>
+  <text x="350" y="272" text-anchor="middle" fill="#333" font-size="12">solde = ouverture + Σ mouvements</text>
+  <text x="350" y="292" text-anchor="middle" fill="#333">dates · montants dans le texte</text>
+  <text x="350" y="330" text-anchor="middle" fill="#777" font-size="12">✓ vérifié · • modèle seul · ␣ vide + raison</text>
+
+  <!-- flèche bidirectionnelle vers Apertus -->
+  <line x1="450" y1="160" x2="500" y2="160" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="500" y1="190" x2="450" y2="190" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 3 : Apertus -->
+  <rect x="500" y="80" width="200" height="140" rx="8" fill="#fff5f4" stroke="#d52b1e" stroke-width="1.5"/>
+  <text x="600" y="105" text-anchor="middle" font-weight="700" fill="#d52b1e">Apertus 1.5</text>
+  <text x="600" y="128" text-anchor="middle" fill="#333">extraction → JSON</text>
+  <text x="600" y="148" text-anchor="middle" fill="#333">prose du rapport</text>
+  <text x="600" y="168" text-anchor="middle" fill="#333">réponse aux questions</text>
+  <text x="600" y="198" text-anchor="middle" fill="#777">70B cloud suisse · 8B local</text>
+
+  <!-- colonne 3 bas : faits -->
+  <rect x="500" y="240" width="200" height="140" rx="8" fill="#ffffff" stroke="#111" stroke-width="1.5"/>
+  <text x="600" y="265" text-anchor="middle" font-weight="700" fill="#111">Faits (JSON)</text>
+  <text x="600" y="290" text-anchor="middle" fill="#333">chaque champ : valeur,</text>
+  <text x="600" y="310" text-anchor="middle" fill="#333">statut, source, raison</text>
+  <text x="600" y="340" text-anchor="middle" fill="#777">index SQLite FTS5</text>
+  <line x1="450" y1="310" x2="500" y2="310" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- flèche vers sorties -->
+  <line x1="700" y1="310" x2="750" y2="310" stroke="#111" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- colonne 4 : sorties -->
+  <rect x="750" y="80" width="210" height="300" rx="8" fill="#fafafa" stroke="#bbb"/>
+  <text x="855" y="105" text-anchor="middle" font-weight="700" fill="#111">Sorties</text>
+  <text x="855" y="135" text-anchor="middle" fill="#333">Rapport du mois</text>
+  <text x="855" y="155" text-anchor="middle" fill="#777">tables par le code,</text>
+  <text x="855" y="173" text-anchor="middle" fill="#777">une phrase par Apertus,</text>
+  <text x="855" y="191" text-anchor="middle" fill="#777">chaque chiffre contrôlé</text>
+  <text x="855" y="225" text-anchor="middle" fill="#333">Questions</text>
+  <text x="855" y="245" text-anchor="middle" fill="#777">réponse citée [p0xx]</text>
+  <text x="855" y="263" text-anchor="middle" fill="#777">chiffres contrôlés</text>
+  <text x="855" y="300" text-anchor="middle" fill="#333">Évaluation</text>
+  <text x="855" y="320" text-anchor="middle" fill="#777">Apertus seul vs Papertus</text>
+  <text x="855" y="338" text-anchor="middle" fill="#777">100 papiers, 50 questions</text>
+
+  <!-- pied -->
+  <text x="20" y="405" fill="#555">Rien ne sort de la machine sauf l'appel au modèle : cloud souverain suisse (Infomaniak) ou serveur local Apertus 8B (hors ligne).</text>
+
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#111"/>
+    </marker>
+  </defs>
+</svg>
