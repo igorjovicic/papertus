@@ -150,6 +150,25 @@ def ibans_in_text(text: str) -> list[str]:
     return out
 
 
+_QRR_IN_TEXT = re.compile(r"(?<!\d)\d{2}(?:\s?\d{5}){5}(?!\d)|(?<!\d)\d{27}(?!\d)")
+_SCOR_IN_TEXT = re.compile(r"\bRF\d{2}(?:\s?[A-Z0-9]{1,5}){1,6}\b")
+
+
+def references_in_text(text: str) -> tuple[list[str], list[str]]:
+    """Les références imprimées dont le chiffre de contrôle passe : (QRR 27 chiffres, SCOR RF…)."""
+    qrr = []
+    for m in _QRR_IN_TEXT.finditer(text):
+        c = re.sub(r"\s+", "", m.group(0))
+        if qrr_valid(c) and c not in qrr:
+            qrr.append(c)
+    scor = []
+    for m in _SCOR_IN_TEXT.finditer(text):
+        c = re.sub(r"\s+", "", m.group(0)).upper()
+        if scor_valid(c) and c not in scor:
+            scor.append(c)
+    return qrr, scor
+
+
 def iban_field_from_model_or_text(raw: Any, text: str) -> Field:
     """L'IBAN du modèle s'il passe le contrôle ; sinon celui imprimé dans le texte qui le prolonge
     (le modèle oublie souvent le dernier chiffre isolé : CH37 0873 … 6676 2)."""
@@ -419,26 +438,24 @@ def _verify_qr_bill(raw: dict[str, Any], text: str, amounts: set[float], text_da
         # Facture sans QR : seul le texte et les checksums peuvent confirmer.
         f["amount_chf"] = _amount_field(raw.get("amount_chf"), amounts, must_be_in_text=False)
         f["iban"] = iban_field_from_model_or_text(raw.get("iban"), text)
+        # Le type de référence est décidé par le code, jamais par le modèle : une référence QRR
+        # ou SCOR imprimée dont le chiffre de contrôle passe, sinon NON.
         rt = _str(raw.get("reference_type"))
         rt = rt.upper() if rt else None
-        ref = re.sub(r"\s+", "", str(raw.get("reference") or "")) or None
-        if ref is None:
-            f["reference"] = Field(None, "blank", reason="not given")
-            if rt is None:
-                f["reference_type"] = Field(None, "blank", reason="not given")
-            elif rt == "NON":
-                f["reference_type"] = Field("NON", "model")
-            else:
-                f["reference_type"] = Field(None, "blank", reason=f"{rt} without a reference")
-        elif qrr_valid(ref):
-            f["reference"] = Field(ref, "verified", source="checksum")
-            f["reference_type"] = Field("QRR", "verified", source="checksum")
-        elif scor_valid(ref):
-            f["reference"] = Field(ref.upper(), "verified", source="checksum")
-            f["reference_type"] = Field("SCOR", "verified", source="checksum")
+        model_ref = re.sub(r"\s+", "", str(raw.get("reference") or "")) or None
+        qrr_printed, scor_printed = references_in_text(text)
+        if qrr_printed:
+            f["reference"] = Field(qrr_printed[0], "verified", source="text",
+                                   reason=None if model_ref in (None, qrr_printed[0]) else f"model said {model_ref}")
+            f["reference_type"] = Field("QRR", "verified", source="text", reason=None if rt in (None, "QRR") else f"model said {rt}")
+        elif scor_printed:
+            f["reference"] = Field(scor_printed[0], "verified", source="text",
+                                   reason=None if model_ref in (None, scor_printed[0].upper()) else f"model said {model_ref}")
+            f["reference_type"] = Field("SCOR", "verified", source="text", reason=None if rt in (None, "SCOR") else f"model said {rt}")
         else:
-            f["reference"] = Field(None, "blank", reason=f"reference checksum failed for {ref}")
-            f["reference_type"] = Field(rt, "model") if rt else Field(None, "blank", reason="not given")
+            f["reference_type"] = Field("NON", "verified", source="rule", reason="no QR and no valid reference printed"
+                                        + ("" if rt in (None, "NON") else f"; model said {rt}"))
+            f["reference"] = Field(None, "blank", reason="no reference on a NON bill" + (f" (model said {model_ref})" if model_ref else ""))
         cur = _str(raw.get("currency"))
         f["currency"] = Field(cur.upper(), "model") if cur else Field(None, "blank", reason="not given")
 
@@ -463,6 +480,75 @@ def _id_field(raw: Any, text: str) -> Field:
     if compact and compact in re.sub(r"\s+", "", text).lower():
         return Field(s, "verified", source="text")
     return Field(s, "model", reason="id not found in text")
+
+
+def unique_sign_assignment(amounts: list[float], debit_total: float) -> list[bool] | None:
+    """Quel sous-ensemble des montants (en valeur absolue) fait exactement le total des débits ?
+
+    Retourne [est_débit…] si UNE seule répartition existe, None sinon (aucune ou plusieurs :
+    le code refuse de choisir). Énumération avec élagage ; n ≤ 22 pour rester instantané.
+    """
+    n = len(amounts)
+    if n == 0 or n > 22:
+        return None
+    cents = [int(round(abs(a) * 100)) for a in amounts]
+    target = int(round(debit_total * 100))
+    order = sorted(range(n), key=lambda i: -cents[i])
+    suffix = [0] * (n + 1)
+    for k in range(n - 1, -1, -1):
+        suffix[k] = suffix[k + 1] + cents[order[k]]
+    solutions: list[list[bool]] = []
+    chosen = [False] * n
+
+    def walk(k: int, remaining: int) -> None:
+        if len(solutions) > 1:
+            return
+        if remaining == 0:
+            solutions.append(list(chosen))
+            if k < n and suffix[k] == 0:
+                solutions.append(list(chosen))  # des montants nuls rendraient la solution ambiguë
+            return
+        if k == n or remaining < 0 or suffix[k] < remaining:
+            return
+        i = order[k]
+        chosen[i] = True
+        walk(k + 1, remaining - cents[i])
+        chosen[i] = False
+        walk(k + 1, remaining)
+
+    walk(0, target)
+    return solutions[0] if len(solutions) == 1 else None
+
+
+_LINE_DATE = re.compile(r"^\s*(\d{1,2})[./](\d{1,2})[./](\d{4})\b")
+
+
+def align_movement_dates(movements: list[dict[str, Any]], text: str) -> int:
+    """Relit la date de chaque mouvement sur le papier : la ligne de date la plus proche
+    au-dessus du libellé (ou du montant). Corrige en place ; retourne le nombre de corrections."""
+    lines = text.splitlines()
+    low = [ln.strip().lower() for ln in lines]
+    fixed = 0
+    for mv in movements:
+        label = re.sub(r"\s+", " ", str(mv.get("label") or "")).strip().lower()
+        if len(label) < 4:
+            continue
+        hits = [i for i, ln in enumerate(low) if label in ln]
+        if len(hits) != 1:
+            continue
+        for j in range(hits[0], max(-1, hits[0] - 4), -1):
+            m = _LINE_DATE.match(lines[j])
+            if m:
+                d, mo, y = map(int, m.groups())
+                try:
+                    printed = date(y, mo, d).isoformat()
+                except ValueError:
+                    break
+                if mv.get("date") != printed:
+                    mv["date"] = printed
+                    fixed += 1
+                break
+    return fixed
 
 
 def _verify_bank_statement(raw: dict[str, Any], text: str, amounts: set[float], text_dates: set[date]) -> dict[str, Field]:
@@ -500,20 +586,25 @@ def _verify_bank_statement(raw: dict[str, Any], text: str, amounts: set[float], 
             kept.append({"date": d.isoformat() if d else None, "label": _str(mv.get("label")), "amount": round(amt, 2)})
     totals = printed_totals(text)
     repaired: str | None = None
+    dated = align_movement_dates(kept, text)
     if kept and totals:
         # Σ débits et Σ crédits des mouvements contre la ligne des totaux imprimée.
         debits = round(-sum(m["amount"] for m in kept if m["amount"] < 0), 2)
         credits = round(sum(m["amount"] for m in kept if m["amount"] > 0), 2)
-        d_gap, c_gap = round(totals[0] - debits, 2), round(totals[1] - credits, 2)
-        if abs(d_gap) >= 0.01 and abs(d_gap + c_gap) < 0.01:
-            # Les deux totaux s'écartent du même montant en sens opposé : UN mouvement a le mauvais
-            # signe (la colonne débit / crédit se perd à l'extraction). S'il n'y a qu'un seul
-            # mouvement de ce montant dans le sens fautif, le code le retourne ; sinon on refuse.
-            wrong_sign = 1 if d_gap > 0 else -1  # il manque du débit → un crédit (positif) est en cause
-            cands = [i for i, m in enumerate(kept) if abs(abs(m["amount"]) - abs(d_gap)) < 0.005 and (m["amount"] > 0) == (wrong_sign > 0)]
-            if len(cands) == 1:
-                kept[cands[0]]["amount"] = -kept[cands[0]]["amount"]
-                repaired = f"sign of {kept[cands[0]]['label']!r} ({abs(d_gap):.2f}) corrected from printed totals"
+        if (abs(debits - totals[0]) >= 0.01 or abs(credits - totals[1]) >= 0.01) \
+                and abs(round(sum(abs(m["amount"]) for m in kept), 2) - round(totals[0] + totals[1], 2)) < 0.01:
+            # Les montants sont tous là mais des signes manquent (la colonne débit / crédit se perd à
+            # l'extraction). S'il n'existe qu'UNE répartition des signes qui fait les deux totaux, le
+            # code l'applique ; sinon il refuse.
+            signs = unique_sign_assignment([m["amount"] for m in kept], totals[0])
+            if signs is not None:
+                changed = 0
+                for m, is_debit in zip(kept, signs):
+                    want = -abs(m["amount"]) if is_debit else abs(m["amount"])
+                    if m["amount"] != want:
+                        m["amount"] = want
+                        changed += 1
+                repaired = f"sign of {changed} movement(s) set from printed totals"
                 debits = round(-sum(m["amount"] for m in kept if m["amount"] < 0), 2)
                 credits = round(sum(m["amount"] for m in kept if m["amount"] > 0), 2)
         if abs(debits - totals[0]) >= 0.01 or abs(credits - totals[1]) >= 0.01:
@@ -521,7 +612,8 @@ def _verify_bank_statement(raw: dict[str, Any], text: str, amounts: set[float], 
                                    reason=f"movement_totals: debits {debits:.2f} / credits {credits:.2f}, "
                                           f"statement prints {totals[0]:.2f} / {totals[1]:.2f}")
         else:
-            notes = [n for n in (repaired, f"{dropped} movement(s) dropped: amount not in text" if dropped else None) if n]
+            notes = [n for n in (repaired, f"date of {dated} movement(s) read from the paper" if dated else None,
+                                 f"{dropped} movement(s) dropped: amount not in text" if dropped else None) if n]
             f["movements"] = Field(kept, "verified", source="arithmetic", reason="; ".join(notes) or None)
     elif kept:
         f["movements"] = Field(kept, "verified", source="text",

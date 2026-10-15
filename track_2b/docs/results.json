@@ -1,6 +1,6 @@
 {
  "model": "swiss-ai/Apertus-v1.5-70B",
- "date": "2026-10-14",
+ "date": "2026-10-15",
  "summary": {
   "baseline": {
    "method": "baseline",
@@ -16,6 +16,11 @@
    "questions": 20,
    "questions_match_pct": 30.0,
    "questions_tokens_total": 289252,
+   "questions_by": {
+    "code": 0,
+    "model": 20,
+    "none": 0
+   },
    "per_kind": {
     "bank_statement": {
      "correct": 144,
@@ -137,32 +142,37 @@
    },
    "questions_retrieval": 20,
    "questions_retrieval_match_pct": 95.0,
-   "questions_retrieval_tokens_total": 85886
+   "questions_retrieval_tokens_total": 59017
   },
   "ours": {
    "method": "ours",
    "papers": 100,
    "fields": 550,
-   "correct_pct": 99.8,
+   "correct_pct": 100.0,
    "invented_pct": 0.0,
-   "blank_pct": 0.2,
+   "blank_pct": 0.0,
    "kind_correct_pct": 100.0,
    "tokens_total": 111145,
    "tokens_per_paper": 1111.0,
    "seconds_per_paper": 6.4,
    "questions": 50,
-   "questions_match_pct": 100.0,
-   "questions_tokens_total": 78975,
+   "questions_match_pct": 88.0,
+   "questions_tokens_total": 0,
+   "questions_by": {
+    "code": 50,
+    "model": 0,
+    "none": 0
+   },
    "per_kind": {
     "bank_statement": {
-     "correct": 149,
+     "correct": 150,
      "invented": 0,
-     "blank": 1,
+     "blank": 0,
      "papers": 30,
      "kind_ok": 30,
-     "correct_pct": 99.3,
+     "correct_pct": 100.0,
      "invented_pct": 0.0,
-     "blank_pct": 0.7
+     "blank_pct": 0.0
     },
     "official_letter": {
      "correct": 120,
@@ -192,9 +202,9 @@
      "blank": 0
     },
     "bank_statement.closing_balance": {
-     "correct": 29,
+     "correct": 30,
      "invented": 0,
-     "blank": 1
+     "blank": 0
     },
     "bank_statement.movements": {
      "correct": 29,
@@ -273,7 +283,7 @@
     }
    },
    "questions_same_as_baseline": 20,
-   "questions_same_as_baseline_match_pct": 100.0
+   "questions_same_as_baseline_match_pct": 75.0
   }
  },
  "details": {
@@ -3389,24 +3399,18 @@
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
      "truth": 5516.78,
      "type": "amount",
-     "answer": "CHF 5'516.78",
+     "answer": "Fr. 5516.78",
      "match": true,
      "papers_seen": [
-      "p043",
-      "p023",
-      "p037",
-      "p060",
-      "p087",
-      "p013"
+      "p043"
      ],
      "tokens": {
-      "prompt_tokens": 3278,
-      "completion_tokens": 12,
-      "total_tokens": 3290,
+      "prompt_tokens": 471,
+      "completion_tokens": 11,
+      "total_tokens": 482,
       "calls": 1
      },
-     "seconds": 1.57,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.64
     },
     {
      "id": "q03",
@@ -3416,21 +3420,15 @@
      "answer": "CHF 4 357.89",
      "match": true,
      "papers_seen": [
-      "p023",
-      "p037",
-      "p043",
-      "p060",
-      "p087",
-      "p013"
+      "p023"
      ],
      "tokens": {
-      "prompt_tokens": 3278,
+      "prompt_tokens": 722,
       "completion_tokens": 12,
-      "total_tokens": 3290,
+      "total_tokens": 734,
       "calls": 1
      },
-     "seconds": 2.8,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.67
     },
     {
      "id": "q04",
@@ -3440,21 +3438,15 @@
      "answer": "CHF 4'223.79",
      "match": true,
      "papers_seen": [
-      "p038",
-      "p033",
-      "p057",
-      "p083",
-      "p005",
-      "p013"
+      "p038"
      ],
      "tokens": {
-      "prompt_tokens": 2643,
+      "prompt_tokens": 494,
       "completion_tokens": 12,
-      "total_tokens": 2655,
+      "total_tokens": 506,
       "calls": 1
      },
-     "seconds": 1.56,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.66
     },
     {
      "id": "q05",
@@ -3464,21 +3456,15 @@
      "answer": "Fr. 4777.59",
      "match": true,
      "papers_seen": [
-      "p014",
-      "p080",
-      "p010",
-      "p017",
-      "p032",
-      "p051"
+      "p014"
      ],
      "tokens": {
-      "prompt_tokens": 3703,
+      "prompt_tokens": 672,
       "completion_tokens": 11,
-      "total_tokens": 3714,
+      "total_tokens": 683,
       "calls": 1
      },
-     "seconds": 3.35,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.67
     },
     {
      "id": "q06",
@@ -3489,44 +3475,33 @@
      "match": true,
      "papers_seen": [
       "p058",
-      "p015",
-      "p022",
-      "p025",
-      "p072",
-      "p005"
+      "p015"
      ],
      "tokens": {
-      "prompt_tokens": 3185,
+      "prompt_tokens": 1126,
       "completion_tokens": 13,
-      "total_tokens": 3198,
+      "total_tokens": 1139,
       "calls": 1
      },
-     "seconds": 2.72,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.69
     },
     {
      "id": "q07",
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
      "truth": 980.25,
      "type": "amount",
-     "answer": "CHF 980.25",
+     "answer": "Fr. 980.25",
      "match": true,
      "papers_seen": [
-      "p037",
-      "p023",
-      "p043",
-      "p060",
-      "p087",
-      "p013"
+      "p037"
      ],
      "tokens": {
-      "prompt_tokens": 3278,
+      "prompt_tokens": 750,
       "completion_tokens": 10,
-      "total_tokens": 3288,
+      "total_tokens": 760,
       "calls": 1
      },
-     "seconds": 1.47,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.67
     },
     {
      "id": "q08",
@@ -3536,21 +3511,15 @@
      "answer": "CHF 2'663.99",
      "match": true,
      "papers_seen": [
-      "p088",
-      "p042",
-      "p065",
-      "p057",
-      "p005",
-      "p011"
+      "p088"
      ],
      "tokens": {
-      "prompt_tokens": 3358,
+      "prompt_tokens": 769,
       "completion_tokens": 12,
-      "total_tokens": 3370,
+      "total_tokens": 781,
       "calls": 1
      },
-     "seconds": 1.37,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.65
     },
     {
      "id": "q09",
@@ -3560,45 +3529,34 @@
      "answer": "CHF 5'832.21",
      "match": true,
      "papers_seen": [
-      "p087",
-      "p023",
-      "p037",
-      "p043",
-      "p060",
-      "p013"
+      "p087"
      ],
      "tokens": {
-      "prompt_tokens": 3278,
+      "prompt_tokens": 699,
       "completion_tokens": 12,
-      "total_tokens": 3290,
+      "total_tokens": 711,
       "calls": 1
      },
-     "seconds": 1.54,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 1.39
     },
     {
      "id": "q10",
      "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
      "truth": 1821.59,
      "type": "amount",
-     "answer": "Fr. 1821.59",
+     "answer": "CHF 1'821.59",
      "match": true,
      "papers_seen": [
       "p051",
-      "p055",
-      "p030",
-      "p067",
-      "p041",
-      "p082"
+      "p055"
      ],
      "tokens": {
-      "prompt_tokens": 2706,
-      "completion_tokens": 11,
-      "total_tokens": 2717,
+      "prompt_tokens": 1182,
+      "completion_tokens": 12,
+      "total_tokens": 1194,
       "calls": 1
      },
-     "seconds": 1.53,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.49
     },
     {
      "id": "q11",
@@ -3608,21 +3566,15 @@
      "answer": "CHF 2'562.08",
      "match": true,
      "papers_seen": [
-      "p071",
-      "p032",
-      "p074",
-      "p094",
-      "p041",
-      "p082"
+      "p071"
      ],
      "tokens": {
-      "prompt_tokens": 3003,
+      "prompt_tokens": 470,
       "completion_tokens": 12,
-      "total_tokens": 3015,
+      "total_tokens": 482,
       "calls": 1
      },
-     "seconds": 1.82,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 1.04
     },
     {
      "id": "q12",
@@ -3632,21 +3584,15 @@
      "answer": "CHF 4 741.21",
      "match": true,
      "papers_seen": [
-      "p046",
-      "p091",
-      "p096",
-      "p057",
-      "p060",
-      "p062"
+      "p046"
      ],
      "tokens": {
-      "prompt_tokens": 3241,
+      "prompt_tokens": 727,
       "completion_tokens": 12,
-      "total_tokens": 3253,
+      "total_tokens": 739,
       "calls": 1
      },
-     "seconds": 1.0,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.51
     },
     {
      "id": "q13",
@@ -4744,7 +4690,7 @@
       "opening_balance": "correct",
       "closing_balance": "correct"
      },
-     "movements": "correct",
+     "movements": "blank",
      "traps": [
       "format_apostrophe",
       "unbalanced",
@@ -5060,9 +5006,9 @@
       "period_start": "correct",
       "period_end": "correct",
       "opening_balance": "correct",
-      "closing_balance": "blank"
+      "closing_balance": "correct"
      },
-     "movements": "blank",
+     "movements": "correct",
      "traps": [
       "format_apostrophe"
      ]
@@ -5627,16 +5573,8 @@
      "question": "Combien dois-je encore à Garage Morel SA ?",
      "truth": 927.5,
      "type": "amount",
-     "answer": "927.50 CHF",
+     "answer": "Dû à Garage Morel SA : CHF 927.50 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1391,
-      "completion_tokens": 9,
-      "total_tokens": 1400,
-      "calls": 1
-     },
-     "seconds": 0.68,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p020",
       "p005",
@@ -5644,332 +5582,392 @@
       "p009",
       "p010",
       "p011"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p020"
+     ],
+     "grounded": true,
+     "value": 927.5
     },
     {
      "id": "q02",
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
      "truth": 5516.78,
      "type": "amount",
-     "answer": "5516.78 CHF",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 5'516.78 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1373,
-      "completion_tokens": 10,
-      "total_tokens": 1383,
-      "calls": 1
-     },
-     "seconds": 0.68,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p043",
-      "p023",
-      "p037",
-      "p060",
-      "p087",
-      "p013"
-     ]
+      "p043"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p043"
+     ],
+     "grounded": true,
+     "value": 5516.78
     },
     {
      "id": "q03",
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
      "truth": 4357.89,
      "type": "amount",
-     "answer": "4357.89 CHF",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 4'357.89 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1373,
-      "completion_tokens": 10,
-      "total_tokens": 1383,
-      "calls": 1
-     },
-     "seconds": 0.69,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p023",
-      "p037",
-      "p043",
-      "p060",
-      "p087",
-      "p013"
-     ]
+      "p023"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p023"
+     ],
+     "grounded": true,
+     "value": 4357.89
     },
     {
      "id": "q04",
      "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
      "truth": 4223.79,
      "type": "amount",
-     "answer": "4223.79 CHF",
+     "answer": "Dû à Électricité Favre SA : CHF 4'223.79 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1425,
-      "completion_tokens": 10,
-      "total_tokens": 1435,
-      "calls": 1
-     },
-     "seconds": 0.69,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p038",
-      "p033",
-      "p083",
-      "p005",
-      "p037",
-      "p042"
-     ]
+      "p038"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p038"
+     ],
+     "grounded": true,
+     "value": 4223.79
     },
     {
      "id": "q05",
      "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
      "truth": 4777.59,
      "type": "amount",
-     "answer": "4777.59 CHF",
+     "answer": "Geschuldet an Praxis Dr. med. Keller: CHF 4'777.59 (1 Rechnung(en)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1498,
-      "completion_tokens": 10,
-      "total_tokens": 1508,
-      "calls": 1
-     },
-     "seconds": 0.49,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p014",
-      "p080",
-      "p055",
-      "p010",
-      "p017",
-      "p032"
-     ]
+      "p014"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p014"
+     ],
+     "grounded": true,
+     "value": 4777.59
     },
     {
      "id": "q06",
      "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
      "truth": 10539.3,
      "type": "amount",
-     "answer": "Devi ancora 10539.30 CHF per la fattura 2026-152 [p058].",
+     "answer": "Dovuto a Fiduciaria Colombo: CHF 10'539.30 (1 fattura/e).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1395,
-      "completion_tokens": 34,
-      "total_tokens": 1429,
-      "calls": 1
-     },
-     "seconds": 0.86,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p058",
-      "p015",
-      "p022",
-      "p025",
-      "p072",
-      "p005"
-     ]
+      "p015"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p058"
+     ],
+     "grounded": true,
+     "value": 10539.3
     },
     {
      "id": "q07",
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
      "truth": 980.25,
      "type": "amount",
-     "answer": "980.25 CHF",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 980.25 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1373,
-      "completion_tokens": 9,
-      "total_tokens": 1382,
-      "calls": 1
-     },
-     "seconds": 0.47,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p037",
-      "p023",
-      "p043",
-      "p060",
-      "p087",
-      "p013"
-     ]
+      "p037"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p037"
+     ],
+     "grounded": true,
+     "value": 980.25
     },
     {
      "id": "q08",
      "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
      "truth": 2663.99,
      "type": "amount",
-     "answer": "Vous devez encore 2663.99 CHF pour la facture 2026-127 de Fiduciaire Lemaire Sàrl [p088].",
+     "answer": "Dû à Fiduciaire Lemaire Sàrl : CHF 2'663.99 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1476,
-      "completion_tokens": 44,
-      "total_tokens": 1520,
-      "calls": 1
-     },
-     "seconds": 1.03,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p088",
-      "p042",
-      "p065",
-      "p005",
-      "p023",
-      "p037"
-     ]
+      "p088"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p088"
+     ],
+     "grounded": true,
+     "value": 2663.99
     },
     {
      "id": "q09",
      "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
      "truth": 5832.21,
      "type": "amount",
-     "answer": "5832.21 CHF",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 5'832.21 (1 facture(s)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1373,
-      "completion_tokens": 10,
-      "total_tokens": 1383,
-      "calls": 1
-     },
-     "seconds": 0.38,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p087",
-      "p023",
-      "p037",
-      "p043",
-      "p060",
-      "p013"
-     ]
+      "p087"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p087"
+     ],
+     "grounded": true,
+     "value": 5832.21
     },
     {
      "id": "q10",
      "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
      "truth": 1821.59,
      "type": "amount",
-     "answer": "1821.59 CHF",
+     "answer": "Geschuldet an Velo Studer AG: CHF 1'821.59 (1 Rechnung(en)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1401,
-      "completion_tokens": 10,
-      "total_tokens": 1411,
-      "calls": 1
-     },
-     "seconds": 0.37,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p051",
-      "p055",
-      "p030",
-      "p005",
-      "p008",
-      "p009"
-     ]
+      "p055"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p051"
+     ],
+     "grounded": true,
+     "value": 1821.59
     },
     {
      "id": "q11",
      "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
      "truth": 2562.08,
      "type": "amount",
-     "answer": "2562.08 CHF (Rechnung [p071] fällig bis 2026-10-15)",
+     "answer": "Geschuldet an Gärtnerei Wyss: CHF 2'562.08 (1 Rechnung(en)).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1492,
-      "completion_tokens": 34,
-      "total_tokens": 1526,
-      "calls": 1
-     },
-     "seconds": 1.11,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p071",
-      "p032",
-      "p074",
-      "p094",
-      "p055",
-      "p005"
-     ]
+      "p071"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p071"
+     ],
+     "grounded": true,
+     "value": 2562.08
     },
     {
      "id": "q12",
      "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
      "truth": 4741.21,
      "type": "amount",
-     "answer": "Devi ancora 4741.21 CHF per la fattura 2026-551 [p046].",
+     "answer": "Dovuto a Pasticceria Rossi: CHF 4'741.21 (1 fattura/e).",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1438,
-      "completion_tokens": 33,
-      "total_tokens": 1471,
-      "calls": 1
-     },
-     "seconds": 1.05,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p046",
-      "p091",
-      "p096",
-      "p060",
-      "p062",
-      "p083"
-     ]
+      "p046"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p046"
+     ],
+     "grounded": true,
+     "value": 4741.21
     },
     {
      "id": "q13",
      "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
      "truth": 3138.75,
      "type": "amount",
-     "answer": "3138.75 CHF [p026]",
-     "match": true,
+     "answer": "Solde du compte Banque du Jura Fictive SA au 30.09.2026 : CHF 3'138.75. Le solde de clôture du relevé Banque du Jura Fictive SA au 30.09.2026 a été laissé vide : arithmetic: opening 10873.00 + movements = 13341.75, statement says 14028.50.",
+     "match": false,
      "papers_seen": [
       "p026"
      ],
      "tokens": {
-      "prompt_tokens": 385,
-      "completion_tokens": 16,
-      "total_tokens": 401,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.55
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p026",
+      "p049"
+     ],
+     "grounded": true,
+     "value": [
+      3138.75,
+      null
+     ]
     },
     {
      "id": "q14",
      "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
      "truth": 11061.8,
      "type": "amount",
-     "answer": "11061.8 CHF [p006]",
-     "match": true,
+     "answer": "Solde du compte Banque Romande du Lac SA au 30.09.2026 : CHF 11'061.80. Solde du compte Banque Romande du Lac SA au 30.09.2026 : CHF 5'937.00.",
+     "match": false,
      "papers_seen": [
       "p006"
      ],
      "tokens": {
-      "prompt_tokens": 384,
-      "completion_tokens": 16,
-      "total_tokens": 400,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.57
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p006",
+      "p034"
+     ],
+     "grounded": true,
+     "value": [
+      11061.8,
+      5937.0
+     ]
     },
     {
      "id": "q15",
      "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
      "truth": 1661.2,
      "type": "amount",
-     "answer": "1661.2 CHF [p052]",
-     "match": true,
+     "answer": "Solde du compte Banque du Jura Fictive SA au 10.10.2026 : CHF 1'661.20. Solde du compte Banque du Jura Fictive SA au 10.10.2026 : CHF 8'015.15.",
+     "match": false,
      "papers_seen": [
       "p052"
      ],
      "tokens": {
-      "prompt_tokens": 384,
-      "completion_tokens": 15,
-      "total_tokens": 399,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.54
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p052",
+      "p095"
+     ],
+     "grounded": true,
+     "value": [
+      1661.2,
+      8015.15
+     ]
     },
     {
      "id": "q16",
      "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
      "truth": 12421.9,
      "type": "amount",
-     "answer": "12421.9 CHF [p079]",
+     "answer": "Saldo del conto Cassa di Risparmio del Ceresio al 31.08.2026: CHF 12'421.90.",
      "match": true,
      "papers_seen": [
       "p079",
@@ -5981,20 +5979,26 @@
       "p073"
      ],
      "tokens": {
-      "prompt_tokens": 1292,
-      "completion_tokens": 16,
-      "total_tokens": 1308,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.86,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p079"
+     ],
+     "grounded": true,
+     "value": 12421.9
     },
     {
      "id": "q17",
      "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
      "truth": 7623.3,
      "type": "amount",
-     "answer": "7623.3 CHF",
+     "answer": "Saldo des Kontos Sparkasse Tösstal am 31.08.2026: CHF 7'623.30.",
      "match": true,
      "papers_seen": [
       "p039",
@@ -6006,56 +6010,86 @@
       "p079"
      ],
      "tokens": {
-      "prompt_tokens": 1289,
-      "completion_tokens": 9,
-      "total_tokens": 1298,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 1.01,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p039"
+     ],
+     "grounded": true,
+     "value": 7623.3
     },
     {
      "id": "q18",
      "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
      "truth": 7026.25,
      "type": "amount",
-     "answer": "7026.25 CHF [p031]",
-     "match": true,
+     "answer": "Saldo des Kontos Alpenbank AG am 31.08.2026: CHF 7'026.25. Saldo des Kontos Alpenbank AG am 31.08.2026: CHF 4'054.25.",
+     "match": false,
      "papers_seen": [
       "p031"
      ],
      "tokens": {
-      "prompt_tokens": 380,
-      "completion_tokens": 16,
-      "total_tokens": 396,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.54
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p031",
+      "p056"
+     ],
+     "grounded": true,
+     "value": [
+      7026.25,
+      4054.25
+     ]
     },
     {
      "id": "q19",
      "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
      "truth": 6957.3,
      "type": "amount",
-     "answer": "Il saldo al 10.10.2026 è 6957.3 CHF [p054].",
-     "match": true,
+     "answer": "Saldo del conto Banca Sud Ticino SA al 10.10.2026: CHF -1'353.90. Saldo del conto Banca Sud Ticino SA al 10.10.2026: CHF 6'957.30. Saldo del conto Banca Sud Ticino SA al 10.10.2026: CHF 616.35.",
+     "match": false,
      "papers_seen": [
       "p054"
      ],
      "tokens": {
-      "prompt_tokens": 384,
-      "completion_tokens": 31,
-      "total_tokens": 415,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.68
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p021",
+      "p054",
+      "p081"
+     ],
+     "grounded": true,
+     "value": [
+      -1353.9,
+      6957.3,
+      616.35
+     ]
     },
     {
      "id": "q20",
      "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
      "truth": 13485.75,
      "type": "amount",
-     "answer": "13485.75 CHF",
+     "answer": "Saldo des Kontos Zugerland Bank AG am 31.08.2026: CHF 13'485.75.",
      "match": true,
      "papers_seen": [
       "p018",
@@ -6067,38 +6101,57 @@
       "p079"
      ],
      "tokens": {
-      "prompt_tokens": 1288,
-      "completion_tokens": 11,
-      "total_tokens": 1299,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.44,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p018"
+     ],
+     "grounded": true,
+     "value": 13485.75
     },
     {
      "id": "q21",
      "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 1617) am 30.09.2026?",
      "truth": 13963.8,
      "type": "amount",
-     "answer": "13963.8 CHF",
-     "match": true,
+     "answer": "Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 13'963.80. Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 7'181.95. Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 6'987.55.",
+     "match": false,
      "papers_seen": [
       "p019"
      ],
      "tokens": {
-      "prompt_tokens": 379,
-      "completion_tokens": 10,
-      "total_tokens": 389,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.41
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p019",
+      "p047",
+      "p090"
+     ],
+     "grounded": true,
+     "value": [
+      13963.8,
+      7181.95,
+      6987.55
+     ]
     },
     {
      "id": "q22",
      "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026?",
      "truth": 1988.8,
      "type": "amount",
-     "answer": "Der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026 beträgt 1988.8 CHF.",
+     "answer": "Saldo des Kontos Zugerland Bank AG am 10.10.2026: CHF 1'988.80.",
      "match": true,
      "papers_seen": [
       "p002",
@@ -6112,13 +6165,19 @@
       "p095"
      ],
      "tokens": {
-      "prompt_tokens": 1547,
-      "completion_tokens": 35,
-      "total_tokens": 1582,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 18.04,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p002"
+     ],
+     "grounded": true,
+     "value": 1988.8
     },
     {
      "id": "q23",
@@ -6128,19 +6187,28 @@
       "p060"
      ],
      "type": "list",
-     "answer": "[p010] et [p060]",
+     "answer": "Factures échues le 05.09.2026 : [p010] Elektro Brunner GmbH CHF 5'767.95, [p060] Physio du Léman Sàrl CHF 3'514.06.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 875,
-      "completion_tokens": 13,
-      "total_tokens": 888,
-      "calls": 1
-     },
-     "seconds": 0.49,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p010",
-      "p022",
+      "p060"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p010",
+      "p060"
+     ],
+     "grounded": true,
+     "value": [
+      "p010",
       "p060"
      ]
     },
@@ -6152,17 +6220,27 @@
       "p042"
      ],
      "type": "list",
-     "answer": "[p005] und [p042]",
+     "answer": "Am 13.09.2026 fällige Rechnungen: [p005] Boulangerie Dupraz Sàrl CHF 5'396.41, [p042] Fiduciaire Lemaire Sàrl CHF 2'326.04.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 637,
-      "completion_tokens": 13,
-      "total_tokens": 650,
-      "calls": 1
-     },
-     "seconds": 0.43,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
+      "p005",
+      "p042"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p042"
+     ],
+     "grounded": true,
+     "value": [
       "p005",
       "p042"
      ]
@@ -6175,17 +6253,27 @@
       "p055"
      ],
      "type": "list",
-     "answer": "[p011] et [p055]",
+     "answer": "Factures échues le 21.09.2026 : [p011] Jardins Vuille CHF 6'218.78, [p055] Treuhand Meier AG CHF 4'334.49.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 654,
-      "completion_tokens": 13,
-      "total_tokens": 667,
-      "calls": 1
-     },
-     "seconds": 0.62,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
+      "p011",
+      "p055"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p011",
+      "p055"
+     ],
+     "grounded": true,
+     "value": [
       "p011",
       "p055"
      ]
@@ -6198,21 +6286,29 @@
       "p074"
      ],
      "type": "list",
-     "answer": "[p020, p074]",
+     "answer": "Am 26.09.2026 fällige Rechnungen: [p020] Garage Morel SA CHF 927.50, [p074] Gärtnerei Wyss CHF 7'634.94.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 998,
-      "completion_tokens": 11,
-      "total_tokens": 1009,
-      "calls": 1
-     },
-     "seconds": 0.53,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p009",
       "p020",
-      "p074",
-      "p096"
+      "p074"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p020",
+      "p074"
+     ],
+     "grounded": true,
+     "value": [
+      "p020",
+      "p074"
      ]
     },
     {
@@ -6223,22 +6319,29 @@
       "p038"
      ],
      "type": "list",
-     "answer": "[p030] e [p038]",
+     "answer": "Fatture in scadenza il 08.10.2026: [p030] Velo Studer AG CHF 7'145.79, [p038] Électricité Favre SA CHF 4'223.79.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1239,
-      "completion_tokens": 13,
-      "total_tokens": 1252,
-      "calls": 1
-     },
-     "seconds": 0.41,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p024",
       "p030",
-      "p038",
-      "p064",
-      "p075"
+      "p038"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p030",
+      "p038"
+     ],
+     "grounded": true,
+     "value": [
+      "p030",
+      "p038"
      ]
     },
     {
@@ -6249,20 +6352,29 @@
       "p087"
      ],
      "type": "list",
-     "answer": "[p025] et [p087]",
+     "answer": "Factures échues le 14.10.2026 : [p025] Fiduciaria Colombo CHF 6'508.05, [p087] Physio du Léman Sàrl CHF 5'832.21.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 860,
-      "completion_tokens": 13,
-      "total_tokens": 873,
-      "calls": 1
-     },
-     "seconds": 0.74,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p025",
-      "p087",
-      "p088"
+      "p087"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p025",
+      "p087"
+     ],
+     "grounded": true,
+     "value": [
+      "p025",
+      "p087"
      ]
     },
     {
@@ -6273,17 +6385,27 @@
       "p071"
      ],
      "type": "list",
-     "answer": "[p046] und [p071]",
+     "answer": "Am 15.10.2026 fällige Rechnungen: [p046] Pasticceria Rossi CHF 4'741.21, [p071] Gärtnerei Wyss CHF 2'562.08.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 610,
-      "completion_tokens": 13,
-      "total_tokens": 623,
-      "calls": 1
-     },
-     "seconds": 0.78,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
+      "p046",
+      "p071"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p046",
+      "p071"
+     ],
+     "grounded": true,
+     "value": [
       "p046",
       "p071"
      ]
@@ -6296,17 +6418,27 @@
       "p096"
      ],
      "type": "list",
-     "answer": "[p009] et [p096]",
+     "answer": "Factures échues le 16.10.2026 : [p009] Schreinerei Huber AG CHF 1'930.88, [p096] Pasticceria Rossi CHF 1'871.32.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 555,
-      "completion_tokens": 13,
-      "total_tokens": 568,
-      "calls": 1
-     },
-     "seconds": 0.74,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
+      "p009",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p096"
+     ],
+     "grounded": true,
+     "value": [
       "p009",
       "p096"
      ]
@@ -6316,16 +6448,8 @@
      "question": "Combien de factures ai-je reçues en août ?",
      "truth": 14,
      "type": "count",
-     "answer": "14",
+     "answer": "14 facture(s) reçue(s) en août 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 2959,
-      "completion_tokens": 3,
-      "total_tokens": 2962,
-      "calls": 1
-     },
-     "seconds": 0.62,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p005",
       "p008",
@@ -6341,23 +6465,42 @@
       "p074",
       "p083",
       "p097"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
     },
     {
      "id": "q32",
      "question": "Wie viele Rechnungen habe ich im August erhalten?",
      "truth": 14,
      "type": "count",
-     "answer": "14",
+     "answer": "14 Rechnung(en) erhalten im August 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 2958,
-      "completion_tokens": 3,
-      "total_tokens": 2961,
-      "calls": 1
-     },
-     "seconds": 0.23,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p005",
       "p008",
@@ -6373,23 +6516,42 @@
       "p074",
       "p083",
       "p097"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
     },
     {
      "id": "q33",
      "question": "Quante fatture ho ricevuto in settembre?",
      "truth": 18,
      "type": "count",
-     "answer": "18",
+     "answer": "18 fattura/e ricevuta/e in settembre 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3681,
-      "completion_tokens": 3,
-      "total_tokens": 3684,
-      "calls": 1
-     },
-     "seconds": 0.33,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6409,23 +6571,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
     },
     {
      "id": "q34",
      "question": "Combien de factures ai-je reçues en septembre ?",
      "truth": 18,
      "type": "count",
-     "answer": "18",
+     "answer": "18 facture(s) reçue(s) en septembre 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3684,
-      "completion_tokens": 3,
-      "total_tokens": 3687,
-      "calls": 1
-     },
-     "seconds": 0.41,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6445,23 +6630,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
     },
     {
      "id": "q35",
      "question": "Wie viele Rechnungen habe ich im September erhalten?",
      "truth": 18,
      "type": "count",
-     "answer": "18",
+     "answer": "18 Rechnung(en) erhalten im September 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3683,
-      "completion_tokens": 3,
-      "total_tokens": 3686,
-      "calls": 1
-     },
-     "seconds": 0.27,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6481,23 +6689,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
     },
     {
      "id": "q36",
      "question": "Quante fatture ho ricevuto in agosto?",
      "truth": 14,
      "type": "count",
-     "answer": "14",
+     "answer": "14 fattura/e ricevuta/e in agosto 2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 2956,
-      "completion_tokens": 3,
-      "total_tokens": 2959,
-      "calls": 1
-     },
-     "seconds": 0.24,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p005",
       "p008",
@@ -6513,23 +6744,42 @@
       "p074",
       "p083",
       "p097"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
     },
     {
      "id": "q37",
      "question": "Total des factures reçues en septembre ?",
      "truth": 65770.53,
      "type": "amount",
-     "answer": "65770.53 CHF",
+     "answer": "Factures reçues en septembre 2026 : 18, total CHF 65'770.53.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3681,
-      "completion_tokens": 11,
-      "total_tokens": 3692,
-      "calls": 1
-     },
-     "seconds": 0.35,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6549,23 +6799,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
     },
     {
      "id": "q38",
      "question": "Total der im September erhaltenen Rechnungen?",
      "truth": 65770.53,
      "type": "amount",
-     "answer": "65770.53 CHF",
+     "answer": "Im September 2026 erhaltene Rechnungen: 18, total CHF 65'770.53.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3682,
-      "completion_tokens": 11,
-      "total_tokens": 3693,
-      "calls": 1
-     },
-     "seconds": 0.34,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6585,23 +6858,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
     },
     {
      "id": "q39",
      "question": "Totale delle fatture ricevute in settembre?",
      "truth": 65770.53,
      "type": "amount",
-     "answer": "65 770.53 CHF",
+     "answer": "Fatture ricevute in settembre 2026: 18, totale CHF 65'770.53.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 3682,
-      "completion_tokens": 12,
-      "total_tokens": 3694,
-      "calls": 1
-     },
-     "seconds": 0.35,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p009",
       "p011",
@@ -6621,23 +6917,46 @@
       "p091",
       "p094",
       "p096"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
     },
     {
      "id": "q40",
      "question": "Total des factures reçues en août ?",
      "truth": 63363.4,
      "type": "amount",
-     "answer": "63363.4 CHF",
+     "answer": "Factures reçues en août 2026 : 14, total CHF 63'363.40.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 2956,
-      "completion_tokens": 10,
-      "total_tokens": 2966,
-      "calls": 1
-     },
-     "seconds": 0.32,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p005",
       "p008",
@@ -6653,23 +6972,42 @@
       "p074",
       "p083",
       "p097"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 63363.4
     },
     {
      "id": "q41",
      "question": "Total der im August erhaltenen Rechnungen?",
      "truth": 63363.4,
      "type": "amount",
-     "answer": "63363.4 CHF",
+     "answer": "Im August 2026 erhaltene Rechnungen: 14, total CHF 63'363.40.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 2957,
-      "completion_tokens": 10,
-      "total_tokens": 2967,
-      "calls": 1
-     },
-     "seconds": 0.33,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p005",
       "p008",
@@ -6685,23 +7023,42 @@
       "p074",
       "p083",
       "p097"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 63363.4
     },
     {
      "id": "q42",
      "question": "Totale delle fatture ricevute in ottobre?",
      "truth": 29133.73,
      "type": "amount",
-     "answer": "29'133.73 CHF",
+     "answer": "Fatture ricevute in ottobre 2026: 8, totale CHF 29'133.73.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1776,
-      "completion_tokens": 12,
-      "total_tokens": 1788,
-      "calls": 1
-     },
-     "seconds": 0.33,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
       "p017",
       "p024",
@@ -6711,199 +7068,228 @@
       "p071",
       "p075",
       "p088"
-     ]
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p017",
+      "p024",
+      "p046",
+      "p064",
+      "p065",
+      "p071",
+      "p075",
+      "p088"
+     ],
+     "grounded": true,
+     "value": 29133.73
     },
     {
      "id": "q43",
      "question": "Quel est le délai de Assurance-maladie Jura-Léman SA (réf. 2026-48829-GE) ?",
      "truth": "2026-11-30",
      "type": "date",
-     "answer": "Le délai est le 30 novembre 2026 [p013].",
+     "answer": "Délai de Assurance-maladie Jura-Léman SA : 30.11.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1045,
-      "completion_tokens": 21,
-      "total_tokens": 1066,
-      "calls": 1
-     },
-     "seconds": 0.65,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p013",
-      "p084",
-      "p001",
-      "p003",
-      "p016",
-      "p027"
-     ]
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p013"
+     ],
+     "grounded": true,
+     "value": "2026-11-30"
     },
     {
      "id": "q44",
      "question": "Qual è il termine fissato da Città di Lugano – Ufficio tecnico (rif. 2026-77154-TI)?",
      "truth": "2026-09-29",
      "type": "date",
-     "answer": "Il termine fissato è 2026-09-29.",
+     "answer": "Termine di Città di Lugano – Ufficio tecnico: 29.09.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1059,
-      "completion_tokens": 18,
-      "total_tokens": 1077,
-      "calls": 1
-     },
-     "seconds": 0.5,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p036",
-      "p093",
-      "p028",
-      "p078",
-      "p001",
-      "p003"
-     ]
+      "p036"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p036"
+     ],
+     "grounded": true,
+     "value": "2026-09-29"
     },
     {
      "id": "q45",
      "question": "Quel est le délai de Commune d'Yverdon-les-Bains – Greffe municipal (réf. 2026-25907-VD) ?",
      "truth": "2026-09-14",
      "type": "date",
-     "answer": "Le délai est le 14 septembre 2026 [p053].",
+     "answer": "Délai de Commune d'Yverdon-les-Bains – Greffe municipal : 14.09.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1002,
-      "completion_tokens": 21,
-      "total_tokens": 1023,
-      "calls": 1
-     },
-     "seconds": 0.48,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p053",
-      "p003",
-      "p045",
-      "p085",
-      "p001",
-      "p013"
-     ]
+      "p053"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p053"
+     ],
+     "grounded": true,
+     "value": "2026-09-14"
     },
     {
      "id": "q46",
      "question": "Welche Frist setzt Kantonales Steueramt (Ref. 2026-10088-ZH)?",
      "truth": "2026-10-30",
      "type": "date",
-     "answer": "Kantonales Steueramt setzt Frist bis 2026-10-30.",
+     "answer": "Frist von Kantonales Steueramt: 30.10.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1019,
-      "completion_tokens": 22,
-      "total_tokens": 1041,
-      "calls": 1
-     },
-     "seconds": 0.48,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p100",
-      "p053",
-      "p001",
-      "p003",
-      "p013",
-      "p016"
-     ]
+      "p100"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p100"
+     ],
+     "grounded": true,
+     "value": "2026-10-30"
     },
     {
      "id": "q47",
      "question": "Quel est le délai de Commune de Vevey – Police des constructions (réf. 2026-27758-VD) ?",
      "truth": "2026-09-15",
      "type": "date",
-     "answer": "2026-09-15",
+     "answer": "Délai de Commune de Vevey – Police des constructions : 15.09.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 998,
-      "completion_tokens": 11,
-      "total_tokens": 1009,
-      "calls": 1
-     },
-     "seconds": 0.4,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p085",
-      "p045",
-      "p003",
-      "p053",
-      "p001",
-      "p013"
-     ]
+      "p085"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p085"
+     ],
+     "grounded": true,
+     "value": "2026-09-15"
     },
     {
      "id": "q48",
      "question": "Quel est le délai de Service cantonal des contributions (réf. 2026-48974-FR) ?",
      "truth": "2026-10-28",
      "type": "date",
-     "answer": "Le délai est le 28 octobre 2026 [p016].",
+     "answer": "Délai de Service cantonal des contributions : 28.10.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1155,
-      "completion_tokens": 21,
-      "total_tokens": 1176,
-      "calls": 1
-     },
-     "seconds": 0.53,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p016",
-      "p001",
-      "p035",
-      "p066",
-      "p078",
-      "p030"
-     ]
+      "p016"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p016"
+     ],
+     "grounded": true,
+     "value": "2026-10-28"
     },
     {
      "id": "q49",
      "question": "Welche Frist setzt Stadt Luzern – Bauverwaltung (Ref. 2026-91289-LU)?",
      "truth": "2026-10-14",
      "type": "date",
-     "answer": "Stadt Luzern – Bauverwaltung setzt eine Frist bis 2026-10-14 [p086].",
+     "answer": "Frist von Stadt Luzern – Bauverwaltung: 14.10.2026.",
      "match": true,
      "papers_seen": [
-      "p086",
-      "p048",
-      "p059",
-      "p053",
-      "p001",
-      "p003"
+      "p086"
      ],
      "tokens": {
-      "prompt_tokens": 1067,
-      "completion_tokens": 30,
-      "total_tokens": 1097,
-      "calls": 1
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
      },
-     "seconds": 0.77,
-     "stamp": "swiss-ai/Apertus-v1.5-70B"
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p086"
+     ],
+     "grounded": true,
+     "value": "2026-10-14"
     },
     {
      "id": "q50",
      "question": "Quel est le délai de Commune de Vevey – Contrôle des habitants (réf. 2026-50562-VD) ?",
      "truth": "2026-09-22",
      "type": "date",
-     "answer": "Le délai est jusqu'au 22 septembre 2026 [p045].",
+     "answer": "Délai de Commune de Vevey – Contrôle des habitants : 22.09.2026.",
      "match": true,
-     "tokens": {
-      "prompt_tokens": 1077,
-      "completion_tokens": 22,
-      "total_tokens": 1099,
-      "calls": 1
-     },
-     "seconds": 0.63,
-     "stamp": "swiss-ai/Apertus-v1.5-70B",
      "papers_seen": [
-      "p045",
-      "p053",
-      "p085",
-      "p003",
-      "p020",
-      "p001"
-     ]
+      "p045"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p045"
+     ],
+     "grounded": true,
+     "value": "2026-09-22"
     }
    ],
    "per_paper": {

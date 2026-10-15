@@ -1,0 +1,8314 @@
+{
+ "model": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit",
+ "date": "2026-10-15",
+ "summary": {
+  "baseline": {
+   "method": "baseline",
+   "papers": 100,
+   "fields": 550,
+   "correct_pct": 89.6,
+   "invented_pct": 8.9,
+   "blank_pct": 1.5,
+   "kind_correct_pct": 98.0,
+   "tokens_total": 141999,
+   "tokens_per_paper": 1420.0,
+   "seconds_per_paper": 9.1,
+   "questions": 20,
+   "questions_match_pct": 25.0,
+   "questions_tokens_total": 289386,
+   "questions_by": {
+    "code": 0,
+    "model": 20,
+    "none": 0
+   },
+   "per_kind": {
+    "bank_statement": {
+     "correct": 145,
+     "invented": 5,
+     "blank": 0,
+     "papers": 30,
+     "kind_ok": 30,
+     "correct_pct": 96.7,
+     "invented_pct": 3.3,
+     "blank_pct": 0.0
+    },
+    "official_letter": {
+     "correct": 112,
+     "invented": 0,
+     "blank": 8,
+     "papers": 30,
+     "kind_ok": 28,
+     "correct_pct": 93.3,
+     "invented_pct": 0.0,
+     "blank_pct": 6.7
+    },
+    "qr_bill": {
+     "correct": 236,
+     "invented": 44,
+     "blank": 0,
+     "papers": 40,
+     "kind_ok": 40,
+     "correct_pct": 84.3,
+     "invented_pct": 15.7,
+     "blank_pct": 0.0
+    }
+   },
+   "per_field": {
+    "bank_statement.account_iban": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.closing_balance": {
+     "correct": 25,
+     "invented": 5,
+     "blank": 0
+    },
+    "bank_statement.movements": {
+     "correct": 5,
+     "invented": 25,
+     "blank": 0
+    },
+    "bank_statement.opening_balance": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.period_end": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.period_start": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "official_letter.amount_chf": {
+     "correct": 28,
+     "invented": 0,
+     "blank": 2
+    },
+    "official_letter.deadline": {
+     "correct": 28,
+     "invented": 0,
+     "blank": 2
+    },
+    "official_letter.letter_date": {
+     "correct": 28,
+     "invented": 0,
+     "blank": 2
+    },
+    "official_letter.reference_number": {
+     "correct": 28,
+     "invented": 0,
+     "blank": 2
+    },
+    "qr_bill.amount_chf": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.due_date": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.iban": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.invoice_date": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.invoice_number": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.reference": {
+     "correct": 30,
+     "invented": 10,
+     "blank": 0
+    },
+    "qr_bill.reference_type": {
+     "correct": 6,
+     "invented": 34,
+     "blank": 0
+    }
+   },
+   "questions_retrieval": 20,
+   "questions_retrieval_match_pct": 100.0,
+   "questions_retrieval_tokens_total": 59020
+  },
+  "ours": {
+   "method": "ours",
+   "papers": 100,
+   "fields": 550,
+   "correct_pct": 99.3,
+   "invented_pct": 0.0,
+   "blank_pct": 0.7,
+   "kind_correct_pct": 100.0,
+   "tokens_total": 109183,
+   "tokens_per_paper": 1092.0,
+   "seconds_per_paper": 10.6,
+   "questions": 50,
+   "questions_match_pct": 88.0,
+   "questions_tokens_total": 0,
+   "questions_by": {
+    "code": 50,
+    "model": 0,
+    "none": 0
+   },
+   "per_kind": {
+    "bank_statement": {
+     "correct": 146,
+     "invented": 0,
+     "blank": 4,
+     "papers": 30,
+     "kind_ok": 30,
+     "correct_pct": 97.3,
+     "invented_pct": 0.0,
+     "blank_pct": 2.7
+    },
+    "official_letter": {
+     "correct": 120,
+     "invented": 0,
+     "blank": 0,
+     "papers": 30,
+     "kind_ok": 30,
+     "correct_pct": 100.0,
+     "invented_pct": 0.0,
+     "blank_pct": 0.0
+    },
+    "qr_bill": {
+     "correct": 280,
+     "invented": 0,
+     "blank": 0,
+     "papers": 40,
+     "kind_ok": 40,
+     "correct_pct": 100.0,
+     "invented_pct": 0.0,
+     "blank_pct": 0.0
+    }
+   },
+   "per_field": {
+    "bank_statement.account_iban": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.closing_balance": {
+     "correct": 26,
+     "invented": 0,
+     "blank": 4
+    },
+    "bank_statement.movements": {
+     "correct": 24,
+     "invented": 0,
+     "blank": 6
+    },
+    "bank_statement.opening_balance": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.period_end": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "bank_statement.period_start": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "official_letter.amount_chf": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "official_letter.deadline": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "official_letter.letter_date": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "official_letter.reference_number": {
+     "correct": 30,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.amount_chf": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.due_date": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.iban": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.invoice_date": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.invoice_number": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.reference": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    },
+    "qr_bill.reference_type": {
+     "correct": 40,
+     "invented": 0,
+     "blank": 0
+    }
+   },
+   "questions_same_as_baseline": 20,
+   "questions_same_as_baseline_match_pct": 75.0
+  }
+ },
+ "details": {
+  "baseline": {
+   "papers": [
+    {
+     "id": "p001",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p002",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p003",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p004",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "invented"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p005",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p006",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p007",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "invented"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p008",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p009",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p010",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p011",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p012",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "invented"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p013",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p014",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p015",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p016",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p017",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p018",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p019",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p020",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p021",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p022",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p023",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p024",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p025",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p026",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p027",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p028",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p029",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p030",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p031",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p032",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p033",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p034",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p035",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p036",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p037",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p038",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p039",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p040",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p041",
+     "kind": "official_letter",
+     "kind_ok": false,
+     "fields": {
+      "letter_date": "blank",
+      "amount_chf": "blank",
+      "deadline": "blank",
+      "reference_number": "blank"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p042",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p043",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p044",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p045",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p046",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p047",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p048",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p049",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "invented"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space",
+      "unbalanced",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p050",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "invented"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "unbalanced",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p051",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p052",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p053",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p054",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p055",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p056",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p057",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p058",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p059",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p060",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p061",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p062",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p063",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p064",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p065",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p066",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p067",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p068",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p069",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p070",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p071",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p072",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p073",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p074",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p075",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p076",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p077",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p078",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p079",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p080",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p081",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p082",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p083",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p084",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p085",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p086",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p087",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p088",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p089",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p090",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p091",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p092",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p093",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p094",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p095",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "invented",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p096",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "invented",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p097",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "invented",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p098",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p099",
+     "kind": "official_letter",
+     "kind_ok": false,
+     "fields": {
+      "letter_date": "blank",
+      "amount_chf": "blank",
+      "deadline": "blank",
+      "reference_number": "blank"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p100",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "q01",
+     "question": "Combien dois-je encore à Garage Morel SA ?",
+     "truth": 927.5,
+     "type": "amount",
+     "answer": "CHF 927.50",
+     "match": true,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14439,
+      "completion_tokens": 10,
+      "total_tokens": 14449,
+      "calls": 1
+     },
+     "seconds": 30.77,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q02",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
+     "truth": 5516.78,
+     "type": "amount",
+     "answer": "CHF 4'357.89",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14456,
+      "completion_tokens": 12,
+      "total_tokens": 14468,
+      "calls": 1
+     },
+     "seconds": 1.23,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q03",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
+     "truth": 4357.89,
+     "type": "amount",
+     "answer": "CHF 4 357.89",
+     "match": true,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14456,
+      "completion_tokens": 12,
+      "total_tokens": 14468,
+      "calls": 1
+     },
+     "seconds": 0.98,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q04",
+     "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
+     "truth": 4223.79,
+     "type": "amount",
+     "answer": "CHF 122.10",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14453,
+      "completion_tokens": 10,
+      "total_tokens": 14463,
+      "calls": 1
+     },
+     "seconds": 0.7,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q05",
+     "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
+     "truth": 4777.59,
+     "type": "amount",
+     "answer": "CHF 4777.59",
+     "match": true,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14455,
+      "completion_tokens": 11,
+      "total_tokens": 14466,
+      "calls": 1
+     },
+     "seconds": 0.83,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q06",
+     "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
+     "truth": 10539.3,
+     "type": "amount",
+     "answer": "CHF 3'815.39",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14452,
+      "completion_tokens": 12,
+      "total_tokens": 14464,
+      "calls": 1
+     },
+     "seconds": 0.83,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q07",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
+     "truth": 980.25,
+     "type": "amount",
+     "answer": "CHF 4'357.89",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14456,
+      "completion_tokens": 12,
+      "total_tokens": 14468,
+      "calls": 1
+     },
+     "seconds": 1.01,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q08",
+     "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
+     "truth": 2663.99,
+     "type": "amount",
+     "answer": "CHF 1 275.00",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14457,
+      "completion_tokens": 12,
+      "total_tokens": 14469,
+      "calls": 1
+     },
+     "seconds": 0.77,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q09",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
+     "truth": 5832.21,
+     "type": "amount",
+     "answer": "CHF 4'357.89",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14456,
+      "completion_tokens": 12,
+      "total_tokens": 14468,
+      "calls": 1
+     },
+     "seconds": 1.01,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q10",
+     "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
+     "truth": 1821.59,
+     "type": "amount",
+     "answer": "CHF 1'234.75",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14454,
+      "completion_tokens": 12,
+      "total_tokens": 14466,
+      "calls": 1
+     },
+     "seconds": 0.84,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q11",
+     "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
+     "truth": 2562.08,
+     "type": "amount",
+     "answer": "CHF 1'930.88",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14455,
+      "completion_tokens": 12,
+      "total_tokens": 14467,
+      "calls": 1
+     },
+     "seconds": 1.05,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q12",
+     "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
+     "truth": 4741.21,
+     "type": "amount",
+     "answer": "CHF 235.00",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14451,
+      "completion_tokens": 10,
+      "total_tokens": 14461,
+      "calls": 1
+     },
+     "seconds": 0.76,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q13",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
+     "truth": 3138.75,
+     "type": "amount",
+     "answer": "CHF 11 061.80",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14469,
+      "completion_tokens": 13,
+      "total_tokens": 14482,
+      "calls": 1
+     },
+     "seconds": 1.02,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q14",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
+     "truth": 11061.8,
+     "type": "amount",
+     "answer": "CHF 11 061.80",
+     "match": true,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14468,
+      "completion_tokens": 13,
+      "total_tokens": 14481,
+      "calls": 1
+     },
+     "seconds": 0.96,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q15",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
+     "truth": 1661.2,
+     "type": "amount",
+     "answer": "CHF 13'485.75",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14469,
+      "completion_tokens": 13,
+      "total_tokens": 14482,
+      "calls": 1
+     },
+     "seconds": 0.87,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q16",
+     "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
+     "truth": 12421.9,
+     "type": "amount",
+     "answer": "CHF 1'159.20",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14459,
+      "completion_tokens": 12,
+      "total_tokens": 14471,
+      "calls": 1
+     },
+     "seconds": 0.84,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q17",
+     "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
+     "truth": 7623.3,
+     "type": "amount",
+     "answer": "CHF 11'758.85",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14456,
+      "completion_tokens": 13,
+      "total_tokens": 14469,
+      "calls": 1
+     },
+     "seconds": 0.86,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q18",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
+     "truth": 7026.25,
+     "type": "amount",
+     "answer": "CHF 11'758.85",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14466,
+      "completion_tokens": 13,
+      "total_tokens": 14479,
+      "calls": 1
+     },
+     "seconds": 0.9,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q19",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
+     "truth": 6957.3,
+     "type": "amount",
+     "answer": "CHF -1353.90",
+     "match": false,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14466,
+      "completion_tokens": 11,
+      "total_tokens": 14477,
+      "calls": 1
+     },
+     "seconds": 0.78,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q20",
+     "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
+     "truth": 13485.75,
+     "type": "amount",
+     "answer": "CHF 13'485.75",
+     "match": true,
+     "papers_seen": [],
+     "tokens": {
+      "prompt_tokens": 14455,
+      "completion_tokens": 13,
+      "total_tokens": 14468,
+      "calls": 1
+     },
+     "seconds": 0.85,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    }
+   ],
+   "per_paper": {
+    "p001": {
+     "tokens": {
+      "prompt_tokens": 920,
+      "completion_tokens": 137,
+      "total_tokens": 1057,
+      "calls": 1
+     },
+     "seconds": 4.87,
+     "kind": "official_letter"
+    },
+    "p002": {
+     "tokens": {
+      "prompt_tokens": 1080,
+      "completion_tokens": 535,
+      "total_tokens": 1615,
+      "calls": 1
+     },
+     "seconds": 14.08,
+     "kind": "bank_statement"
+    },
+    "p003": {
+     "tokens": {
+      "prompt_tokens": 878,
+      "completion_tokens": 133,
+      "total_tokens": 1011,
+      "calls": 1
+     },
+     "seconds": 3.85,
+     "kind": "official_letter"
+    },
+    "p004": {
+     "tokens": {
+      "prompt_tokens": 1239,
+      "completion_tokens": 677,
+      "total_tokens": 1916,
+      "calls": 1
+     },
+     "seconds": 17.9,
+     "kind": "bank_statement"
+    },
+    "p005": {
+     "tokens": {
+      "prompt_tokens": 1004,
+      "completion_tokens": 164,
+      "total_tokens": 1168,
+      "calls": 1
+     },
+     "seconds": 4.79,
+     "kind": "qr_bill"
+    },
+    "p006": {
+     "tokens": {
+      "prompt_tokens": 1422,
+      "completion_tokens": 768,
+      "total_tokens": 2190,
+      "calls": 1
+     },
+     "seconds": 20.53,
+     "kind": "bank_statement"
+    },
+    "p007": {
+     "tokens": {
+      "prompt_tokens": 1143,
+      "completion_tokens": 556,
+      "total_tokens": 1699,
+      "calls": 1
+     },
+     "seconds": 14.91,
+     "kind": "bank_statement"
+    },
+    "p008": {
+     "tokens": {
+      "prompt_tokens": 1258,
+      "completion_tokens": 201,
+      "total_tokens": 1459,
+      "calls": 1
+     },
+     "seconds": 6.26,
+     "kind": "qr_bill"
+    },
+    "p009": {
+     "tokens": {
+      "prompt_tokens": 926,
+      "completion_tokens": 159,
+      "total_tokens": 1085,
+      "calls": 1
+     },
+     "seconds": 4.51,
+     "kind": "qr_bill"
+    },
+    "p010": {
+     "tokens": {
+      "prompt_tokens": 1228,
+      "completion_tokens": 199,
+      "total_tokens": 1427,
+      "calls": 1
+     },
+     "seconds": 5.98,
+     "kind": "qr_bill"
+    },
+    "p011": {
+     "tokens": {
+      "prompt_tokens": 1240,
+      "completion_tokens": 199,
+      "total_tokens": 1439,
+      "calls": 1
+     },
+     "seconds": 5.99,
+     "kind": "qr_bill"
+    },
+    "p012": {
+     "tokens": {
+      "prompt_tokens": 1179,
+      "completion_tokens": 583,
+      "total_tokens": 1762,
+      "calls": 1
+     },
+     "seconds": 15.5,
+     "kind": "bank_statement"
+    },
+    "p013": {
+     "tokens": {
+      "prompt_tokens": 887,
+      "completion_tokens": 138,
+      "total_tokens": 1025,
+      "calls": 1
+     },
+     "seconds": 3.96,
+     "kind": "official_letter"
+    },
+    "p014": {
+     "tokens": {
+      "prompt_tokens": 1201,
+      "completion_tokens": 188,
+      "total_tokens": 1389,
+      "calls": 1
+     },
+     "seconds": 5.74,
+     "kind": "qr_bill"
+    },
+    "p015": {
+     "tokens": {
+      "prompt_tokens": 1204,
+      "completion_tokens": 186,
+      "total_tokens": 1390,
+      "calls": 1
+     },
+     "seconds": 5.67,
+     "kind": "qr_bill"
+    },
+    "p016": {
+     "tokens": {
+      "prompt_tokens": 938,
+      "completion_tokens": 135,
+      "total_tokens": 1073,
+      "calls": 1
+     },
+     "seconds": 4.01,
+     "kind": "official_letter"
+    },
+    "p017": {
+     "tokens": {
+      "prompt_tokens": 1231,
+      "completion_tokens": 182,
+      "total_tokens": 1413,
+      "calls": 1
+     },
+     "seconds": 5.62,
+     "kind": "qr_bill"
+    },
+    "p018": {
+     "tokens": {
+      "prompt_tokens": 1138,
+      "completion_tokens": 541,
+      "total_tokens": 1679,
+      "calls": 1
+     },
+     "seconds": 14.45,
+     "kind": "bank_statement"
+    },
+    "p019": {
+     "tokens": {
+      "prompt_tokens": 1192,
+      "completion_tokens": 509,
+      "total_tokens": 1701,
+      "calls": 1
+     },
+     "seconds": 13.69,
+     "kind": "bank_statement"
+    },
+    "p020": {
+     "tokens": {
+      "prompt_tokens": 1168,
+      "completion_tokens": 187,
+      "total_tokens": 1355,
+      "calls": 1
+     },
+     "seconds": 5.64,
+     "kind": "qr_bill"
+    },
+    "p021": {
+     "tokens": {
+      "prompt_tokens": 1143,
+      "completion_tokens": 542,
+      "total_tokens": 1685,
+      "calls": 1
+     },
+     "seconds": 14.44,
+     "kind": "bank_statement"
+    },
+    "p022": {
+     "tokens": {
+      "prompt_tokens": 1294,
+      "completion_tokens": 201,
+      "total_tokens": 1495,
+      "calls": 1
+     },
+     "seconds": 6.17,
+     "kind": "qr_bill"
+    },
+    "p023": {
+     "tokens": {
+      "prompt_tokens": 1250,
+      "completion_tokens": 211,
+      "total_tokens": 1461,
+      "calls": 1
+     },
+     "seconds": 6.32,
+     "kind": "qr_bill"
+    },
+    "p024": {
+     "tokens": {
+      "prompt_tokens": 1193,
+      "completion_tokens": 189,
+      "total_tokens": 1382,
+      "calls": 1
+     },
+     "seconds": 5.7,
+     "kind": "qr_bill"
+    },
+    "p025": {
+     "tokens": {
+      "prompt_tokens": 1025,
+      "completion_tokens": 173,
+      "total_tokens": 1198,
+      "calls": 1
+     },
+     "seconds": 4.98,
+     "kind": "qr_bill"
+    },
+    "p026": {
+     "tokens": {
+      "prompt_tokens": 1203,
+      "completion_tokens": 471,
+      "total_tokens": 1674,
+      "calls": 1
+     },
+     "seconds": 12.81,
+     "kind": "bank_statement"
+    },
+    "p027": {
+     "tokens": {
+      "prompt_tokens": 928,
+      "completion_tokens": 142,
+      "total_tokens": 1070,
+      "calls": 1
+     },
+     "seconds": 4.16,
+     "kind": "official_letter"
+    },
+    "p028": {
+     "tokens": {
+      "prompt_tokens": 933,
+      "completion_tokens": 152,
+      "total_tokens": 1085,
+      "calls": 1
+     },
+     "seconds": 4.46,
+     "kind": "official_letter"
+    },
+    "p029": {
+     "tokens": {
+      "prompt_tokens": 1264,
+      "completion_tokens": 684,
+      "total_tokens": 1948,
+      "calls": 1
+     },
+     "seconds": 18.72,
+     "kind": "bank_statement"
+    },
+    "p030": {
+     "tokens": {
+      "prompt_tokens": 1239,
+      "completion_tokens": 189,
+      "total_tokens": 1428,
+      "calls": 1
+     },
+     "seconds": 6.02,
+     "kind": "qr_bill"
+    },
+    "p031": {
+     "tokens": {
+      "prompt_tokens": 1189,
+      "completion_tokens": 609,
+      "total_tokens": 1798,
+      "calls": 1
+     },
+     "seconds": 16.98,
+     "kind": "bank_statement"
+    },
+    "p032": {
+     "tokens": {
+      "prompt_tokens": 1321,
+      "completion_tokens": 182,
+      "total_tokens": 1503,
+      "calls": 1
+     },
+     "seconds": 6.34,
+     "kind": "qr_bill"
+    },
+    "p033": {
+     "tokens": {
+      "prompt_tokens": 1142,
+      "completion_tokens": 187,
+      "total_tokens": 1329,
+      "calls": 1
+     },
+     "seconds": 6.01,
+     "kind": "qr_bill"
+    },
+    "p034": {
+     "tokens": {
+      "prompt_tokens": 1198,
+      "completion_tokens": 701,
+      "total_tokens": 1899,
+      "calls": 1
+     },
+     "seconds": 19.55,
+     "kind": "bank_statement"
+    },
+    "p035": {
+     "tokens": {
+      "prompt_tokens": 930,
+      "completion_tokens": 148,
+      "total_tokens": 1078,
+      "calls": 1
+     },
+     "seconds": 4.47,
+     "kind": "official_letter"
+    },
+    "p036": {
+     "tokens": {
+      "prompt_tokens": 911,
+      "completion_tokens": 148,
+      "total_tokens": 1059,
+      "calls": 1
+     },
+     "seconds": 4.46,
+     "kind": "official_letter"
+    },
+    "p037": {
+     "tokens": {
+      "prompt_tokens": 1278,
+      "completion_tokens": 199,
+      "total_tokens": 1477,
+      "calls": 1
+     },
+     "seconds": 6.38,
+     "kind": "qr_bill"
+    },
+    "p038": {
+     "tokens": {
+      "prompt_tokens": 1026,
+      "completion_tokens": 154,
+      "total_tokens": 1180,
+      "calls": 1
+     },
+     "seconds": 4.78,
+     "kind": "qr_bill"
+    },
+    "p039": {
+     "tokens": {
+      "prompt_tokens": 1413,
+      "completion_tokens": 753,
+      "total_tokens": 2166,
+      "calls": 1
+     },
+     "seconds": 24.74,
+     "kind": "bank_statement"
+    },
+    "p040": {
+     "tokens": {
+      "prompt_tokens": 906,
+      "completion_tokens": 146,
+      "total_tokens": 1052,
+      "calls": 1
+     },
+     "seconds": 4.42,
+     "kind": "official_letter"
+    },
+    "p041": {
+     "tokens": {
+      "prompt_tokens": 887,
+      "completion_tokens": 153,
+      "total_tokens": 1040,
+      "calls": 1
+     },
+     "seconds": 4.51,
+     "kind": "qr_bill"
+    },
+    "p042": {
+     "tokens": {
+      "prompt_tokens": 1194,
+      "completion_tokens": 196,
+      "total_tokens": 1390,
+      "calls": 1
+     },
+     "seconds": 6.13,
+     "kind": "qr_bill"
+    },
+    "p043": {
+     "tokens": {
+      "prompt_tokens": 999,
+      "completion_tokens": 174,
+      "total_tokens": 1173,
+      "calls": 1
+     },
+     "seconds": 5.23,
+     "kind": "qr_bill"
+    },
+    "p044": {
+     "tokens": {
+      "prompt_tokens": 1164,
+      "completion_tokens": 539,
+      "total_tokens": 1703,
+      "calls": 1
+     },
+     "seconds": 15.07,
+     "kind": "bank_statement"
+    },
+    "p045": {
+     "tokens": {
+      "prompt_tokens": 858,
+      "completion_tokens": 129,
+      "total_tokens": 987,
+      "calls": 1
+     },
+     "seconds": 3.86,
+     "kind": "official_letter"
+    },
+    "p046": {
+     "tokens": {
+      "prompt_tokens": 1260,
+      "completion_tokens": 191,
+      "total_tokens": 1451,
+      "calls": 1
+     },
+     "seconds": 6.09,
+     "kind": "qr_bill"
+    },
+    "p047": {
+     "tokens": {
+      "prompt_tokens": 1320,
+      "completion_tokens": 662,
+      "total_tokens": 1982,
+      "calls": 1
+     },
+     "seconds": 18.66,
+     "kind": "bank_statement"
+    },
+    "p048": {
+     "tokens": {
+      "prompt_tokens": 863,
+      "completion_tokens": 121,
+      "total_tokens": 984,
+      "calls": 1
+     },
+     "seconds": 3.64,
+     "kind": "official_letter"
+    },
+    "p049": {
+     "tokens": {
+      "prompt_tokens": 1144,
+      "completion_tokens": 468,
+      "total_tokens": 1612,
+      "calls": 1
+     },
+     "seconds": 13.09,
+     "kind": "bank_statement"
+    },
+    "p050": {
+     "tokens": {
+      "prompt_tokens": 1207,
+      "completion_tokens": 684,
+      "total_tokens": 1891,
+      "calls": 1
+     },
+     "seconds": 18.67,
+     "kind": "bank_statement"
+    },
+    "p051": {
+     "tokens": {
+      "prompt_tokens": 1108,
+      "completion_tokens": 161,
+      "total_tokens": 1269,
+      "calls": 1
+     },
+     "seconds": 5.06,
+     "kind": "qr_bill"
+    },
+    "p052": {
+     "tokens": {
+      "prompt_tokens": 1213,
+      "completion_tokens": 619,
+      "total_tokens": 1832,
+      "calls": 1
+     },
+     "seconds": 17.52,
+     "kind": "bank_statement"
+    },
+    "p053": {
+     "tokens": {
+      "prompt_tokens": 886,
+      "completion_tokens": 130,
+      "total_tokens": 1016,
+      "calls": 1
+     },
+     "seconds": 3.98,
+     "kind": "official_letter"
+    },
+    "p054": {
+     "tokens": {
+      "prompt_tokens": 1414,
+      "completion_tokens": 733,
+      "total_tokens": 2147,
+      "calls": 1
+     },
+     "seconds": 20.92,
+     "kind": "bank_statement"
+    },
+    "p055": {
+     "tokens": {
+      "prompt_tokens": 1214,
+      "completion_tokens": 206,
+      "total_tokens": 1420,
+      "calls": 1
+     },
+     "seconds": 6.65,
+     "kind": "qr_bill"
+    },
+    "p056": {
+     "tokens": {
+      "prompt_tokens": 1231,
+      "completion_tokens": 550,
+      "total_tokens": 1781,
+      "calls": 1
+     },
+     "seconds": 15.56,
+     "kind": "bank_statement"
+    },
+    "p057": {
+     "tokens": {
+      "prompt_tokens": 932,
+      "completion_tokens": 142,
+      "total_tokens": 1074,
+      "calls": 1
+     },
+     "seconds": 4.36,
+     "kind": "official_letter"
+    },
+    "p058": {
+     "tokens": {
+      "prompt_tokens": 1065,
+      "completion_tokens": 167,
+      "total_tokens": 1232,
+      "calls": 1
+     },
+     "seconds": 5.22,
+     "kind": "qr_bill"
+    },
+    "p059": {
+     "tokens": {
+      "prompt_tokens": 850,
+      "completion_tokens": 124,
+      "total_tokens": 974,
+      "calls": 1
+     },
+     "seconds": 3.93,
+     "kind": "official_letter"
+    },
+    "p060": {
+     "tokens": {
+      "prompt_tokens": 1215,
+      "completion_tokens": 185,
+      "total_tokens": 1400,
+      "calls": 1
+     },
+     "seconds": 5.97,
+     "kind": "qr_bill"
+    },
+    "p061": {
+     "tokens": {
+      "prompt_tokens": 1338,
+      "completion_tokens": 696,
+      "total_tokens": 2034,
+      "calls": 1
+     },
+     "seconds": 19.97,
+     "kind": "bank_statement"
+    },
+    "p062": {
+     "tokens": {
+      "prompt_tokens": 1265,
+      "completion_tokens": 187,
+      "total_tokens": 1452,
+      "calls": 1
+     },
+     "seconds": 6.31,
+     "kind": "qr_bill"
+    },
+    "p063": {
+     "tokens": {
+      "prompt_tokens": 945,
+      "completion_tokens": 142,
+      "total_tokens": 1087,
+      "calls": 1
+     },
+     "seconds": 4.42,
+     "kind": "official_letter"
+    },
+    "p064": {
+     "tokens": {
+      "prompt_tokens": 1182,
+      "completion_tokens": 192,
+      "total_tokens": 1374,
+      "calls": 1
+     },
+     "seconds": 6.16,
+     "kind": "qr_bill"
+    },
+    "p065": {
+     "tokens": {
+      "prompt_tokens": 1270,
+      "completion_tokens": 207,
+      "total_tokens": 1477,
+      "calls": 1
+     },
+     "seconds": 6.73,
+     "kind": "qr_bill"
+    },
+    "p066": {
+     "tokens": {
+      "prompt_tokens": 936,
+      "completion_tokens": 137,
+      "total_tokens": 1073,
+      "calls": 1
+     },
+     "seconds": 4.33,
+     "kind": "official_letter"
+    },
+    "p067": {
+     "tokens": {
+      "prompt_tokens": 932,
+      "completion_tokens": 146,
+      "total_tokens": 1078,
+      "calls": 1
+     },
+     "seconds": 4.63,
+     "kind": "official_letter"
+    },
+    "p068": {
+     "tokens": {
+      "prompt_tokens": 1401,
+      "completion_tokens": 689,
+      "total_tokens": 2090,
+      "calls": 1
+     },
+     "seconds": 20.1,
+     "kind": "bank_statement"
+    },
+    "p069": {
+     "tokens": {
+      "prompt_tokens": 924,
+      "completion_tokens": 142,
+      "total_tokens": 1066,
+      "calls": 1
+     },
+     "seconds": 4.5,
+     "kind": "official_letter"
+    },
+    "p070": {
+     "tokens": {
+      "prompt_tokens": 1251,
+      "completion_tokens": 636,
+      "total_tokens": 1887,
+      "calls": 1
+     },
+     "seconds": 18.7,
+     "kind": "bank_statement"
+    },
+    "p071": {
+     "tokens": {
+      "prompt_tokens": 1000,
+      "completion_tokens": 158,
+      "total_tokens": 1158,
+      "calls": 1
+     },
+     "seconds": 5.21,
+     "kind": "qr_bill"
+    },
+    "p072": {
+     "tokens": {
+      "prompt_tokens": 1177,
+      "completion_tokens": 192,
+      "total_tokens": 1369,
+      "calls": 1
+     },
+     "seconds": 6.54,
+     "kind": "qr_bill"
+    },
+    "p073": {
+     "tokens": {
+      "prompt_tokens": 1272,
+      "completion_tokens": 718,
+      "total_tokens": 1990,
+      "calls": 1
+     },
+     "seconds": 21.41,
+     "kind": "bank_statement"
+    },
+    "p074": {
+     "tokens": {
+      "prompt_tokens": 1266,
+      "completion_tokens": 205,
+      "total_tokens": 1471,
+      "calls": 1
+     },
+     "seconds": 7.24,
+     "kind": "qr_bill"
+    },
+    "p075": {
+     "tokens": {
+      "prompt_tokens": 1144,
+      "completion_tokens": 181,
+      "total_tokens": 1325,
+      "calls": 1
+     },
+     "seconds": 6.1,
+     "kind": "qr_bill"
+    },
+    "p076": {
+     "tokens": {
+      "prompt_tokens": 1330,
+      "completion_tokens": 708,
+      "total_tokens": 2038,
+      "calls": 1
+     },
+     "seconds": 21.44,
+     "kind": "bank_statement"
+    },
+    "p077": {
+     "tokens": {
+      "prompt_tokens": 845,
+      "completion_tokens": 124,
+      "total_tokens": 969,
+      "calls": 1
+     },
+     "seconds": 4.04,
+     "kind": "official_letter"
+    },
+    "p078": {
+     "tokens": {
+      "prompt_tokens": 935,
+      "completion_tokens": 139,
+      "total_tokens": 1074,
+      "calls": 1
+     },
+     "seconds": 4.6,
+     "kind": "official_letter"
+    },
+    "p079": {
+     "tokens": {
+      "prompt_tokens": 1230,
+      "completion_tokens": 507,
+      "total_tokens": 1737,
+      "calls": 1
+     },
+     "seconds": 15.78,
+     "kind": "bank_statement"
+    },
+    "p080": {
+     "tokens": {
+      "prompt_tokens": 1193,
+      "completion_tokens": 186,
+      "total_tokens": 1379,
+      "calls": 1
+     },
+     "seconds": 6.41,
+     "kind": "qr_bill"
+    },
+    "p081": {
+     "tokens": {
+      "prompt_tokens": 1370,
+      "completion_tokens": 687,
+      "total_tokens": 2057,
+      "calls": 1
+     },
+     "seconds": 21.41,
+     "kind": "bank_statement"
+    },
+    "p082": {
+     "tokens": {
+      "prompt_tokens": 906,
+      "completion_tokens": 140,
+      "total_tokens": 1046,
+      "calls": 1
+     },
+     "seconds": 4.7,
+     "kind": "official_letter"
+    },
+    "p083": {
+     "tokens": {
+      "prompt_tokens": 1235,
+      "completion_tokens": 205,
+      "total_tokens": 1440,
+      "calls": 1
+     },
+     "seconds": 7.1,
+     "kind": "qr_bill"
+    },
+    "p084": {
+     "tokens": {
+      "prompt_tokens": 885,
+      "completion_tokens": 139,
+      "total_tokens": 1024,
+      "calls": 1
+     },
+     "seconds": 4.68,
+     "kind": "official_letter"
+    },
+    "p085": {
+     "tokens": {
+      "prompt_tokens": 913,
+      "completion_tokens": 140,
+      "total_tokens": 1053,
+      "calls": 1
+     },
+     "seconds": 4.76,
+     "kind": "official_letter"
+    },
+    "p086": {
+     "tokens": {
+      "prompt_tokens": 886,
+      "completion_tokens": 140,
+      "total_tokens": 1026,
+      "calls": 1
+     },
+     "seconds": 4.86,
+     "kind": "official_letter"
+    },
+    "p087": {
+     "tokens": {
+      "prompt_tokens": 1227,
+      "completion_tokens": 205,
+      "total_tokens": 1432,
+      "calls": 1
+     },
+     "seconds": 7.14,
+     "kind": "qr_bill"
+    },
+    "p088": {
+     "tokens": {
+      "prompt_tokens": 1296,
+      "completion_tokens": 197,
+      "total_tokens": 1493,
+      "calls": 1
+     },
+     "seconds": 7.05,
+     "kind": "qr_bill"
+    },
+    "p089": {
+     "tokens": {
+      "prompt_tokens": 887,
+      "completion_tokens": 141,
+      "total_tokens": 1028,
+      "calls": 1
+     },
+     "seconds": 4.74,
+     "kind": "official_letter"
+    },
+    "p090": {
+     "tokens": {
+      "prompt_tokens": 1260,
+      "completion_tokens": 636,
+      "total_tokens": 1896,
+      "calls": 1
+     },
+     "seconds": 19.82,
+     "kind": "bank_statement"
+    },
+    "p091": {
+     "tokens": {
+      "prompt_tokens": 1075,
+      "completion_tokens": 162,
+      "total_tokens": 1237,
+      "calls": 1
+     },
+     "seconds": 5.54,
+     "kind": "qr_bill"
+    },
+    "p092": {
+     "tokens": {
+      "prompt_tokens": 890,
+      "completion_tokens": 143,
+      "total_tokens": 1033,
+      "calls": 1
+     },
+     "seconds": 4.67,
+     "kind": "official_letter"
+    },
+    "p093": {
+     "tokens": {
+      "prompt_tokens": 903,
+      "completion_tokens": 141,
+      "total_tokens": 1044,
+      "calls": 1
+     },
+     "seconds": 4.66,
+     "kind": "official_letter"
+    },
+    "p094": {
+     "tokens": {
+      "prompt_tokens": 1203,
+      "completion_tokens": 205,
+      "total_tokens": 1408,
+      "calls": 1
+     },
+     "seconds": 7.08,
+     "kind": "qr_bill"
+    },
+    "p095": {
+     "tokens": {
+      "prompt_tokens": 1113,
+      "completion_tokens": 550,
+      "total_tokens": 1663,
+      "calls": 1
+     },
+     "seconds": 17.8,
+     "kind": "bank_statement"
+    },
+    "p096": {
+     "tokens": {
+      "prompt_tokens": 1078,
+      "completion_tokens": 163,
+      "total_tokens": 1241,
+      "calls": 1
+     },
+     "seconds": 6.29,
+     "kind": "qr_bill"
+    },
+    "p097": {
+     "tokens": {
+      "prompt_tokens": 1278,
+      "completion_tokens": 206,
+      "total_tokens": 1484,
+      "calls": 1
+     },
+     "seconds": 7.56,
+     "kind": "qr_bill"
+    },
+    "p098": {
+     "tokens": {
+      "prompt_tokens": 1256,
+      "completion_tokens": 691,
+      "total_tokens": 1947,
+      "calls": 1
+     },
+     "seconds": 23.79,
+     "kind": "bank_statement"
+    },
+    "p099": {
+     "tokens": {
+      "prompt_tokens": 930,
+      "completion_tokens": 144,
+      "total_tokens": 1074,
+      "calls": 1
+     },
+     "seconds": 5.3,
+     "kind": "qr_bill"
+    },
+    "p100": {
+     "tokens": {
+      "prompt_tokens": 927,
+      "completion_tokens": 140,
+      "total_tokens": 1067,
+      "calls": 1
+     },
+     "seconds": 4.89,
+     "kind": "official_letter"
+    }
+   },
+   "questions_retrieval": [
+    {
+     "id": "q01",
+     "question": "Combien dois-je encore à Garage Morel SA ?",
+     "truth": 927.5,
+     "type": "amount",
+     "answer": "927.50 CHF",
+     "match": true,
+     "papers_seen": [
+      "p020",
+      "p005",
+      "p008",
+      "p009",
+      "p010",
+      "p011"
+     ],
+     "tokens": {
+      "prompt_tokens": 3227,
+      "completion_tokens": 9,
+      "total_tokens": 3236,
+      "calls": 1
+     },
+     "seconds": 6.34,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q02",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
+     "truth": 5516.78,
+     "type": "amount",
+     "answer": "5516.78 CHF",
+     "match": true,
+     "papers_seen": [
+      "p043"
+     ],
+     "tokens": {
+      "prompt_tokens": 471,
+      "completion_tokens": 10,
+      "total_tokens": 481,
+      "calls": 1
+     },
+     "seconds": 1.86
+    },
+    {
+     "id": "q03",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
+     "truth": 4357.89,
+     "type": "amount",
+     "answer": "CHF 4 357.89",
+     "match": true,
+     "papers_seen": [
+      "p023"
+     ],
+     "tokens": {
+      "prompt_tokens": 722,
+      "completion_tokens": 12,
+      "total_tokens": 734,
+      "calls": 1
+     },
+     "seconds": 2.17
+    },
+    {
+     "id": "q04",
+     "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
+     "truth": 4223.79,
+     "type": "amount",
+     "answer": "CHF 4'223.79",
+     "match": true,
+     "papers_seen": [
+      "p038"
+     ],
+     "tokens": {
+      "prompt_tokens": 494,
+      "completion_tokens": 12,
+      "total_tokens": 506,
+      "calls": 1
+     },
+     "seconds": 1.35
+    },
+    {
+     "id": "q05",
+     "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
+     "truth": 4777.59,
+     "type": "amount",
+     "answer": "Fr. 4777.59",
+     "match": true,
+     "papers_seen": [
+      "p014"
+     ],
+     "tokens": {
+      "prompt_tokens": 672,
+      "completion_tokens": 11,
+      "total_tokens": 683,
+      "calls": 1
+     },
+     "seconds": 1.93
+    },
+    {
+     "id": "q06",
+     "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
+     "truth": 10539.3,
+     "type": "amount",
+     "answer": "CHF 10'539.30",
+     "match": true,
+     "papers_seen": [
+      "p058",
+      "p015"
+     ],
+     "tokens": {
+      "prompt_tokens": 1126,
+      "completion_tokens": 13,
+      "total_tokens": 1139,
+      "calls": 1
+     },
+     "seconds": 2.62
+    },
+    {
+     "id": "q07",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
+     "truth": 980.25,
+     "type": "amount",
+     "answer": "980.25 CHF",
+     "match": true,
+     "papers_seen": [
+      "p037"
+     ],
+     "tokens": {
+      "prompt_tokens": 750,
+      "completion_tokens": 9,
+      "total_tokens": 759,
+      "calls": 1
+     },
+     "seconds": 3.24
+    },
+    {
+     "id": "q08",
+     "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
+     "truth": 2663.99,
+     "type": "amount",
+     "answer": "CHF 2'663.99",
+     "match": true,
+     "papers_seen": [
+      "p088"
+     ],
+     "tokens": {
+      "prompt_tokens": 769,
+      "completion_tokens": 12,
+      "total_tokens": 781,
+      "calls": 1
+     },
+     "seconds": 2.03
+    },
+    {
+     "id": "q09",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
+     "truth": 5832.21,
+     "type": "amount",
+     "answer": "CHF 5'832.21",
+     "match": true,
+     "papers_seen": [
+      "p087"
+     ],
+     "tokens": {
+      "prompt_tokens": 699,
+      "completion_tokens": 12,
+      "total_tokens": 711,
+      "calls": 1
+     },
+     "seconds": 1.81
+    },
+    {
+     "id": "q10",
+     "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
+     "truth": 1821.59,
+     "type": "amount",
+     "answer": "Fr. 1821.59",
+     "match": true,
+     "papers_seen": [
+      "p051",
+      "p055"
+     ],
+     "tokens": {
+      "prompt_tokens": 1182,
+      "completion_tokens": 11,
+      "total_tokens": 1193,
+      "calls": 1
+     },
+     "seconds": 2.83
+    },
+    {
+     "id": "q11",
+     "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
+     "truth": 2562.08,
+     "type": "amount",
+     "answer": "CHF 2'562.08",
+     "match": true,
+     "papers_seen": [
+      "p071"
+     ],
+     "tokens": {
+      "prompt_tokens": 470,
+      "completion_tokens": 12,
+      "total_tokens": 482,
+      "calls": 1
+     },
+     "seconds": 1.38
+    },
+    {
+     "id": "q12",
+     "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
+     "truth": 4741.21,
+     "type": "amount",
+     "answer": "CHF 4 741.21",
+     "match": true,
+     "papers_seen": [
+      "p046"
+     ],
+     "tokens": {
+      "prompt_tokens": 727,
+      "completion_tokens": 12,
+      "total_tokens": 739,
+      "calls": 1
+     },
+     "seconds": 1.85
+    },
+    {
+     "id": "q13",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
+     "truth": 3138.75,
+     "type": "amount",
+     "answer": "CHF 3'138.75",
+     "match": true,
+     "papers_seen": [
+      "p026",
+      "p049",
+      "p006",
+      "p034",
+      "p004",
+      "p012",
+      "p029",
+      "p076",
+      "p098",
+      "p019",
+      "p047",
+      "p068",
+      "p070",
+      "p090"
+     ],
+     "tokens": {
+      "prompt_tokens": 9214,
+      "completion_tokens": 12,
+      "total_tokens": 9226,
+      "calls": 1
+     },
+     "seconds": 20.97,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q14",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
+     "truth": 11061.8,
+     "type": "amount",
+     "answer": "CHF 11 061.80",
+     "match": true,
+     "papers_seen": [
+      "p006",
+      "p034",
+      "p026",
+      "p049",
+      "p004",
+      "p012",
+      "p029",
+      "p076",
+      "p098",
+      "p019",
+      "p047",
+      "p068",
+      "p070",
+      "p090"
+     ],
+     "tokens": {
+      "prompt_tokens": 9213,
+      "completion_tokens": 13,
+      "total_tokens": 9226,
+      "calls": 1
+     },
+     "seconds": 22.21,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q15",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
+     "truth": 1661.2,
+     "type": "amount",
+     "answer": "1'661.20 CHF",
+     "match": true,
+     "papers_seen": [
+      "p052",
+      "p095",
+      "p007",
+      "p061",
+      "p002",
+      "p021",
+      "p050",
+      "p054",
+      "p081"
+     ],
+     "tokens": {
+      "prompt_tokens": 5626,
+      "completion_tokens": 11,
+      "total_tokens": 5637,
+      "calls": 1
+     },
+     "seconds": 13.43,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q16",
+     "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
+     "truth": 12421.9,
+     "type": "amount",
+     "answer": "12421.90 CHF",
+     "match": true,
+     "papers_seen": [
+      "p079",
+      "p018",
+      "p031",
+      "p039",
+      "p044",
+      "p056",
+      "p073"
+     ],
+     "tokens": {
+      "prompt_tokens": 4452,
+      "completion_tokens": 11,
+      "total_tokens": 4463,
+      "calls": 1
+     },
+     "seconds": 9.6,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q17",
+     "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
+     "truth": 7623.3,
+     "type": "amount",
+     "answer": "7623.30 CHF",
+     "match": true,
+     "papers_seen": [
+      "p039",
+      "p018",
+      "p031",
+      "p044",
+      "p056",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4449,
+      "completion_tokens": 10,
+      "total_tokens": 4459,
+      "calls": 1
+     },
+     "seconds": 9.35,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q18",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
+     "truth": 7026.25,
+     "type": "amount",
+     "answer": "7026.25 CHF",
+     "match": true,
+     "papers_seen": [
+      "p031",
+      "p056",
+      "p018",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4459,
+      "completion_tokens": 10,
+      "total_tokens": 4469,
+      "calls": 1
+     },
+     "seconds": 9.48,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q19",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
+     "truth": 6957.3,
+     "type": "amount",
+     "answer": "CHF 6'957.30",
+     "match": true,
+     "papers_seen": [
+      "p021",
+      "p054",
+      "p081",
+      "p002",
+      "p007",
+      "p050",
+      "p052",
+      "p061",
+      "p095"
+     ],
+     "tokens": {
+      "prompt_tokens": 5623,
+      "completion_tokens": 12,
+      "total_tokens": 5635,
+      "calls": 1
+     },
+     "seconds": 12.19,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    },
+    {
+     "id": "q20",
+     "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
+     "truth": 13485.75,
+     "type": "amount",
+     "answer": "CHF 13 485.75",
+     "match": true,
+     "papers_seen": [
+      "p018",
+      "p031",
+      "p056",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 4448,
+      "completion_tokens": 13,
+      "total_tokens": 4461,
+      "calls": 1
+     },
+     "seconds": 9.74,
+     "stamp": "/Users/igorjovicic/wilhlm-box-test/models/apertus-v1.5-8b-8bit"
+    }
+   ]
+  },
+  "ours": {
+   "papers": [
+    {
+     "id": "p001",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p002",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p003",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p004",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p005",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p006",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "blank"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p007",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p008",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p009",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p010",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p011",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p012",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "unbalanced"
+     ]
+    },
+    {
+     "id": "p013",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p014",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p015",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p016",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p017",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p018",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p019",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p020",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p021",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p022",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p023",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p024",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p025",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p026",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p027",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p028",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p029",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p030",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p031",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "blank"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p032",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p033",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p034",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p035",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p036",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p037",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p038",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p039",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p040",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p041",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p042",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p043",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_qr",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p044",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p045",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p046",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p047",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p048",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p049",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_space",
+      "unbalanced",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p050",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_apostrophe",
+      "unbalanced",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p051",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p052",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p053",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p054",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "blank"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p055",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p056",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p057",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p058",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p059",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p060",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p061",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p062",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p063",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p064",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p065",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p066",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p067",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p068",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p069",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p070",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p071",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p072",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p073",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "blank"
+     },
+     "movements": "blank",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p074",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p075",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p076",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p077",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p078",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p079",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p080",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p081",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p082",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p083",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p084",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe"
+     ]
+    },
+    {
+     "id": "p085",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p086",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "no_amount"
+     ]
+    },
+    {
+     "id": "p087",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p088",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "second_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p089",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p090",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_apostrophe",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p091",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "no_qr"
+     ]
+    },
+    {
+     "id": "p092",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p093",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "no_amount",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p094",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_apostrophe",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p095",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_fr_dash"
+     ]
+    },
+    {
+     "id": "p096",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "creditor_name_drift"
+     ]
+    },
+    {
+     "id": "p097",
+     "kind": "qr_bill",
+     "kind_ok": true,
+     "fields": {
+      "amount_chf": "correct",
+      "iban": "correct",
+      "reference": "correct",
+      "reference_type": "correct",
+      "invoice_number": "correct",
+      "invoice_date": "correct",
+      "due_date": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space",
+      "second_amount",
+      "creditor_name_drift",
+      "footer_date"
+     ]
+    },
+    {
+     "id": "p098",
+     "kind": "bank_statement",
+     "kind_ok": true,
+     "fields": {
+      "account_iban": "correct",
+      "period_start": "correct",
+      "period_end": "correct",
+      "opening_balance": "correct",
+      "closing_balance": "correct"
+     },
+     "movements": "correct",
+     "traps": [
+      "format_space"
+     ]
+    },
+    {
+     "id": "p099",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_fr_dash",
+      "second_amount"
+     ]
+    },
+    {
+     "id": "p100",
+     "kind": "official_letter",
+     "kind_ok": true,
+     "fields": {
+      "letter_date": "correct",
+      "amount_chf": "correct",
+      "deadline": "correct",
+      "reference_number": "correct"
+     },
+     "movements": null,
+     "traps": [
+      "format_space"
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "id": "q01",
+     "question": "Combien dois-je encore à Garage Morel SA ?",
+     "truth": 927.5,
+     "type": "amount",
+     "answer": "Dû à Garage Morel SA : CHF 927.50 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p020",
+      "p005",
+      "p008",
+      "p009",
+      "p010",
+      "p011"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p020"
+     ],
+     "grounded": true,
+     "value": 927.5
+    },
+    {
+     "id": "q02",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-994 ?",
+     "truth": 5516.78,
+     "type": "amount",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 5'516.78 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p043"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p043"
+     ],
+     "grounded": true,
+     "value": 5516.78
+    },
+    {
+     "id": "q03",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-580 ?",
+     "truth": 4357.89,
+     "type": "amount",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 4'357.89 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p023"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p023"
+     ],
+     "grounded": true,
+     "value": 4357.89
+    },
+    {
+     "id": "q04",
+     "question": "Combien dois-je encore à Électricité Favre SA pour la facture 2026-546 ?",
+     "truth": 4223.79,
+     "type": "amount",
+     "answer": "Dû à Électricité Favre SA : CHF 4'223.79 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p038"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p038"
+     ],
+     "grounded": true,
+     "value": 4223.79
+    },
+    {
+     "id": "q05",
+     "question": "Wie viel schulde ich Praxis Dr. med. Keller noch für die Rechnung 2026-229?",
+     "truth": 4777.59,
+     "type": "amount",
+     "answer": "Geschuldet an Praxis Dr. med. Keller: CHF 4'777.59 (1 Rechnung(en)).",
+     "match": true,
+     "papers_seen": [
+      "p014"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p014"
+     ],
+     "grounded": true,
+     "value": 4777.59
+    },
+    {
+     "id": "q06",
+     "question": "Quanto devo ancora a Fiduciaria Colombo per la fattura 2026-152?",
+     "truth": 10539.3,
+     "type": "amount",
+     "answer": "Dovuto a Fiduciaria Colombo: CHF 10'539.30 (1 fattura/e).",
+     "match": true,
+     "papers_seen": [
+      "p058",
+      "p015"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p058"
+     ],
+     "grounded": true,
+     "value": 10539.3
+    },
+    {
+     "id": "q07",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-598 ?",
+     "truth": 980.25,
+     "type": "amount",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 980.25 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p037"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p037"
+     ],
+     "grounded": true,
+     "value": 980.25
+    },
+    {
+     "id": "q08",
+     "question": "Combien dois-je encore à Fiduciaire Lemaire Sàrl pour la facture 2026-127 ?",
+     "truth": 2663.99,
+     "type": "amount",
+     "answer": "Dû à Fiduciaire Lemaire Sàrl : CHF 2'663.99 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p088"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p088"
+     ],
+     "grounded": true,
+     "value": 2663.99
+    },
+    {
+     "id": "q09",
+     "question": "Combien dois-je encore à Physio du Léman Sàrl pour la facture 2026-540 ?",
+     "truth": 5832.21,
+     "type": "amount",
+     "answer": "Dû à Physio du Léman Sàrl : CHF 5'832.21 (1 facture(s)).",
+     "match": true,
+     "papers_seen": [
+      "p087"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p087"
+     ],
+     "grounded": true,
+     "value": 5832.21
+    },
+    {
+     "id": "q10",
+     "question": "Wie viel schulde ich Velo Studer AG noch für die Rechnung 2026-754?",
+     "truth": 1821.59,
+     "type": "amount",
+     "answer": "Geschuldet an Velo Studer AG: CHF 1'821.59 (1 Rechnung(en)).",
+     "match": true,
+     "papers_seen": [
+      "p051",
+      "p055"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p051"
+     ],
+     "grounded": true,
+     "value": 1821.59
+    },
+    {
+     "id": "q11",
+     "question": "Wie viel schulde ich Gärtnerei Wyss noch für die Rechnung 2026-236?",
+     "truth": 2562.08,
+     "type": "amount",
+     "answer": "Geschuldet an Gärtnerei Wyss: CHF 2'562.08 (1 Rechnung(en)).",
+     "match": true,
+     "papers_seen": [
+      "p071"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p071"
+     ],
+     "grounded": true,
+     "value": 2562.08
+    },
+    {
+     "id": "q12",
+     "question": "Quanto devo ancora a Pasticceria Rossi per la fattura 2026-551?",
+     "truth": 4741.21,
+     "type": "amount",
+     "answer": "Dovuto a Pasticceria Rossi: CHF 4'741.21 (1 fattura/e).",
+     "match": true,
+     "papers_seen": [
+      "p046"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p046"
+     ],
+     "grounded": true,
+     "value": 4741.21
+    },
+    {
+     "id": "q13",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 5840) au 30.09.2026 ?",
+     "truth": 3138.75,
+     "type": "amount",
+     "answer": "Solde du compte Banque du Jura Fictive SA au 30.09.2026 : CHF 3'138.75. Le solde de clôture du relevé Banque du Jura Fictive SA au 30.09.2026 a été laissé vide : arithmetic: opening 10873.00 + movements = 13373.05, statement says 14028.50.",
+     "match": false,
+     "papers_seen": [
+      "p026"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p026",
+      "p049"
+     ],
+     "grounded": true,
+     "value": [
+      3138.75,
+      null
+     ]
+    },
+    {
+     "id": "q14",
+     "question": "Quel est le solde du compte chez Banque Romande du Lac SA (compte se terminant par 6917) au 30.09.2026 ?",
+     "truth": 11061.8,
+     "type": "amount",
+     "answer": "Le solde de clôture du relevé Banque Romande du Lac SA au 30.09.2026 a été laissé vide : arithmetic: opening 8278.00 + movements = 11106.00, statement says 11061.80. Solde du compte Banque Romande du Lac SA au 30.09.2026 : CHF 5'937.00.",
+     "match": false,
+     "papers_seen": [
+      "p006"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p006",
+      "p034"
+     ],
+     "grounded": true,
+     "value": [
+      null,
+      5937.0
+     ]
+    },
+    {
+     "id": "q15",
+     "question": "Quel est le solde du compte chez Banque du Jura Fictive SA (compte se terminant par 3911) au 10.10.2026 ?",
+     "truth": 1661.2,
+     "type": "amount",
+     "answer": "Solde du compte Banque du Jura Fictive SA au 10.10.2026 : CHF 1'661.20. Solde du compte Banque du Jura Fictive SA au 10.10.2026 : CHF 8'015.15.",
+     "match": false,
+     "papers_seen": [
+      "p052"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p052",
+      "p095"
+     ],
+     "grounded": true,
+     "value": [
+      1661.2,
+      8015.15
+     ]
+    },
+    {
+     "id": "q16",
+     "question": "Qual è il saldo del conto presso Cassa di Risparmio del Ceresio al 31.08.2026?",
+     "truth": 12421.9,
+     "type": "amount",
+     "answer": "Saldo del conto Cassa di Risparmio del Ceresio al 31.08.2026: CHF 12'421.90.",
+     "match": true,
+     "papers_seen": [
+      "p079",
+      "p018",
+      "p031",
+      "p039",
+      "p044",
+      "p056",
+      "p073"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p079"
+     ],
+     "grounded": true,
+     "value": 12421.9
+    },
+    {
+     "id": "q17",
+     "question": "Wie hoch ist der Saldo des Kontos bei Sparkasse Tösstal am 31.08.2026?",
+     "truth": 7623.3,
+     "type": "amount",
+     "answer": "Saldo des Kontos Sparkasse Tösstal am 31.08.2026: CHF 7'623.30.",
+     "match": true,
+     "papers_seen": [
+      "p039",
+      "p018",
+      "p031",
+      "p044",
+      "p056",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p039"
+     ],
+     "grounded": true,
+     "value": 7623.3
+    },
+    {
+     "id": "q18",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 2449) am 31.08.2026?",
+     "truth": 7026.25,
+     "type": "amount",
+     "answer": "Der Schlusssaldo des Auszugs Alpenbank AG am 31.08.2026 wurde leer gelassen: arithmetic: opening 4698.85 + movements = 7478.65, statement says 7026.25. Saldo des Kontos Alpenbank AG am 31.08.2026: CHF 4'054.25.",
+     "match": false,
+     "papers_seen": [
+      "p031"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p031",
+      "p056"
+     ],
+     "grounded": true,
+     "value": [
+      null,
+      4054.25
+     ]
+    },
+    {
+     "id": "q19",
+     "question": "Qual è il saldo del conto presso Banca Sud Ticino SA (conto che termina con 0275) al 10.10.2026?",
+     "truth": 6957.3,
+     "type": "amount",
+     "answer": "Saldo del conto Banca Sud Ticino SA al 10.10.2026: CHF -1'353.90. Il saldo finale dell'estratto Banca Sud Ticino SA al 10.10.2026 è stato lasciato vuoto: arithmetic: opening 10176.10 + movements = 7460.90, statement says 6957.30. Saldo del conto Banca Sud Ticino SA al 10.10.2026: CHF 616.35.",
+     "match": false,
+     "papers_seen": [
+      "p054"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p021",
+      "p054",
+      "p081"
+     ],
+     "grounded": true,
+     "value": [
+      -1353.9,
+      null,
+      616.35
+     ]
+    },
+    {
+     "id": "q20",
+     "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 31.08.2026?",
+     "truth": 13485.75,
+     "type": "amount",
+     "answer": "Saldo des Kontos Zugerland Bank AG am 31.08.2026: CHF 13'485.75.",
+     "match": true,
+     "papers_seen": [
+      "p018",
+      "p031",
+      "p056",
+      "p039",
+      "p044",
+      "p073",
+      "p079"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p018"
+     ],
+     "grounded": true,
+     "value": 13485.75
+    },
+    {
+     "id": "q21",
+     "question": "Wie hoch ist der Saldo des Kontos bei Alpenbank AG (Konto endend auf 1617) am 30.09.2026?",
+     "truth": 13963.8,
+     "type": "amount",
+     "answer": "Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 13'963.80. Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 7'181.95. Saldo des Kontos Alpenbank AG am 30.09.2026: CHF 6'987.55.",
+     "match": false,
+     "papers_seen": [
+      "p019"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p019",
+      "p047",
+      "p090"
+     ],
+     "grounded": true,
+     "value": [
+      13963.8,
+      7181.95,
+      6987.55
+     ]
+    },
+    {
+     "id": "q22",
+     "question": "Wie hoch ist der Saldo des Kontos bei Zugerland Bank AG am 10.10.2026?",
+     "truth": 1988.8,
+     "type": "amount",
+     "answer": "Saldo des Kontos Zugerland Bank AG am 10.10.2026: CHF 1'988.80.",
+     "match": true,
+     "papers_seen": [
+      "p002",
+      "p050",
+      "p007",
+      "p021",
+      "p052",
+      "p054",
+      "p061",
+      "p081",
+      "p095"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.01,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p002"
+     ],
+     "grounded": true,
+     "value": 1988.8
+    },
+    {
+     "id": "q23",
+     "question": "Quelles factures sont dues le 05.09.2026 ?",
+     "truth": [
+      "p010",
+      "p060"
+     ],
+     "type": "list",
+     "answer": "Factures échues le 05.09.2026 : [p010] Elektro Brunner GmbH CHF 5'767.95, [p060] Physio du Léman Sàrl CHF 3'514.06.",
+     "match": true,
+     "papers_seen": [
+      "p010",
+      "p060"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p010",
+      "p060"
+     ],
+     "grounded": true,
+     "value": [
+      "p010",
+      "p060"
+     ]
+    },
+    {
+     "id": "q24",
+     "question": "Welche Rechnungen sind am 13.09.2026 fällig?",
+     "truth": [
+      "p005",
+      "p042"
+     ],
+     "type": "list",
+     "answer": "Am 13.09.2026 fällige Rechnungen: [p005] Boulangerie Dupraz Sàrl CHF 5'396.41, [p042] Fiduciaire Lemaire Sàrl CHF 2'326.04.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p042"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p042"
+     ],
+     "grounded": true,
+     "value": [
+      "p005",
+      "p042"
+     ]
+    },
+    {
+     "id": "q25",
+     "question": "Quelles factures sont dues le 21.09.2026 ?",
+     "truth": [
+      "p011",
+      "p055"
+     ],
+     "type": "list",
+     "answer": "Factures échues le 21.09.2026 : [p011] Jardins Vuille CHF 6'218.78, [p055] Treuhand Meier AG CHF 4'334.49.",
+     "match": true,
+     "papers_seen": [
+      "p011",
+      "p055"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p011",
+      "p055"
+     ],
+     "grounded": true,
+     "value": [
+      "p011",
+      "p055"
+     ]
+    },
+    {
+     "id": "q26",
+     "question": "Welche Rechnungen sind am 26.09.2026 fällig?",
+     "truth": [
+      "p020",
+      "p074"
+     ],
+     "type": "list",
+     "answer": "Am 26.09.2026 fällige Rechnungen: [p020] Garage Morel SA CHF 927.50, [p074] Gärtnerei Wyss CHF 7'634.94.",
+     "match": true,
+     "papers_seen": [
+      "p020",
+      "p074"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p020",
+      "p074"
+     ],
+     "grounded": true,
+     "value": [
+      "p020",
+      "p074"
+     ]
+    },
+    {
+     "id": "q27",
+     "question": "Quali fatture scadono il 08.10.2026?",
+     "truth": [
+      "p030",
+      "p038"
+     ],
+     "type": "list",
+     "answer": "Fatture in scadenza il 08.10.2026: [p030] Velo Studer AG CHF 7'145.79, [p038] Électricité Favre SA CHF 4'223.79.",
+     "match": true,
+     "papers_seen": [
+      "p030",
+      "p038"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p030",
+      "p038"
+     ],
+     "grounded": true,
+     "value": [
+      "p030",
+      "p038"
+     ]
+    },
+    {
+     "id": "q28",
+     "question": "Quelles factures sont dues le 14.10.2026 ?",
+     "truth": [
+      "p025",
+      "p087"
+     ],
+     "type": "list",
+     "answer": "Factures échues le 14.10.2026 : [p025] Fiduciaria Colombo CHF 6'508.05, [p087] Physio du Léman Sàrl CHF 5'832.21.",
+     "match": true,
+     "papers_seen": [
+      "p025",
+      "p087"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p025",
+      "p087"
+     ],
+     "grounded": true,
+     "value": [
+      "p025",
+      "p087"
+     ]
+    },
+    {
+     "id": "q29",
+     "question": "Welche Rechnungen sind am 15.10.2026 fällig?",
+     "truth": [
+      "p046",
+      "p071"
+     ],
+     "type": "list",
+     "answer": "Am 15.10.2026 fällige Rechnungen: [p046] Pasticceria Rossi CHF 4'741.21, [p071] Gärtnerei Wyss CHF 2'562.08.",
+     "match": true,
+     "papers_seen": [
+      "p046",
+      "p071"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p046",
+      "p071"
+     ],
+     "grounded": true,
+     "value": [
+      "p046",
+      "p071"
+     ]
+    },
+    {
+     "id": "q30",
+     "question": "Quelles factures sont dues le 16.10.2026 ?",
+     "truth": [
+      "p009",
+      "p096"
+     ],
+     "type": "list",
+     "answer": "Factures échues le 16.10.2026 : [p009] Schreinerei Huber AG CHF 1'930.88, [p096] Pasticceria Rossi CHF 1'871.32.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p096"
+     ],
+     "grounded": true,
+     "value": [
+      "p009",
+      "p096"
+     ]
+    },
+    {
+     "id": "q31",
+     "question": "Combien de factures ai-je reçues en août ?",
+     "truth": 14,
+     "type": "count",
+     "answer": "14 facture(s) reçue(s) en août 2026.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
+    },
+    {
+     "id": "q32",
+     "question": "Wie viele Rechnungen habe ich im August erhalten?",
+     "truth": 14,
+     "type": "count",
+     "answer": "14 Rechnung(en) erhalten im August 2026.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
+    },
+    {
+     "id": "q33",
+     "question": "Quante fatture ho ricevuto in settembre?",
+     "truth": 18,
+     "type": "count",
+     "answer": "18 fattura/e ricevuta/e in settembre 2026.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
+    },
+    {
+     "id": "q34",
+     "question": "Combien de factures ai-je reçues en septembre ?",
+     "truth": 18,
+     "type": "count",
+     "answer": "18 facture(s) reçue(s) en septembre 2026.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
+    },
+    {
+     "id": "q35",
+     "question": "Wie viele Rechnungen habe ich im September erhalten?",
+     "truth": 18,
+     "type": "count",
+     "answer": "18 Rechnung(en) erhalten im September 2026.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 18
+    },
+    {
+     "id": "q36",
+     "question": "Quante fatture ho ricevuto in agosto?",
+     "truth": 14,
+     "type": "count",
+     "answer": "14 fattura/e ricevuta/e in agosto 2026.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 14
+    },
+    {
+     "id": "q37",
+     "question": "Total des factures reçues en septembre ?",
+     "truth": 65770.53,
+     "type": "amount",
+     "answer": "Factures reçues en septembre 2026 : 18, total CHF 65'770.53.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
+    },
+    {
+     "id": "q38",
+     "question": "Total der im September erhaltenen Rechnungen?",
+     "truth": 65770.53,
+     "type": "amount",
+     "answer": "Im September 2026 erhaltene Rechnungen: 18, total CHF 65'770.53.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
+    },
+    {
+     "id": "q39",
+     "question": "Totale delle fatture ricevute in settembre?",
+     "truth": 65770.53,
+     "type": "amount",
+     "answer": "Fatture ricevute in settembre 2026: 18, totale CHF 65'770.53.",
+     "match": true,
+     "papers_seen": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p009",
+      "p011",
+      "p015",
+      "p022",
+      "p025",
+      "p030",
+      "p032",
+      "p033",
+      "p038",
+      "p051",
+      "p055",
+      "p062",
+      "p072",
+      "p080",
+      "p087",
+      "p091",
+      "p094",
+      "p096"
+     ],
+     "grounded": true,
+     "value": 65770.53
+    },
+    {
+     "id": "q40",
+     "question": "Total des factures reçues en août ?",
+     "truth": 63363.4,
+     "type": "amount",
+     "answer": "Factures reçues en août 2026 : 14, total CHF 63'363.40.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 63363.4
+    },
+    {
+     "id": "q41",
+     "question": "Total der im August erhaltenen Rechnungen?",
+     "truth": 63363.4,
+     "type": "amount",
+     "answer": "Im August 2026 erhaltene Rechnungen: 14, total CHF 63'363.40.",
+     "match": true,
+     "papers_seen": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p005",
+      "p008",
+      "p010",
+      "p014",
+      "p020",
+      "p023",
+      "p037",
+      "p042",
+      "p043",
+      "p058",
+      "p060",
+      "p074",
+      "p083",
+      "p097"
+     ],
+     "grounded": true,
+     "value": 63363.4
+    },
+    {
+     "id": "q42",
+     "question": "Totale delle fatture ricevute in ottobre?",
+     "truth": 29133.73,
+     "type": "amount",
+     "answer": "Fatture ricevute in ottobre 2026: 8, totale CHF 29'133.73.",
+     "match": true,
+     "papers_seen": [
+      "p017",
+      "p024",
+      "p046",
+      "p064",
+      "p065",
+      "p071",
+      "p075",
+      "p088"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p017",
+      "p024",
+      "p046",
+      "p064",
+      "p065",
+      "p071",
+      "p075",
+      "p088"
+     ],
+     "grounded": true,
+     "value": 29133.73
+    },
+    {
+     "id": "q43",
+     "question": "Quel est le délai de Assurance-maladie Jura-Léman SA (réf. 2026-48829-GE) ?",
+     "truth": "2026-11-30",
+     "type": "date",
+     "answer": "Délai de Assurance-maladie Jura-Léman SA : 30.11.2026.",
+     "match": true,
+     "papers_seen": [
+      "p013"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p013"
+     ],
+     "grounded": true,
+     "value": "2026-11-30"
+    },
+    {
+     "id": "q44",
+     "question": "Qual è il termine fissato da Città di Lugano – Ufficio tecnico (rif. 2026-77154-TI)?",
+     "truth": "2026-09-29",
+     "type": "date",
+     "answer": "Termine di Città di Lugano – Ufficio tecnico: 29.09.2026.",
+     "match": true,
+     "papers_seen": [
+      "p036"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p036"
+     ],
+     "grounded": true,
+     "value": "2026-09-29"
+    },
+    {
+     "id": "q45",
+     "question": "Quel est le délai de Commune d'Yverdon-les-Bains – Greffe municipal (réf. 2026-25907-VD) ?",
+     "truth": "2026-09-14",
+     "type": "date",
+     "answer": "Délai de Commune d'Yverdon-les-Bains – Greffe municipal : 14.09.2026.",
+     "match": true,
+     "papers_seen": [
+      "p053"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p053"
+     ],
+     "grounded": true,
+     "value": "2026-09-14"
+    },
+    {
+     "id": "q46",
+     "question": "Welche Frist setzt Kantonales Steueramt (Ref. 2026-10088-ZH)?",
+     "truth": "2026-10-30",
+     "type": "date",
+     "answer": "Frist von Kantonales Steueramt: 30.10.2026.",
+     "match": true,
+     "papers_seen": [
+      "p100"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p100"
+     ],
+     "grounded": true,
+     "value": "2026-10-30"
+    },
+    {
+     "id": "q47",
+     "question": "Quel est le délai de Commune de Vevey – Police des constructions (réf. 2026-27758-VD) ?",
+     "truth": "2026-09-15",
+     "type": "date",
+     "answer": "Délai de Commune de Vevey – Police des constructions : 15.09.2026.",
+     "match": true,
+     "papers_seen": [
+      "p085"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p085"
+     ],
+     "grounded": true,
+     "value": "2026-09-15"
+    },
+    {
+     "id": "q48",
+     "question": "Quel est le délai de Service cantonal des contributions (réf. 2026-48974-FR) ?",
+     "truth": "2026-10-28",
+     "type": "date",
+     "answer": "Délai de Service cantonal des contributions : 28.10.2026.",
+     "match": true,
+     "papers_seen": [
+      "p016"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p016"
+     ],
+     "grounded": true,
+     "value": "2026-10-28"
+    },
+    {
+     "id": "q49",
+     "question": "Welche Frist setzt Stadt Luzern – Bauverwaltung (Ref. 2026-91289-LU)?",
+     "truth": "2026-10-14",
+     "type": "date",
+     "answer": "Frist von Stadt Luzern – Bauverwaltung: 14.10.2026.",
+     "match": true,
+     "papers_seen": [
+      "p086"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p086"
+     ],
+     "grounded": true,
+     "value": "2026-10-14"
+    },
+    {
+     "id": "q50",
+     "question": "Quel est le délai de Commune de Vevey – Contrôle des habitants (réf. 2026-50562-VD) ?",
+     "truth": "2026-09-22",
+     "type": "date",
+     "answer": "Délai de Commune de Vevey – Contrôle des habitants : 22.09.2026.",
+     "match": true,
+     "papers_seen": [
+      "p045"
+     ],
+     "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "calls": 0
+     },
+     "seconds": 0.0,
+     "by": "code",
+     "note": "",
+     "cited_ids": [
+      "p045"
+     ],
+     "grounded": true,
+     "value": "2026-09-22"
+    }
+   ],
+   "per_paper": {
+    "p001": {
+     "tokens": {
+      "prompt_tokens": 587,
+      "completion_tokens": 127,
+      "total_tokens": 714,
+      "calls": 1
+     },
+     "seconds": 6.46,
+     "kind": "official_letter"
+    },
+    "p002": {
+     "tokens": {
+      "prompt_tokens": 725,
+      "completion_tokens": 584,
+      "total_tokens": 1309,
+      "calls": 1
+     },
+     "seconds": 25.09,
+     "kind": "bank_statement"
+    },
+    "p003": {
+     "tokens": {
+      "prompt_tokens": 545,
+      "completion_tokens": 114,
+      "total_tokens": 659,
+      "calls": 1
+     },
+     "seconds": 5.14,
+     "kind": "official_letter"
+    },
+    "p004": {
+     "tokens": {
+      "prompt_tokens": 884,
+      "completion_tokens": 723,
+      "total_tokens": 1607,
+      "calls": 1
+     },
+     "seconds": 30.0,
+     "kind": "bank_statement"
+    },
+    "p005": {
+     "tokens": {
+      "prompt_tokens": 701,
+      "completion_tokens": 170,
+      "total_tokens": 871,
+      "calls": 1
+     },
+     "seconds": 8.6,
+     "kind": "qr_bill"
+    },
+    "p006": {
+     "tokens": {
+      "prompt_tokens": 1067,
+      "completion_tokens": 796,
+      "total_tokens": 1863,
+      "calls": 1
+     },
+     "seconds": 32.32,
+     "kind": "bank_statement"
+    },
+    "p007": {
+     "tokens": {
+      "prompt_tokens": 788,
+      "completion_tokens": 548,
+      "total_tokens": 1336,
+      "calls": 1
+     },
+     "seconds": 21.16,
+     "kind": "bank_statement"
+    },
+    "p008": {
+     "tokens": {
+      "prompt_tokens": 955,
+      "completion_tokens": 174,
+      "total_tokens": 1129,
+      "calls": 1
+     },
+     "seconds": 7.32,
+     "kind": "qr_bill"
+    },
+    "p009": {
+     "tokens": {
+      "prompt_tokens": 623,
+      "completion_tokens": 144,
+      "total_tokens": 767,
+      "calls": 1
+     },
+     "seconds": 5.54,
+     "kind": "qr_bill"
+    },
+    "p010": {
+     "tokens": {
+      "prompt_tokens": 925,
+      "completion_tokens": 187,
+      "total_tokens": 1112,
+      "calls": 1
+     },
+     "seconds": 7.45,
+     "kind": "qr_bill"
+    },
+    "p011": {
+     "tokens": {
+      "prompt_tokens": 937,
+      "completion_tokens": 177,
+      "total_tokens": 1114,
+      "calls": 1
+     },
+     "seconds": 7.06,
+     "kind": "qr_bill"
+    },
+    "p012": {
+     "tokens": {
+      "prompt_tokens": 824,
+      "completion_tokens": 617,
+      "total_tokens": 1441,
+      "calls": 1
+     },
+     "seconds": 21.27,
+     "kind": "bank_statement"
+    },
+    "p013": {
+     "tokens": {
+      "prompt_tokens": 554,
+      "completion_tokens": 126,
+      "total_tokens": 680,
+      "calls": 1
+     },
+     "seconds": 4.52,
+     "kind": "official_letter"
+    },
+    "p014": {
+     "tokens": {
+      "prompt_tokens": 898,
+      "completion_tokens": 176,
+      "total_tokens": 1074,
+      "calls": 1
+     },
+     "seconds": 6.61,
+     "kind": "qr_bill"
+    },
+    "p015": {
+     "tokens": {
+      "prompt_tokens": 901,
+      "completion_tokens": 157,
+      "total_tokens": 1058,
+      "calls": 1
+     },
+     "seconds": 5.99,
+     "kind": "qr_bill"
+    },
+    "p016": {
+     "tokens": {
+      "prompt_tokens": 605,
+      "completion_tokens": 124,
+      "total_tokens": 729,
+      "calls": 1
+     },
+     "seconds": 4.53,
+     "kind": "official_letter"
+    },
+    "p017": {
+     "tokens": {
+      "prompt_tokens": 928,
+      "completion_tokens": 170,
+      "total_tokens": 1098,
+      "calls": 1
+     },
+     "seconds": 6.61,
+     "kind": "qr_bill"
+    },
+    "p018": {
+     "tokens": {
+      "prompt_tokens": 783,
+      "completion_tokens": 526,
+      "total_tokens": 1309,
+      "calls": 1
+     },
+     "seconds": 17.95,
+     "kind": "bank_statement"
+    },
+    "p019": {
+     "tokens": {
+      "prompt_tokens": 837,
+      "completion_tokens": 560,
+      "total_tokens": 1397,
+      "calls": 1
+     },
+     "seconds": 19.14,
+     "kind": "bank_statement"
+    },
+    "p020": {
+     "tokens": {
+      "prompt_tokens": 865,
+      "completion_tokens": 175,
+      "total_tokens": 1040,
+      "calls": 1
+     },
+     "seconds": 6.3,
+     "kind": "qr_bill"
+    },
+    "p021": {
+     "tokens": {
+      "prompt_tokens": 788,
+      "completion_tokens": 574,
+      "total_tokens": 1362,
+      "calls": 1
+     },
+     "seconds": 18.92,
+     "kind": "bank_statement"
+    },
+    "p022": {
+     "tokens": {
+      "prompt_tokens": 991,
+      "completion_tokens": 179,
+      "total_tokens": 1170,
+      "calls": 1
+     },
+     "seconds": 6.88,
+     "kind": "qr_bill"
+    },
+    "p023": {
+     "tokens": {
+      "prompt_tokens": 947,
+      "completion_tokens": 176,
+      "total_tokens": 1123,
+      "calls": 1
+     },
+     "seconds": 6.5,
+     "kind": "qr_bill"
+    },
+    "p024": {
+     "tokens": {
+      "prompt_tokens": 890,
+      "completion_tokens": 177,
+      "total_tokens": 1067,
+      "calls": 1
+     },
+     "seconds": 6.39,
+     "kind": "qr_bill"
+    },
+    "p025": {
+     "tokens": {
+      "prompt_tokens": 722,
+      "completion_tokens": 161,
+      "total_tokens": 883,
+      "calls": 1
+     },
+     "seconds": 5.6,
+     "kind": "qr_bill"
+    },
+    "p026": {
+     "tokens": {
+      "prompt_tokens": 848,
+      "completion_tokens": 499,
+      "total_tokens": 1347,
+      "calls": 1
+     },
+     "seconds": 16.04,
+     "kind": "bank_statement"
+    },
+    "p027": {
+     "tokens": {
+      "prompt_tokens": 595,
+      "completion_tokens": 131,
+      "total_tokens": 726,
+      "calls": 1
+     },
+     "seconds": 5.03,
+     "kind": "official_letter"
+    },
+    "p028": {
+     "tokens": {
+      "prompt_tokens": 600,
+      "completion_tokens": 136,
+      "total_tokens": 736,
+      "calls": 1
+     },
+     "seconds": 4.68,
+     "kind": "official_letter"
+    },
+    "p029": {
+     "tokens": {
+      "prompt_tokens": 909,
+      "completion_tokens": 751,
+      "total_tokens": 1660,
+      "calls": 1
+     },
+     "seconds": 24.0,
+     "kind": "bank_statement"
+    },
+    "p030": {
+     "tokens": {
+      "prompt_tokens": 936,
+      "completion_tokens": 186,
+      "total_tokens": 1122,
+      "calls": 1
+     },
+     "seconds": 6.75,
+     "kind": "qr_bill"
+    },
+    "p031": {
+     "tokens": {
+      "prompt_tokens": 834,
+      "completion_tokens": 662,
+      "total_tokens": 1496,
+      "calls": 1
+     },
+     "seconds": 21.17,
+     "kind": "bank_statement"
+    },
+    "p032": {
+     "tokens": {
+      "prompt_tokens": 1018,
+      "completion_tokens": 185,
+      "total_tokens": 1203,
+      "calls": 1
+     },
+     "seconds": 6.88,
+     "kind": "qr_bill"
+    },
+    "p033": {
+     "tokens": {
+      "prompt_tokens": 839,
+      "completion_tokens": 165,
+      "total_tokens": 1004,
+      "calls": 1
+     },
+     "seconds": 6.04,
+     "kind": "qr_bill"
+    },
+    "p034": {
+     "tokens": {
+      "prompt_tokens": 843,
+      "completion_tokens": 677,
+      "total_tokens": 1520,
+      "calls": 1
+     },
+     "seconds": 21.75,
+     "kind": "bank_statement"
+    },
+    "p035": {
+     "tokens": {
+      "prompt_tokens": 597,
+      "completion_tokens": 129,
+      "total_tokens": 726,
+      "calls": 1
+     },
+     "seconds": 4.56,
+     "kind": "official_letter"
+    },
+    "p036": {
+     "tokens": {
+      "prompt_tokens": 578,
+      "completion_tokens": 128,
+      "total_tokens": 706,
+      "calls": 1
+     },
+     "seconds": 4.76,
+     "kind": "official_letter"
+    },
+    "p037": {
+     "tokens": {
+      "prompt_tokens": 975,
+      "completion_tokens": 181,
+      "total_tokens": 1156,
+      "calls": 1
+     },
+     "seconds": 6.74,
+     "kind": "qr_bill"
+    },
+    "p038": {
+     "tokens": {
+      "prompt_tokens": 723,
+      "completion_tokens": 161,
+      "total_tokens": 884,
+      "calls": 1
+     },
+     "seconds": 6.03,
+     "kind": "qr_bill"
+    },
+    "p039": {
+     "tokens": {
+      "prompt_tokens": 1058,
+      "completion_tokens": 769,
+      "total_tokens": 1827,
+      "calls": 1
+     },
+     "seconds": 25.89,
+     "kind": "bank_statement"
+    },
+    "p040": {
+     "tokens": {
+      "prompt_tokens": 573,
+      "completion_tokens": 118,
+      "total_tokens": 691,
+      "calls": 1
+     },
+     "seconds": 4.37,
+     "kind": "official_letter"
+    },
+    "p041": {
+     "tokens": {
+      "prompt_tokens": 554,
+      "completion_tokens": 129,
+      "total_tokens": 683,
+      "calls": 1
+     },
+     "seconds": 4.88,
+     "kind": "official_letter"
+    },
+    "p042": {
+     "tokens": {
+      "prompt_tokens": 891,
+      "completion_tokens": 184,
+      "total_tokens": 1075,
+      "calls": 1
+     },
+     "seconds": 7.07,
+     "kind": "qr_bill"
+    },
+    "p043": {
+     "tokens": {
+      "prompt_tokens": 696,
+      "completion_tokens": 161,
+      "total_tokens": 857,
+      "calls": 1
+     },
+     "seconds": 5.89,
+     "kind": "qr_bill"
+    },
+    "p044": {
+     "tokens": {
+      "prompt_tokens": 809,
+      "completion_tokens": 577,
+      "total_tokens": 1386,
+      "calls": 1
+     },
+     "seconds": 18.72,
+     "kind": "bank_statement"
+    },
+    "p045": {
+     "tokens": {
+      "prompt_tokens": 525,
+      "completion_tokens": 123,
+      "total_tokens": 648,
+      "calls": 1
+     },
+     "seconds": 4.22,
+     "kind": "official_letter"
+    },
+    "p046": {
+     "tokens": {
+      "prompt_tokens": 957,
+      "completion_tokens": 182,
+      "total_tokens": 1139,
+      "calls": 1
+     },
+     "seconds": 7.5,
+     "kind": "qr_bill"
+    },
+    "p047": {
+     "tokens": {
+      "prompt_tokens": 965,
+      "completion_tokens": 725,
+      "total_tokens": 1690,
+      "calls": 1
+     },
+     "seconds": 24.03,
+     "kind": "bank_statement"
+    },
+    "p048": {
+     "tokens": {
+      "prompt_tokens": 530,
+      "completion_tokens": 125,
+      "total_tokens": 655,
+      "calls": 1
+     },
+     "seconds": 4.63,
+     "kind": "official_letter"
+    },
+    "p049": {
+     "tokens": {
+      "prompt_tokens": 789,
+      "completion_tokens": 504,
+      "total_tokens": 1293,
+      "calls": 1
+     },
+     "seconds": 17.58,
+     "kind": "bank_statement"
+    },
+    "p050": {
+     "tokens": {
+      "prompt_tokens": 852,
+      "completion_tokens": 649,
+      "total_tokens": 1501,
+      "calls": 1
+     },
+     "seconds": 22.13,
+     "kind": "bank_statement"
+    },
+    "p051": {
+     "tokens": {
+      "prompt_tokens": 805,
+      "completion_tokens": 149,
+      "total_tokens": 954,
+      "calls": 1
+     },
+     "seconds": 5.92,
+     "kind": "qr_bill"
+    },
+    "p052": {
+     "tokens": {
+      "prompt_tokens": 858,
+      "completion_tokens": 668,
+      "total_tokens": 1526,
+      "calls": 1
+     },
+     "seconds": 21.84,
+     "kind": "bank_statement"
+    },
+    "p053": {
+     "tokens": {
+      "prompt_tokens": 553,
+      "completion_tokens": 120,
+      "total_tokens": 673,
+      "calls": 1
+     },
+     "seconds": 4.08,
+     "kind": "official_letter"
+    },
+    "p054": {
+     "tokens": {
+      "prompt_tokens": 1059,
+      "completion_tokens": 756,
+      "total_tokens": 1815,
+      "calls": 1
+     },
+     "seconds": 23.82,
+     "kind": "bank_statement"
+    },
+    "p055": {
+     "tokens": {
+      "prompt_tokens": 911,
+      "completion_tokens": 194,
+      "total_tokens": 1105,
+      "calls": 1
+     },
+     "seconds": 6.8,
+     "kind": "qr_bill"
+    },
+    "p056": {
+     "tokens": {
+      "prompt_tokens": 876,
+      "completion_tokens": 543,
+      "total_tokens": 1419,
+      "calls": 1
+     },
+     "seconds": 17.09,
+     "kind": "bank_statement"
+    },
+    "p057": {
+     "tokens": {
+      "prompt_tokens": 599,
+      "completion_tokens": 114,
+      "total_tokens": 713,
+      "calls": 1
+     },
+     "seconds": 3.95,
+     "kind": "official_letter"
+    },
+    "p058": {
+     "tokens": {
+      "prompt_tokens": 762,
+      "completion_tokens": 155,
+      "total_tokens": 917,
+      "calls": 1
+     },
+     "seconds": 5.37,
+     "kind": "qr_bill"
+    },
+    "p059": {
+     "tokens": {
+      "prompt_tokens": 517,
+      "completion_tokens": 118,
+      "total_tokens": 635,
+      "calls": 1
+     },
+     "seconds": 3.98,
+     "kind": "official_letter"
+    },
+    "p060": {
+     "tokens": {
+      "prompt_tokens": 912,
+      "completion_tokens": 165,
+      "total_tokens": 1077,
+      "calls": 1
+     },
+     "seconds": 5.98,
+     "kind": "qr_bill"
+    },
+    "p061": {
+     "tokens": {
+      "prompt_tokens": 983,
+      "completion_tokens": 701,
+      "total_tokens": 1684,
+      "calls": 1
+     },
+     "seconds": 22.15,
+     "kind": "bank_statement"
+    },
+    "p062": {
+     "tokens": {
+      "prompt_tokens": 962,
+      "completion_tokens": 177,
+      "total_tokens": 1139,
+      "calls": 1
+     },
+     "seconds": 6.46,
+     "kind": "qr_bill"
+    },
+    "p063": {
+     "tokens": {
+      "prompt_tokens": 612,
+      "completion_tokens": 131,
+      "total_tokens": 743,
+      "calls": 1
+     },
+     "seconds": 4.49,
+     "kind": "official_letter"
+    },
+    "p064": {
+     "tokens": {
+      "prompt_tokens": 879,
+      "completion_tokens": 180,
+      "total_tokens": 1059,
+      "calls": 1
+     },
+     "seconds": 6.58,
+     "kind": "qr_bill"
+    },
+    "p065": {
+     "tokens": {
+      "prompt_tokens": 967,
+      "completion_tokens": 185,
+      "total_tokens": 1152,
+      "calls": 1
+     },
+     "seconds": 6.96,
+     "kind": "qr_bill"
+    },
+    "p066": {
+     "tokens": {
+      "prompt_tokens": 603,
+      "completion_tokens": 125,
+      "total_tokens": 728,
+      "calls": 1
+     },
+     "seconds": 4.34,
+     "kind": "official_letter"
+    },
+    "p067": {
+     "tokens": {
+      "prompt_tokens": 599,
+      "completion_tokens": 135,
+      "total_tokens": 734,
+      "calls": 1
+     },
+     "seconds": 4.64,
+     "kind": "official_letter"
+    },
+    "p068": {
+     "tokens": {
+      "prompt_tokens": 1046,
+      "completion_tokens": 760,
+      "total_tokens": 1806,
+      "calls": 1
+     },
+     "seconds": 24.26,
+     "kind": "bank_statement"
+    },
+    "p069": {
+     "tokens": {
+      "prompt_tokens": 591,
+      "completion_tokens": 130,
+      "total_tokens": 721,
+      "calls": 1
+     },
+     "seconds": 4.5,
+     "kind": "official_letter"
+    },
+    "p070": {
+     "tokens": {
+      "prompt_tokens": 896,
+      "completion_tokens": 706,
+      "total_tokens": 1602,
+      "calls": 1
+     },
+     "seconds": 22.56,
+     "kind": "bank_statement"
+    },
+    "p071": {
+     "tokens": {
+      "prompt_tokens": 697,
+      "completion_tokens": 143,
+      "total_tokens": 840,
+      "calls": 1
+     },
+     "seconds": 5.05,
+     "kind": "qr_bill"
+    },
+    "p072": {
+     "tokens": {
+      "prompt_tokens": 874,
+      "completion_tokens": 180,
+      "total_tokens": 1054,
+      "calls": 1
+     },
+     "seconds": 6.42,
+     "kind": "qr_bill"
+    },
+    "p073": {
+     "tokens": {
+      "prompt_tokens": 917,
+      "completion_tokens": 735,
+      "total_tokens": 1652,
+      "calls": 1
+     },
+     "seconds": 23.32,
+     "kind": "bank_statement"
+    },
+    "p074": {
+     "tokens": {
+      "prompt_tokens": 963,
+      "completion_tokens": 167,
+      "total_tokens": 1130,
+      "calls": 1
+     },
+     "seconds": 6.29,
+     "kind": "qr_bill"
+    },
+    "p075": {
+     "tokens": {
+      "prompt_tokens": 841,
+      "completion_tokens": 169,
+      "total_tokens": 1010,
+      "calls": 1
+     },
+     "seconds": 6.04,
+     "kind": "qr_bill"
+    },
+    "p076": {
+     "tokens": {
+      "prompt_tokens": 975,
+      "completion_tokens": 775,
+      "total_tokens": 1750,
+      "calls": 1
+     },
+     "seconds": 24.86,
+     "kind": "bank_statement"
+    },
+    "p077": {
+     "tokens": {
+      "prompt_tokens": 512,
+      "completion_tokens": 120,
+      "total_tokens": 632,
+      "calls": 1
+     },
+     "seconds": 4.14,
+     "kind": "official_letter"
+    },
+    "p078": {
+     "tokens": {
+      "prompt_tokens": 602,
+      "completion_tokens": 127,
+      "total_tokens": 729,
+      "calls": 1
+     },
+     "seconds": 4.46,
+     "kind": "official_letter"
+    },
+    "p079": {
+     "tokens": {
+      "prompt_tokens": 875,
+      "completion_tokens": 540,
+      "total_tokens": 1415,
+      "calls": 1
+     },
+     "seconds": 17.51,
+     "kind": "bank_statement"
+    },
+    "p080": {
+     "tokens": {
+      "prompt_tokens": 890,
+      "completion_tokens": 174,
+      "total_tokens": 1064,
+      "calls": 1
+     },
+     "seconds": 6.44,
+     "kind": "qr_bill"
+    },
+    "p081": {
+     "tokens": {
+      "prompt_tokens": 1015,
+      "completion_tokens": 698,
+      "total_tokens": 1713,
+      "calls": 1
+     },
+     "seconds": 22.69,
+     "kind": "bank_statement"
+    },
+    "p082": {
+     "tokens": {
+      "prompt_tokens": 573,
+      "completion_tokens": 132,
+      "total_tokens": 705,
+      "calls": 1
+     },
+     "seconds": 4.59,
+     "kind": "official_letter"
+    },
+    "p083": {
+     "tokens": {
+      "prompt_tokens": 932,
+      "completion_tokens": 193,
+      "total_tokens": 1125,
+      "calls": 1
+     },
+     "seconds": 6.94,
+     "kind": "qr_bill"
+    },
+    "p084": {
+     "tokens": {
+      "prompt_tokens": 552,
+      "completion_tokens": 128,
+      "total_tokens": 680,
+      "calls": 1
+     },
+     "seconds": 4.42,
+     "kind": "official_letter"
+    },
+    "p085": {
+     "tokens": {
+      "prompt_tokens": 580,
+      "completion_tokens": 113,
+      "total_tokens": 693,
+      "calls": 1
+     },
+     "seconds": 4.04,
+     "kind": "official_letter"
+    },
+    "p086": {
+     "tokens": {
+      "prompt_tokens": 553,
+      "completion_tokens": 111,
+      "total_tokens": 664,
+      "calls": 1
+     },
+     "seconds": 4.07,
+     "kind": "official_letter"
+    },
+    "p087": {
+     "tokens": {
+      "prompt_tokens": 924,
+      "completion_tokens": 179,
+      "total_tokens": 1103,
+      "calls": 1
+     },
+     "seconds": 6.7,
+     "kind": "qr_bill"
+    },
+    "p088": {
+     "tokens": {
+      "prompt_tokens": 993,
+      "completion_tokens": 175,
+      "total_tokens": 1168,
+      "calls": 1
+     },
+     "seconds": 6.73,
+     "kind": "qr_bill"
+    },
+    "p089": {
+     "tokens": {
+      "prompt_tokens": 554,
+      "completion_tokens": 129,
+      "total_tokens": 683,
+      "calls": 1
+     },
+     "seconds": 4.48,
+     "kind": "official_letter"
+    },
+    "p090": {
+     "tokens": {
+      "prompt_tokens": 905,
+      "completion_tokens": 740,
+      "total_tokens": 1645,
+      "calls": 1
+     },
+     "seconds": 23.5,
+     "kind": "bank_statement"
+    },
+    "p091": {
+     "tokens": {
+      "prompt_tokens": 772,
+      "completion_tokens": 171,
+      "total_tokens": 943,
+      "calls": 1
+     },
+     "seconds": 5.97,
+     "kind": "qr_bill"
+    },
+    "p092": {
+     "tokens": {
+      "prompt_tokens": 557,
+      "completion_tokens": 131,
+      "total_tokens": 688,
+      "calls": 1
+     },
+     "seconds": 4.56,
+     "kind": "official_letter"
+    },
+    "p093": {
+     "tokens": {
+      "prompt_tokens": 570,
+      "completion_tokens": 113,
+      "total_tokens": 683,
+      "calls": 1
+     },
+     "seconds": 4.08,
+     "kind": "official_letter"
+    },
+    "p094": {
+     "tokens": {
+      "prompt_tokens": 900,
+      "completion_tokens": 193,
+      "total_tokens": 1093,
+      "calls": 1
+     },
+     "seconds": 7.21,
+     "kind": "qr_bill"
+    },
+    "p095": {
+     "tokens": {
+      "prompt_tokens": 758,
+      "completion_tokens": 532,
+      "total_tokens": 1290,
+      "calls": 1
+     },
+     "seconds": 17.61,
+     "kind": "bank_statement"
+    },
+    "p096": {
+     "tokens": {
+      "prompt_tokens": 775,
+      "completion_tokens": 143,
+      "total_tokens": 918,
+      "calls": 1
+     },
+     "seconds": 5.16,
+     "kind": "qr_bill"
+    },
+    "p097": {
+     "tokens": {
+      "prompt_tokens": 975,
+      "completion_tokens": 175,
+      "total_tokens": 1150,
+      "calls": 1
+     },
+     "seconds": 7.14,
+     "kind": "qr_bill"
+    },
+    "p098": {
+     "tokens": {
+      "prompt_tokens": 901,
+      "completion_tokens": 760,
+      "total_tokens": 1661,
+      "calls": 1
+     },
+     "seconds": 27.15,
+     "kind": "bank_statement"
+    },
+    "p099": {
+     "tokens": {
+      "prompt_tokens": 597,
+      "completion_tokens": 135,
+      "total_tokens": 732,
+      "calls": 1
+     },
+     "seconds": 4.94,
+     "kind": "official_letter"
+    },
+    "p100": {
+     "tokens": {
+      "prompt_tokens": 594,
+      "completion_tokens": 131,
+      "total_tokens": 725,
+      "calls": 1
+     },
+     "seconds": 4.77,
+     "kind": "official_letter"
+    }
+   }
+  }
+ }
+}

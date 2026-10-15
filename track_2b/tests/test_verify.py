@@ -191,7 +191,7 @@ def test_statement_single_sign_flip_repaired_from_totals():
                {"date": "2026-09-05", "label": "Loyer", "amount": -1850.0},
                {"date": "2026-09-12", "label": "Migros", "amount": 123.45}]
     f = verify.verify("bank_statement", {"opening_balance": 1000.0, "closing_balance": 4026.55, "movements": flipped}, text, None)
-    assert f.fields["movements"].status == "verified" and "corrected" in f.fields["movements"].reason
+    assert f.fields["movements"].status == "verified" and "set from printed totals" in f.fields["movements"].reason
     assert f.fields["movements"].value[2]["amount"] == -123.45
     assert f.fields["closing_balance"].status == "verified" and f.fields["balanced"].value is True
 
@@ -223,7 +223,10 @@ def test_all_keys_present_for_each_kind():
     for kind, keys in TRUTH_KEYS.items():
         f = verify.verify(kind, {}, "", None)
         assert set(keys) <= set(f.fields), kind
-        assert all(fld.status == "blank" for k, fld in f.fields.items() if k in keys)
+        # Sans QR ni référence imprimée, le type de référence d'une facture est NON par règle de code.
+        assert all(fld.status == "blank" for k, fld in f.fields.items() if k in keys and k != "reference_type")
+        if kind == "qr_bill":
+            assert f.fields["reference_type"].value == "NON" and f.fields["reference_type"].source == "rule"
 
 
 # --- ancrage de la prose -----------------------------------------------------
@@ -251,3 +254,34 @@ def test_numbers_grounded_accepts_id_suffix_but_not_inner_digits():
     assert ok, missing
     ok, missing = verify.numbers_grounded("Le solde du compte 1722 est de 3138.75 CHF.", facts)
     assert not ok and "1722" in missing
+
+
+def test_statement_all_positive_amounts_signed_from_totals():
+    text = STATEMENT + "Débit : CHF 1 973.45   Crédit : CHF 5 000.00\n"
+    unsigned = [{"date": "2026-09-02", "label": "Salaire", "amount": 5000.0},
+                {"date": "2026-09-05", "label": "Loyer", "amount": 1850.0},
+                {"date": "2026-09-12", "label": "Migros", "amount": 123.45}]
+    f = verify.verify("bank_statement", {"opening_balance": 1000.0, "closing_balance": 4026.55, "movements": unsigned}, text, None)
+    assert [m["amount"] for m in f.fields["movements"].value] == [5000.0, -1850.0, -123.45]
+    assert f.fields["closing_balance"].status == "verified"
+    assert verify.unique_sign_assignment([100.0, 100.0, 50.0], 100.0) is None   # deux répartitions
+    assert verify.unique_sign_assignment([100.0, 60.0, 50.0], 110.0) == [False, True, True]
+
+
+def test_movement_date_read_from_the_printed_line():
+    mv = [{"date": "2026-09-14", "label": "Migros", "amount": -123.45}]
+    assert verify.align_movement_dates(mv, STATEMENT) == 1 and mv[0]["date"] == "2026-09-12"
+
+
+def test_reference_type_decided_by_code_not_model():
+    text = "Facture no 12. Montant CHF 10.00. IBAN " + swissqr.iban_format(IBAN)
+    f = verify.verify("qr_bill", {"iban": IBAN, "amount_chf": 10.0, "reference": "123456", "reference_type": "QRR"}, text, None)
+    assert f.fields["reference_type"].value == "NON" and f.fields["reference_type"].source == "rule"
+    assert f.fields["reference"].status == "blank" and "NON bill" in f.fields["reference"].reason
+    with_qrr = text + "\nRéférence " + swissqr.qrr_format(QRR)
+    g = verify.verify("qr_bill", {"reference": None, "reference_type": "NON"}, with_qrr, None)
+    assert g.fields["reference"].value == QRR and g.fields["reference"].source == "text"
+    assert g.fields["reference_type"].value == "QRR" and "model said NON" in g.fields["reference_type"].reason
+    with_scor = text + "\nReferenz " + swissqr.scor_format(SCOR)
+    h = verify.verify("qr_bill", {"reference_type": "QRR"}, with_scor, None)
+    assert h.fields["reference_type"].value == "SCOR" and h.fields["reference"].value == SCOR

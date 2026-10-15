@@ -26,11 +26,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from typing import Any
 
-from . import baseline, llm, read, verify
+from . import ask, baseline, i18n, llm, read, verify
 from .schema import DATE_KEYS, NUMERIC_KEYS, Paper, Truth, load_truth, scored_keys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RUNTIME = os.path.join(ROOT, "runtime", "cache")  # changé par --tag (runtime/cache-<tag>)
+NO_NEW_CALLS = False  # --no-new-calls : rejouer les contrôles sur le cache, sans appel au modèle
 TOP_PAPERS = 6
 NOT_FOUND = {
     "fr": "Je ne trouve pas ce chiffre dans vos papiers.",
@@ -108,6 +109,8 @@ def run_paper(method: str, truth: Truth, pdf_path: str, use_cache: bool) -> dict
         hit = _cache_get(method, truth.id, stamp)
         if hit:
             return hit
+    if NO_NEW_CALLS:
+        raise RuntimeError(f"{truth.id}: not in cache and --no-new-calls is set")
     t0 = time.time()
     with llm.usage_scope() as usage:
         if method == "ours":
@@ -279,9 +282,27 @@ def select_papers(question: str, papers: list[Paper]) -> list[Paper]:
         ids = [str(p.facts.get(k) or "") for k in ("account_iban", "iban", "reference", "invoice_number", "reference_number")]
         return any(i.endswith(t) for t in q_suffixes for i in ids if i)
 
+    # 0. Un identifiant précis (numéro de facture, référence, fin de compte) désigne le papier.
+    strong = [p for p in papers if id_match(p)] if q_suffixes else []
+    dashed = {w for w in words if re.search(r"\d", w) and "-" in w}
+    if dashed:
+        strong += [p for p in papers if p not in strong and any(
+            w == str(p.facts.get(k) or "").lower() for w in dashed for k in ("invoice_number", "reference_number", "reference"))]
+    if strong:
+        strong.sort(key=lambda p: (-word_score(p), p.id))
+        return strong[:MAX_SELECTED]
+
     # 1. Une date exacte : tous les papiers qui la portent (solde au …, factures dues le …).
     if q_dates:
-        exact = [p for p in papers if q_dates & set(_paper_dates(p))]
+        iso = {d.isoformat() for d in q_dates}
+        if re.search(r"fällig|dues?\b|due\b|scad|échéance|zahlbar", low):
+            exact = [p for p in papers if p.facts.get("due_date") in iso]
+        elif re.search(r"solde|saldo|kontostand", low):
+            exact = [p for p in papers if p.facts.get("period_end") in iso]
+        else:
+            exact = []
+        if not exact:
+            exact = [p for p in papers if q_dates & set(_paper_dates(p))]
         if exact and kinds and any(p.kind in kinds for p in exact):
             exact = [p for p in exact if p.kind in kinds]
         if q_suffixes and any(id_match(p) for p in exact):
@@ -310,7 +331,10 @@ def select_papers(question: str, papers: list[Paper]) -> list[Paper]:
 def _facts_digest(p: Paper) -> str:
     parts = []
     for k, f in p.facts.fields.items():
-        if f.value is None or k == "balanced":
+        if k == "balanced":
+            continue
+        if f.value is None:
+            parts.append(f"{k}: BLANK (not verifiable: {(f.reason or 'unknown').split(':')[0]})")
             continue
         if isinstance(f.value, list):
             parts.append(f"{k}: {len(f.value)} lines")
@@ -371,7 +395,8 @@ def answer_question(question: str, papers: list[Paper]) -> str:
             "You answer a question about the user's Swiss papers using ONLY the facts below. "
             "Answer in the language of the question, in one short sentence. Cite the paper ids in square "
             "brackets like [p012]. Use the numbers exactly as given; for counts and totals use the "
-            "COMPUTED block, never your own arithmetic. If the facts do not answer the question, say so.")},
+            "COMPUTED block, never your own arithmetic. A field marked BLANK is unknown: if the asked value "
+            "is BLANK, say you cannot find it, never substitute another field. If the facts do not answer the question, say so.")},
         {"role": "user", "content": f"FACTS:\n{context}\n\nCOMPUTED (by code, over the facts above): {computed}\n\nQUESTION: {question}"},
     ]
     try:
@@ -406,7 +431,8 @@ def _numbers_in_answer(answer: str) -> list[float]:
     return out
 
 
-_FALLBACK_LINES = set(NOT_FOUND.values()) | set(NO_PAPER.values())
+_FALLBACK_LINES = set(NOT_FOUND.values()) | set(NO_PAPER.values()) | {
+    i18n.t(key, lg) for key in ("ask.not_found", "ask.no_paper") for lg in ("fr", "de", "it", "en")}
 
 
 def answer_is_blank(answer: str) -> bool:
@@ -415,15 +441,24 @@ def answer_is_blank(answer: str) -> bool:
     return not a or a in _FALLBACK_LINES or not re.search(r"\d", a)
 
 
-def question_match(q: dict[str, Any], answer: str) -> bool:
+def question_match(q: dict[str, Any], answer: str, value: Any = None) -> bool:
     """Réponse exacte : le chiffre / la date / la liste de la vérité est dans la réponse.
 
     Strict : une réponse blanche ne compte juste que si la vérité attend un blanc ; seule
-    la réponse est lue (jamais une raison ou un commentaire)."""
+    la réponse est lue (jamais une raison ou un commentaire). Quand le code a calculé une
+    valeur nue (value), c'est elle qui est jugée, exactement."""
     truth = q.get("truth")
     qtype = q.get("type")
     if truth is None:
-        return answer_is_blank(answer)
+        return answer_is_blank(answer) and value is None
+    if value is not None:
+        if isinstance(value, list) or qtype == "list":
+            want = {str(x) for x in truth} if isinstance(truth, list) else {str(truth)}
+            return isinstance(value, list) and {str(x) for x in value} == want
+        if qtype == "date":
+            return verify.parse_iso_date(value) is not None and verify.parse_iso_date(value) == verify.parse_iso_date(truth)
+        t, v = verify.parse_amount(truth), verify.parse_amount(value)
+        return t is not None and v is not None and abs(t - v) < 0.01
     if answer_is_blank(answer):
         return False
     if qtype in ("amount", "count") or isinstance(truth, (int, float)):
@@ -443,12 +478,35 @@ def _facts_stamp(selected: list[Paper]) -> str:
     return hashlib.sha256(json.dumps([(p.id, p.facts.plain()) for p in selected], ensure_ascii=False, sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
+def _previous_answer(method_dir: str, q: dict[str, Any]) -> dict[str, Any] | None:
+    """La dernière réponse en cache pour cette question (même id et même texte), quelle que soit la clé."""
+    d = os.path.join(RUNTIME, method_dir)
+    if not os.path.isdir(d):
+        return None
+    best: dict[str, Any] | None = None
+    for name in os.listdir(d):
+        try:
+            with open(os.path.join(d, name), encoding="utf-8") as fh:
+                c = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        if c.get("id") == q["id"] and c.get("question") == q["question"]:
+            if best is None or os.path.getmtime(os.path.join(d, name)) > best["_mtime"]:
+                best = dict(c, _mtime=os.path.getmtime(os.path.join(d, name)))
+    if best:
+        best.pop("_mtime", None)
+    return best
+
+
 def run_question(method: str, q: dict[str, Any], papers: list[Paper], texts: dict[str, str], use_cache: bool) -> dict[str, Any]:
     """method : 'ours' (faits + calculs + citations + contrôle), 'baseline' (tous les textes bruts,
     contexte borné), 'baseline_retrieval' (les MÊMES papiers que notre sélection, en texte brut,
     réponse libre, aucun contrôle)."""
     selected = select_papers(q["question"], papers) if method != "baseline" else []
-    if method == "ours":
+    if method == "ours_product":
+        # Le produit (ask.py) regarde tous les papiers : la clé suit l'ensemble des faits.
+        key_src = q["question"] + "|" + _facts_stamp(papers)
+    elif method == "ours":
         key_src = q["question"] + "|" + _facts_stamp(selected)
     elif method == "baseline_retrieval":
         key_src = q["question"] + "|" + hashlib.sha256("\n".join(p.text for p in selected).encode()).hexdigest()[:16]
@@ -459,12 +517,28 @@ def run_question(method: str, q: dict[str, Any], papers: list[Paper], texts: dic
     if use_cache:
         hit = _cache_get(method + "_q", key, stamp)
         if hit:
-            hit["match"] = question_match(q, hit["answer"])  # le juge peut changer, la réponse non
+            hit["match"] = question_match(q, hit["answer"], hit.get("value"))  # le juge peut changer, la réponse non
             return hit
+    if NO_NEW_CALLS:
+        # Les faits ont changé (contrôles rejoués) mais pas la question : on reprend la réponse
+        # donnée lors du dernier vrai passage, re-jugée ; aucun appel au modèle.
+        prev = _previous_answer(method + "_q", q)
+        if prev:
+            prev["match"] = question_match(q, prev["answer"], prev.get("value"))
+            prev["replayed"] = True
+            return prev
+        return {"id": q["id"], "question": q["question"], "truth": q.get("truth"), "type": q.get("type"),
+                "answer": "", "match": question_match(q, ""), "papers_seen": [], "tokens": {"total_tokens": 0}, "seconds": 0.0, "replayed": True}
     t0 = time.time()
+    extra: dict[str, Any] = {}
     with llm.usage_scope() as usage:
         try:
-            if method == "ours":
+            if method == "ours_product":
+                a = ask.ask(q["question"], papers, q.get("language", "fr"))
+                answer = a.text
+                extra = {"by": a.by, "note": a.note, "cited_ids": list(a.cited_ids), "grounded": a.grounded,
+                         "value": a.value if isinstance(a.value, (int, float, str, list)) else None}
+            elif method == "ours":
                 answer = answer_question(q["question"], papers)
             elif method == "baseline_retrieval":
                 answer = baseline.baseline_questions({p.id: p.text for p in selected}, q["question"]) if selected else NO_PAPER[q.get("language", "fr")]
@@ -473,8 +547,8 @@ def run_question(method: str, q: dict[str, Any], papers: list[Paper], texts: dic
         except (llm.ModelError, llm.ModelAnswerError) as e:
             answer = f"(error: {str(e)[:60]})"
     out = {"id": q["id"], "question": q["question"], "truth": q.get("truth"), "type": q.get("type"),
-           "answer": answer, "match": question_match(q, answer), "papers_seen": [p.id for p in selected],
-           "tokens": dict(usage), "seconds": round(time.time() - t0, 2)}
+           "answer": answer, "match": question_match(q, answer, extra.get("value")), "papers_seen": [p.id for p in selected],
+           "tokens": dict(usage), "seconds": round(time.time() - t0, 2), **extra}
     _cache_put(method + "_q", key, stamp, out)
     return out
 
@@ -509,6 +583,9 @@ def summarise(method: str, runs: list[dict[str, Any]], scores: list[dict[str, An
     n = len(runs)
     qmatch = sum(int(q["match"]) for q in qruns)
     qtokens = sum(q["tokens"]["total_tokens"] for q in qruns)
+    by = {"code": 0, "model": 0, "none": 0}
+    for q in qruns:
+        by[q.get("by") or "model"] = by.get(q.get("by") or "model", 0) + 1
     return {
         "method": method,
         "papers": n,
@@ -523,6 +600,7 @@ def summarise(method: str, runs: list[dict[str, Any]], scores: list[dict[str, An
         "questions": len(qruns),
         "questions_match_pct": _pct(qmatch, len(qruns)),
         "questions_tokens_total": qtokens,
+        "questions_by": by,
         "per_kind": {k: dict(v, correct_pct=_pct(v["correct"], v["correct"] + v["invented"] + v["blank"]),
                              invented_pct=_pct(v["invented"], v["correct"] + v["invented"] + v["blank"]),
                              blank_pct=_pct(v["blank"], v["correct"] + v["invented"] + v["blank"]))
@@ -564,7 +642,11 @@ def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: d
             if s.get("questions_retrieval"):
                 lines.append(f"| Baseline + retrieval (same papers as Ours, raw text, free-form, no checks) | questions exact match ({s['questions_retrieval']} q) | {s['questions_retrieval_match_pct']} % |")
         else:
-            lines.append(f"| {L} | questions exact match ({s['questions']} q) | {s['questions_match_pct']} % |")
+            by = s.get("questions_by") or {}
+            path = "product path: ask.py rules first, model for the rest" if by.get("code") else "digest path"
+            lines.append(f"| {L} | questions exact match ({s['questions']} q, {path}) | {s['questions_match_pct']} % |")
+            if by:
+                lines.append(f"| {L} | questions answered by rules / by model / none | {by.get('code', 0)} / {by.get('model', 0)} / {by.get('none', 0)} |")
         if s.get("questions_same_as_baseline"):
             lines.append(f"| {L} | questions exact match on the Baseline's {s['questions_same_as_baseline']} q | {s['questions_same_as_baseline_match_pct']} % |")
         lines += [
@@ -607,13 +689,24 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--no-cache", action="store_true")
     ap.add_argument("--tag", default="", help="suffixe des résultats (docs/results-<tag>.*) et du cache (runtime/cache-<tag>/)")
+    ap.add_argument("--no-new-calls", action="store_true", help="rejoue les contrôles sur le cache ; aucun appel au modèle")
+    ap.add_argument("--ours-questions", choices=["product", "digest"], default="product",
+                    help="product = ask.ask (règles puis modèle, le chemin du produit) ; digest = la sélection + résumé de eval.py")
     args = ap.parse_args(argv)
-    global RUNTIME
+    global RUNTIME, NO_NEW_CALLS
+    NO_NEW_CALLS = args.no_new_calls
     if args.tag:
         RUNTIME = os.path.join(ROOT, "runtime", f"cache-{args.tag}")
     use_cache = not args.no_cache
     methods = ["baseline", "ours"] if args.methods == "both" else [args.methods]
     model_name = os.getenv("LLM_NAME") or llm.DEFAULT_MODEL
+    if args.no_new_calls:
+        # Le cache porte le nom du modèle dans son empreinte : on l'affiche tel quel.
+        prev = os.path.join(args.out, f"results{'-' + args.tag if args.tag else ''}.json")
+        if os.path.exists(prev):
+            with open(prev, encoding="utf-8") as fh:
+                model_name = json.load(fh).get("model", model_name)
+        os.environ["LLM_NAME"] = model_name  # les empreintes du cache incluent ce nom
 
     truth_files = sorted(glob.glob(os.path.join(args.data, "truth", "*.json")))
     if args.limit:
@@ -678,7 +771,7 @@ def main(argv: list[str] | None = None) -> int:
             out.sort(key=lambda q: q["id"])
             return out
 
-        qruns = ask_all(method)
+        qruns = ask_all("ours_product" if method == "ours" and args.ours_questions == "product" else method)
         summaries[method] = summarise(method, ordered, scores, qruns)
         details[method] = {"papers": scores, "questions": qruns,
                            "per_paper": {r["paper"]["id"]: {"tokens": r["tokens"], "seconds": r["seconds"], "kind": r["paper"]["kind"]} for r in ordered}}
