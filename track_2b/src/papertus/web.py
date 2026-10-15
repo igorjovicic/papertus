@@ -821,14 +821,18 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   };
 
   // --- départ ---------------------------------------------------------------
-  // L'adresse peut préciser ?lang=de&paper=p050&tab=report (lien partageable, captures d'écran).
+  // L'adresse peut préciser ?lang=de&paper=p050&tab=report&q=… (lien partageable, captures d'écran).
   var params = new URLSearchParams(location.search);
   var saved = 'fr'; try { saved = localStorage.getItem('papertus.lang') || 'fr'; } catch (e) {}
   if (params.get('lang')) saved = params.get('lang');
   if (LANGS.indexOf(saved) < 0) saved = 'fr';
   if (params.get('paper')) state.selected = params.get('paper');
   setLang(saved, true);
-  loadPapers().then(function () { if (params.get('tab') === 'report') { showTab('report'); genReport(); } });
+  loadPapers().then(function () {
+    if (params.get('tab') === 'report') { showTab('report'); genReport(); }
+    // ?q=… pose la question à l'ouverture (lien partageable, captures d'écran).
+    if (params.get('q')) { $('q').value = params.get('q'); $('askform').onsubmit(new Event('submit')); }
+  });
   poll();
 })();
 </script>
