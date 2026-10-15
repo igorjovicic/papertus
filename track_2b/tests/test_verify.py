@@ -1,7 +1,7 @@
 """Les contrôles de code, cas faits à la main. Aucun appel au modèle ici."""
 
-from paperasse import swissqr, verify
-from paperasse.schema import Field
+from papertus import swissqr, verify
+from papertus.schema import Field
 
 IBAN = swissqr.iban_build("CH", "00700123456789012")          # IBAN ordinaire valide
 QR_IBAN = swissqr.iban_build("CH", "30000123456789012")       # QR-IBAN (clearing 30000)
@@ -219,7 +219,7 @@ def test_letter_amount_must_be_in_text():
 
 
 def test_all_keys_present_for_each_kind():
-    from paperasse.schema import TRUTH_KEYS
+    from papertus.schema import TRUTH_KEYS
     for kind, keys in TRUTH_KEYS.items():
         f = verify.verify(kind, {}, "", None)
         assert set(keys) <= set(f.fields), kind

@@ -1,4 +1,4 @@
-# Paperasse — Track 2B. `make run` est ce que lancent les juges (Docker, dépôt propre).
+# Papertus — Track 2B. `make run` est ce que lancent les juges (Docker, dépôt propre).
 .PHONY: run data eval test dev stop seed
 
 # Interpréteur pour les cibles locales : le venv du dépôt s'il existe, sinon python3.
@@ -14,14 +14,14 @@ stop:
 
 # Régénère les 100 papiers synthétiques et leur vérité (déterministe, graine 42)
 data:
-	$(PY) -m paperasse.generate --out data --seed 42
+	$(PY) -m papertus.generate --out data --seed 42
 
 # Compare le modèle seul (baseline) à notre chaîne vérifiée ; écrit docs/results.md + results.json
 # make eval            → docs/results.md on the configured endpoint
 # make eval TAG=8b     → docs/results-8b.md, separate cache (e.g. a local Apertus 8B server)
 TAG ?=
 eval:
-	$(PY) -m paperasse.eval --data data --out docs $(if $(TAG),--tag $(TAG),)
+	$(PY) -m papertus.eval --data data --out docs $(if $(TAG),--tag $(TAG),)
 
 # Tests unitaires ; les tests qui appellent le modèle sont sautés sans LLM_API_KEY
 test:
@@ -29,7 +29,7 @@ test:
 
 # Serveur de développement avec rechargement, sans Docker (lit ./papers ou PAPERS_DIR)
 dev:
-	PAPERS_DIR=$${PAPERS_DIR:-./papers} $(PY) -m uvicorn paperasse.web:app --reload --port 8640 --app-dir src
+	PAPERS_DIR=$${PAPERS_DIR:-./papers} $(PY) -m uvicorn papertus.web:app --reload --port 8640 --app-dir src
 
 # Construit la graine livrée (data/cache.json) : les réponses brutes du modèle gardées par
 # l'évaluation (runtime/cache/ours_raw) rejouées par le verify.py ACTUEL, sans appel au modèle.

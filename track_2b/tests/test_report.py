@@ -4,8 +4,8 @@ import os
 
 import pytest
 
-from paperasse import report
-from paperasse.schema import Facts, Field, Paper
+from papertus import report
+from papertus.schema import Facts, Field, Paper
 
 
 def mk(pid, kind, lang, **values):

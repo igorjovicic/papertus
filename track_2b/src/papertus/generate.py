@@ -1,6 +1,6 @@
 """Générateur de papiers suisses synthétiques : QR-factures, relevés bancaires, lettres officielles.
 
-    python -m paperasse.generate --out track_2b/data --seed 42
+    python -m papertus.generate --out track_2b/data --seed 42
 
 Produit ``<out>/papers/pNNN.pdf``, ``<out>/truth/pNNN.json`` et ``<out>/questions.json``.
 Tout est fictif : personnes, entreprises, adresses, banques, IBAN (contrôle valide).
@@ -363,7 +363,7 @@ class Sheet:
     def __init__(self, path: str, title: str):
         self.c = canvas.Canvas(path, pagesize=A4, invariant=1)   # md5 stable d'un run à l'autre
         self.c.setTitle(title)
-        self.c.setAuthor("Paperasse – papiers synthétiques")
+        self.c.setAuthor("Papertus – papiers synthétiques")
         self.c.setSubject("Document fictif généré pour un jeu de test")
         self.pages = 1
 

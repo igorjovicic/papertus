@@ -1,6 +1,6 @@
 """L'évaluation : Apertus seul (Baseline) contre Apertus + code (Ours), sur data/.
 
-    python -m paperasse.eval --data data --out docs [--limit N] [--methods ours|baseline|both]
+    python -m papertus.eval --data data --out docs [--limit N] [--methods ours|baseline|both]
                              [--questions N] [--workers 4] [--no-cache]
 
 Pour chaque papier et chaque champ compté (nombres, dates, identifiants) on compare

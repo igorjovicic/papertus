@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 420" width="980" height="420" font-family="Helvetica, Arial, sans-serif" font-size="14">
   <rect width="980" height="420" fill="#ffffff"/>
   <!-- titre -->
-  <text x="20" y="30" font-size="18" font-weight="700" fill="#111">Paperasse : des papiers suisses → des faits vérifiés → un rapport → une conversation</text>
+  <text x="20" y="30" font-size="18" font-weight="700" fill="#111">Papertus : des papiers suisses → des faits vérifiés → un rapport → une conversation</text>
   <text x="20" y="50" fill="#555">Le code fait les chiffres. Apertus fait la langue. Un chiffre non vérifié reste vide.</text>
 
   <!-- colonne 1 : papiers -->
@@ -64,7 +64,7 @@
   <text x="855" y="245" text-anchor="middle" fill="#777">réponse citée [p0xx]</text>
   <text x="855" y="263" text-anchor="middle" fill="#777">chiffres contrôlés</text>
   <text x="855" y="300" text-anchor="middle" fill="#333">Évaluation</text>
-  <text x="855" y="320" text-anchor="middle" fill="#777">Apertus seul vs Paperasse</text>
+  <text x="855" y="320" text-anchor="middle" fill="#777">Apertus seul vs Papertus</text>
   <text x="855" y="338" text-anchor="middle" fill="#777">100 papiers, 50 questions</text>
 
   <!-- pied -->

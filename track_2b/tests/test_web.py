@@ -3,8 +3,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from paperasse import i18n, web
-from paperasse.schema import Facts, Field, Paper
+from papertus import i18n, web
+from papertus.schema import Facts, Field, Paper
 
 
 @pytest.fixture

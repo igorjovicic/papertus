@@ -6,8 +6,8 @@ import os
 
 import pytest
 
-from paperasse import ask, i18n
-from paperasse.schema import Paper
+from papertus import ask, i18n
+from papertus.schema import Paper
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = os.path.join(ROOT, "data", "cache.json")
@@ -25,7 +25,7 @@ def papers():
 
 @pytest.fixture(autouse=True)
 def no_model(monkeypatch):
-    import paperasse.llm as llm
+    import papertus.llm as llm
 
     def boom(*a, **k):
         raise AssertionError("an example chip must be answered by the rules, never by the model")

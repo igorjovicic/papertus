@@ -187,7 +187,7 @@ class Store:
 
     def start(self) -> None:
         if self.thread is None:
-            self.thread = threading.Thread(target=self.worker, name="paperasse-reader", daemon=True)
+            self.thread = threading.Thread(target=self.worker, name="papertus-reader", daemon=True)
             self.thread.start()
 
 
@@ -365,7 +365,7 @@ def api_report_md(month: str = "2026-09", lang: str = "fr") -> PlainTextResponse
     lang = i18n.norm_lang(lang)
     rep = report_mod.build_report(STORE.ordered(), month, lang)
     return PlainTextResponse(report_mod.render_markdown(rep, lang), media_type="text/markdown; charset=utf-8",
-                             headers={"Content-Disposition": f'attachment; filename="paperasse-{month}-{lang}.md"'})
+                             headers={"Content-Disposition": f'attachment; filename="papertus-{month}-{lang}.md"'})
 
 
 @app.post("/api/ask")

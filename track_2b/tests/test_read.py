@@ -5,7 +5,7 @@ import os
 
 import pytest
 
-from paperasse import read
+from papertus import read
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAPERS = sorted(glob.glob(os.path.join(ROOT, "data", "papers", "*.pdf")))

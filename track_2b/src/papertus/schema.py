@@ -1,4 +1,4 @@
-"""Schéma partagé de Paperasse : un papier, ses faits, chaque fait avec sa provenance.
+"""Schéma partagé de Papertus : un papier, ses faits, chaque fait avec sa provenance.
 
 Ce module ne dépend que de la bibliothèque standard. Il est lu par tous les autres
 modules (lecture, vérification, rapport, questions, interface). Les règles :

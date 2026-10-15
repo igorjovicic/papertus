@@ -8,9 +8,9 @@ import pytest
 import zxingcpp
 from PIL import Image
 
-from paperasse import generate as g
-from paperasse import swissqr
-from paperasse.schema import DATE_KEYS, NUMERIC_KEYS, TRUTH_KEYS, Truth
+from papertus import generate as g
+from papertus import swissqr
+from papertus.schema import DATE_KEYS, NUMERIC_KEYS, TRUTH_KEYS, Truth
 
 SMALL_PLAN = {
     ("qr_bill", "fr"): 3, ("qr_bill", "de"): 3, ("qr_bill", "it"): 2,

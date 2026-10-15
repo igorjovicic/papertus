@@ -1,4 +1,4 @@
-# Paperasse — un seul service. `make run` = `docker compose up --build`.
+# Papertus — un seul service. `make run` = `docker compose up --build`.
 #
 # Le modèle est joint par trois variables : LLM_NAME, LLM_BASE_URL, LLM_API_KEY.
 # Elles viennent soit d'un fichier .env (facultatif, copié depuis .env.example),
@@ -9,9 +9,9 @@
 # démarrage, les 100 papiers synthétiques de data/papers y sont copiés pour que
 # la page montre quelque chose tout de suite.
 services:
-  paperasse:
+  papertus:
     build: .
-    container_name: paperasse
+    container_name: papertus
     ports:
       - "8640:8640"
     env_file:
@@ -31,7 +31,7 @@ services:
                echo 'papers/ vide : copie des exemples de data/papers';
                cp /app/data/papers/*.pdf /papers/ 2>/dev/null || true;
              fi;
-             exec uvicorn paperasse.web:app --host 0.0.0.0 --port 8640"
+             exec uvicorn papertus.web:app --host 0.0.0.0 --port 8640"
     # Pour un serveur Apertus local sur la machine hôte (vLLM ou un serveur GGUF), voir .env.example.
     extra_hosts:
       - "host.docker.internal:host-gateway"

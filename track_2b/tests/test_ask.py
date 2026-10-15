@@ -4,8 +4,8 @@ import os
 
 import pytest
 
-from paperasse import ask
-from paperasse.schema import Facts, Field, Paper
+from papertus import ask
+from papertus.schema import Facts, Field, Paper
 
 
 def mk(pid, kind, lang, **values):
@@ -103,7 +103,7 @@ def test_query_terms_strip_stopwords():
 
 
 def test_no_hit_makes_no_model_call(papers, monkeypatch):
-    import paperasse.llm as llm
+    import papertus.llm as llm
 
     def boom(*a, **k):
         raise AssertionError("the model must not be called")
@@ -115,7 +115,7 @@ def test_no_hit_makes_no_model_call(papers, monkeypatch):
 
 
 def test_model_answer_with_invented_number_is_replaced(papers, monkeypatch):
-    import paperasse.llm as llm
+    import papertus.llm as llm
     monkeypatch.setattr(llm, "chat", lambda *a, **k: ("La lettre vient de Steuerverwaltung Kanton Bern [p005] pour CHF 7'777.00.", {"total_tokens": 10}))
     a = ask.ask("Qui a envoyé la lettre sur la Veranlagung ?", papers, "fr")
     assert a.grounded is False and a.text == "Je ne trouve pas ce chiffre dans vos papiers."

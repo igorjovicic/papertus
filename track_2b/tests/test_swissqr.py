@@ -2,7 +2,7 @@
 
 import pytest
 
-from paperasse import swissqr as q
+from papertus import swissqr as q
 
 # Vecteurs publics (exemples des spécifications et de l'ISO).
 IBAN_OK = "CH93 0076 2011 6238 5295 7"

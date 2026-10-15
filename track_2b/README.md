@@ -106,8 +106,8 @@ correct, invented and blank percentages per field, exact match on 50 questions, 
 (valid checksums, no real bank). `data/truth` holds the ground truth per paper, `data/questions.json`
 the 50 questions. No real person, no real paper.
 
-The Python package is still named `paperasse` in module paths (`paperasse.web:app`); the display
-name is the single constant `APP_NAME` in `src/paperasse/i18n.py`.
+The Python package is still named `papertus` in module paths (`papertus.web:app`); the display
+name is the single constant `APP_NAME` in `src/papertus/i18n.py`.
 
 ## Licences
 

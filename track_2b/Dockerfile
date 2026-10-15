@@ -1,4 +1,4 @@
-# Paperasse — image unique : Python 3.12, le code et les papiers d'exemple.
+# Papertus — image unique : Python 3.12, le code et les papiers d'exemple.
 # Aucune ressource réseau au démarrage ; seul le point d'accès LLM est joint à l'exécution.
 # Image épinglée (python:3.12-slim, Debian bookworm, 2026-10) : la construction ne touche le réseau que pour pip.
 FROM python:3.12-slim-bookworm
@@ -22,4 +22,4 @@ RUN mkdir -p /papers /app/runtime
 
 EXPOSE 8640
 
-CMD ["uvicorn", "paperasse.web:app", "--host", "0.0.0.0", "--port", "8640"]
+CMD ["uvicorn", "papertus.web:app", "--host", "0.0.0.0", "--port", "8640"]
