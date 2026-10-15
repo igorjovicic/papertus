@@ -3,7 +3,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from paperasse import web
+from paperasse import i18n, web
 from paperasse.schema import Facts, Field, Paper
 
 
@@ -20,7 +20,7 @@ def client(tmp_path, monkeypatch):
 
 def test_page_and_health(client):
     r = client.get("/")
-    assert r.status_code == 200 and "Paperasse" in r.text and "<script" in r.text
+    assert r.status_code == 200 and i18n.APP_NAME in r.text and "<script" in r.text and "{{APP}}" not in r.text
     assert "http://" not in r.text.replace("http://localhost", "") and "https://" not in r.text  # aucune ressource externe
     h = client.get("/health").json()
     assert h["ok"] is True and h["papers"] == 0
@@ -38,7 +38,7 @@ def test_papers_list_report_and_ask(client):
     assert len(ps) == 1 and ps[0]["id"] == "p001" and ps[0]["facts"]["amount_chf"]["status"] == "verified"
     assert client.get("/api/months").json() == ["2026-10", "2026-09"]
     rep = client.get("/api/report?month=2026-09&lang=en&prose=0").json()
-    assert rep["report"]["totals"]["bills_total"] == 1234.5 and "Bills received" in rep["html"]
+    assert rep["report"]["totals"]["bills_total"] == 1234.5 and "Bills received" in rep["html"] and "Apertus" in rep["html"]
     assert client.get("/api/report?month=sept").status_code == 400
     a = client.post("/api/ask", json={"question": "Combien dois-je encore à Fiduciaire Rochat SA ?", "lang": "fr"}).json()
     assert a["by"] == "code" and a["value"] == 1234.5 and a["papers"][0]["id"] == "p001"
@@ -54,5 +54,6 @@ def test_upload_rejects_non_pdf(client):
 
 def test_strings_in_four_languages(client):
     for lang, word in (("fr", "Rapport"), ("de", "Bericht"), ("it", "Rapporto"), ("en", "Report")):
-        assert client.get(f"/api/strings?lang={lang}").json()["tab.report"] == word
+        got = client.get(f"/api/strings?lang={lang}").json()
+        assert got["tab.report"] == word and got["_app"] == i18n.APP_NAME and "Apertus" in got["_badge"]
     assert "ß" not in "".join(client.get("/api/strings?lang=de").json().values())

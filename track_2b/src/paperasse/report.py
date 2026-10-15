@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
+from urllib.parse import urlparse
 from dataclasses import asdict, dataclass, field
 from datetime import date
 from typing import Any
@@ -24,6 +26,34 @@ except ImportError:  # pragma: no cover - dépend de l'ordre d'arrivée des fich
 
 TOLERANCE = 0.01  # centime
 PROSE_MAX_WORDS = 80
+
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1", "host.docker.internal", "0.0.0.0"}
+
+
+def deployment() -> dict[str, Any]:
+    """Où tourne le modèle, d'après LLM_BASE_URL / LLM_NAME : {local, size, configured}.
+
+    Hôte local (localhost, 127.0.0.1, host.docker.internal, *.local) → la machine elle-même,
+    rien ne sort ; sinon le cloud. La taille vient du nom du modèle (…-8B, …-70B)."""
+    base = os.getenv("LLM_BASE_URL") or ""
+    host = (urlparse(base).hostname or "").lower() if base else ""
+    local = bool(host) and (host in LOCAL_HOSTS or host.endswith(".local") or host.endswith(".localhost"))
+    m = re.search(r"(\d+)\s*B\b", os.getenv("LLM_NAME") or "", flags=re.I)
+    size = f"{m.group(1)}B" if m else ("8B" if local else "70B")
+    return {"local": local, "size": size, "configured": bool(base)}
+
+
+def status_line(lang: str | None = None) -> str:
+    """La pastille d'état de l'en-tête : « Apertus 8B · sur cette machine · rien ne sort »."""
+    d = deployment()
+    if not d["configured"]:
+        return t("status.none", lang)
+    return t("status.local" if d["local"] else "status.cloud", lang, size=d["size"])
+
+
+def model_badge(lang: str | None = None) -> str:
+    """Le petit libellé gris sous la phrase du modèle : « Apertus 8B · chaque chiffre contrôlé »."""
+    return t("apertus.label", lang, size=deployment()["size"])
 
 
 # ---------------------------------------------------------------------------
@@ -556,7 +586,7 @@ def render_html(report: Report, lang: str | None = None) -> str:
     lang = i18n.norm_lang(lang or report.lang)
     L = lambda k: t(k, lang)  # noqa: E731
     link = lambda pid: f'<a class="pid" href="/api/paper/{_esc(pid)}/file" target="_blank">{_esc(pid)}</a>'  # noqa: E731
-    h = [f"<h2>{_esc(L('report.title'))} — {_esc(i18n.month_label(report.month, lang))}</h2>"]
+    h = [f"<h2><span class='label'>{_esc(L('report.title'))}</span>{_esc(i18n.month_label(report.month, lang))}</h2>"]
     if not (report.bills or report.accounts or report.letters):
         h.append(f"<p class='muted'>{_esc(L('report.empty'))}</p>")
         return "\n".join(h)
@@ -605,5 +635,6 @@ def render_html(report: Report, lang: str | None = None) -> str:
     else:
         h.append(f"<p class='muted'>{_esc(L('report.empty'))}</p>")
     h.append(f"<h3>{_esc(L('report.summary'))}</h3>")
-    h.append(f"<p class='prose'>{_esc(report.prose or L('report.no_prose'))}</p>")
+    h.append(f"<div class='prose'><p>{_esc(report.prose or L('report.no_prose'))}</p>"
+             f"<span class='label'>{_esc(model_badge(lang))}</span></div>")
     return "\n".join(h)

@@ -1,17 +1,23 @@
-# Paperasse — Swiss papers in, a report out, then a conversation
+# Papertus — talk to your own papers, on your own laptop
 
-Drop a folder of Swiss papers (QR-bills, bank statements, official letters, in French, German or Italian)
-and Paperasse turns them into verified facts, a monthly report in your language and answers to your
-questions. Apertus 1.5 reads and writes the language; plain code decodes the QR, checks every checksum,
-redoes every sum and compares every date, so that each figure on screen points back to the paper it came
-from, and a field the code cannot confirm stays blank with its reason instead of becoming a guess.
-Nothing leaves the machine except the calls to the model endpoint you configure, which can be a Swiss
-sovereign cloud or an Apertus 8B server on your own network with no internet at all.
+Everyone can talk to their own papers on their own laptop, with a small Swiss model, and nothing leaves
+the machine. Drop a folder of Swiss papers (QR-bills, bank statements, letters from the canton, the
+commune or the health insurer, in French, German or Italian) and Papertus turns them into verified
+facts, a monthly report in your language and answers to your questions. Apertus 1.5 reads and writes the
+language; plain code decodes the QR, checks every checksum, redoes every sum and compares every date, so
+that each figure on screen points back to the paper it came from, and a field the code cannot confirm
+stays blank with its reason instead of becoming a guess. The model can be Apertus 8B running on the
+laptop itself (the header then says « sur cette machine · rien ne sort ») or Apertus 70B on a Swiss
+sovereign cloud; the code is the same.
 
 ![Architecture](docs/architecture.svg)
 
-Track 2B — Hack Apertus 2026 (online). Target architecture: **c) sovereign Swiss cloud** for the model
-endpoint by default, **b) air-gapped** with a local Apertus 8B server (see below). Everything else runs
+| The facts of a bank statement | The September report | At 375 px |
+|---|---|---|
+| ![Facts](docs/screenshot-facts.png) | ![Report](docs/screenshot-rapport.png) | ![Mobile](docs/screenshot-mobile.png) |
+
+Track 2B — Hack Apertus 2026 (online). Target architecture: **b) air-gapped** with Apertus 8B on the
+machine itself (the pitch), or **c) sovereign Swiss cloud** for the 70B endpoint (see below). Everything else runs
 in one container on your own machine.
 
 ## Quick start
@@ -45,7 +51,7 @@ cached by file hash in `runtime/cache.json`). Then:
   with its reason when the code refused it. Every paper opens as PDF.
 - **Rapport**: pick a month and a language (fr / de / it / en). The tables are built by code; the short
   paragraph under them is written by Apertus from those tables, and every number in it is checked.
-- **Question** (bottom box): "Combien dois-je encore à … ?", "Welche Rechnungen sind am 20.10.2026 fällig?",
+- **Question** (bottom box, with example chips): "Combien dois-je encore à la caisse-maladie ?", "Welche Rechnungen sind am 20.10.2026 fällig?",
   "Quante fatture ho ricevuto in settembre?" Simple questions are answered by code; the others go to
   Apertus with the six closest papers and must cite them as `[p0xx]`, each citation a link to the PDF.
 - Drop your own folder on the page (a whole folder or many files; PDF only). They are saved in `./papers`
@@ -99,6 +105,9 @@ correct, invented and blank percentages per field, exact match on 50 questions, 
 ~40 fr / 40 de / 20 it; August–October 2026) with fictitious people, companies, addresses and IBANs
 (valid checksums, no real bank). `data/truth` holds the ground truth per paper, `data/questions.json`
 the 50 questions. No real person, no real paper.
+
+The Python package is still named `paperasse` in module paths (`paperasse.web:app`); the display
+name is the single constant `APP_NAME` in `src/paperasse/i18n.py`.
 
 ## Licences
 

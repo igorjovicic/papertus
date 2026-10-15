@@ -10,17 +10,51 @@ from __future__ import annotations
 LANGS: tuple[str, ...] = ("fr", "de", "it", "en")
 DEFAULT_LANG = "fr"
 
+# Le nom affiché partout (page, titres, rapport, README). Le paquet Python garde son
+# nom de module pour l'instant ; seul ce libellé compte pour ce que voit la personne.
+APP_NAME = "Papertus"
+
 LANG_NAMES = {"fr": "Français", "de": "Deutsch", "it": "Italiano", "en": "English"}
 
 # Clé -> (fr, de, it, en). L'ordre des langues est celui de LANGS.
 _S: dict[str, tuple[str, str, str, str]] = {
     # --- Général -------------------------------------------------------------
-    "app.title": ("Paperasse", "Paperasse", "Paperasse", "Paperasse"),
+    "app.title": (APP_NAME, APP_NAME, APP_NAME, APP_NAME),
     "app.tagline": (
-        "Vos papiers suisses, lus et vérifiés. Chaque chiffre renvoie à son papier.",
-        "Ihre Schweizer Papiere, gelesen und geprüft. Jede Zahl führt zu ihrem Papier.",
-        "I vostri documenti svizzeri, letti e verificati. Ogni cifra rimanda al suo documento.",
-        "Your Swiss papers, read and checked. Every figure points back to its paper.",
+        "Parlez à vos papiers, sur votre ordinateur. Rien ne sort.",
+        "Sprechen Sie mit Ihren Papieren, auf Ihrem Computer. Nichts verlässt ihn.",
+        "Parlate con i vostri documenti, sul vostro computer. Nulla esce.",
+        "Talk to your papers, on your own computer. Nothing leaves it.",
+    ),
+    "status.local": (
+        "Apertus {size} · sur cette machine · rien ne sort",
+        "Apertus {size} · auf diesem Gerät · nichts geht raus",
+        "Apertus {size} · su questo computer · nulla esce",
+        "Apertus {size} · on this machine · nothing leaves",
+    ),
+    "status.cloud": (
+        "Apertus {size} · cloud suisse",
+        "Apertus {size} · Schweizer Cloud",
+        "Apertus {size} · cloud svizzero",
+        "Apertus {size} · Swiss cloud",
+    ),
+    "status.none": (
+        "Aucun modèle configuré",
+        "Kein Modell eingerichtet",
+        "Nessun modello configurato",
+        "No model configured",
+    ),
+    "apertus.label": (
+        "Apertus {size} · chaque chiffre contrôlé",
+        "Apertus {size} · jede Zahl geprüft",
+        "Apertus {size} · ogni cifra controllata",
+        "Apertus {size} · every figure checked",
+    ),
+    "empty.line": (
+        "Vos factures, relevés et lettres officielles, lus ici, sur votre ordinateur. Déposez un dossier pour commencer.",
+        "Ihre Rechnungen, Kontoauszüge und amtlichen Briefe, hier gelesen, auf Ihrem Computer. Legen Sie einen Ordner ab, um zu beginnen.",
+        "Le vostre fatture, estratti conto e lettere ufficiali, letti qui, sul vostro computer. Trascinate una cartella per iniziare.",
+        "Your bills, bank statements and official letters, read here, on your own computer. Drop a folder to begin.",
     ),
     "tab.papers": ("Papiers", "Papiere", "Documenti", "Papers"),
     "tab.report": ("Rapport", "Bericht", "Rapporto", "Report"),
@@ -34,16 +68,16 @@ _S: dict[str, tuple[str, str, str, str]] = {
 
     # --- Dépôt ---------------------------------------------------------------
     "drop.title": (
-        "Déposez un dossier de papiers (PDF)",
-        "Legen Sie einen Ordner mit Papieren ab (PDF)",
-        "Trascinate una cartella di documenti (PDF)",
-        "Drop a folder of papers (PDF)",
+        "Déposez vos factures QR, relevés, lettres du canton, de la commune, de la caisse-maladie",
+        "Legen Sie Ihre QR-Rechnungen, Kontoauszüge, Briefe von Kanton, Gemeinde und Krankenkasse ab",
+        "Trascinate le vostre fatture QR, estratti conto, lettere del Cantone, del Comune, della cassa malati",
+        "Drop your QR-bills, bank statements, letters from the canton, the commune, the health insurer",
     ),
     "drop.hint": (
-        "Glissez ici un dossier entier ou plusieurs fichiers.",
-        "Ziehen Sie einen ganzen Ordner oder mehrere Dateien hierher.",
-        "Trascinate qui un'intera cartella o più file.",
-        "Drag a whole folder or several files here.",
+        "Un dossier entier ou plusieurs PDF, glissés ici.",
+        "Ein ganzer Ordner oder mehrere PDF, hierher gezogen.",
+        "Un'intera cartella o più PDF, trascinati qui.",
+        "A whole folder or several PDFs, dragged here.",
     ),
     "drop.folder": ("Choisir un dossier", "Ordner wählen", "Scegli una cartella", "Choose a folder"),
     "drop.files": ("Choisir des fichiers", "Dateien wählen", "Scegli dei file", "Choose files"),
@@ -182,6 +216,37 @@ _S: dict[str, tuple[str, str, str, str]] = {
         "I can't find that figure in your papers.",
     ),
     "ask.sources": ("Sources", "Quellen", "Fonti", "Sources"),
+    "ask.examples": ("Par exemple", "Zum Beispiel", "Per esempio", "For example"),
+    "ask.chip.1": (
+        "Combien dois-je encore à la caisse-maladie ?",
+        "Was schulde ich der Krankenkasse noch?",
+        "Quanto devo ancora alla cassa malati?",
+        "How much do I still owe the health insurer?",
+    ),
+    "ask.chip.2": (
+        "Quel est le délai de l'Office des poursuites ?",
+        "Welche Frist setzt das Betreibungsamt?",
+        "Qual è il termine dell'Ufficio esecuzioni?",
+        "What is the deadline from the debt collection office?",
+    ),
+    "ask.chip.3": (
+        "Combien dois-je encore à la commune ?",
+        "Was schulde ich der Gemeinde noch?",
+        "Quanto devo ancora al Comune?",
+        "How much do I still owe the commune?",
+    ),
+    "ask.chip.4": (
+        "Quel est le délai de l'Office des impôts ?",
+        "Welche Frist setzt das Steueramt?",
+        "Quanto devo ancora all'Ufficio delle imposte?",
+        "What is the deadline from the tax office?",
+    ),
+    "ask.chip.5": (
+        "Total des factures de septembre ?",
+        "Total der Rechnungen im September?",
+        "Totale delle fatture di settembre?",
+        "Total of September's bills?",
+    ),
     "ask.grounded": ("chiffres vérifiés", "Zahlen geprüft", "cifre verificate", "figures checked"),
     "ask.not_grounded": ("non vérifié", "ungeprüft", "non verificato", "unchecked"),
     "ask.by_code": ("calculé par le code", "vom Code berechnet", "calcolato dal codice", "computed by code"),

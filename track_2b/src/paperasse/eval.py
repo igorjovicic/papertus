@@ -30,7 +30,7 @@ from . import baseline, llm, read, verify
 from .schema import DATE_KEYS, NUMERIC_KEYS, Paper, Truth, load_truth, scored_keys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-RUNTIME = os.path.join(ROOT, "runtime", "cache")
+RUNTIME = os.path.join(ROOT, "runtime", "cache")  # changé par --tag (runtime/cache-<tag>)
 TOP_PAPERS = 6
 NOT_FOUND = {
     "fr": "Je ne trouve pas ce chiffre dans vos papiers.",
@@ -531,15 +531,16 @@ def summarise(method: str, runs: list[dict[str, Any]], scores: list[dict[str, An
     }
 
 
-def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: dict[str, Any], model_name: str) -> None:
+def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: dict[str, Any], model_name: str, tag: str = "") -> None:
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "results.json"), "w", encoding="utf-8") as fh:
+    suffix = f"-{tag}" if tag else ""
+    with open(os.path.join(out_dir, f"results{suffix}.json"), "w", encoding="utf-8") as fh:
         json.dump({"model": model_name, "date": date.today().isoformat(), "summary": summaries, "details": details}, fh, ensure_ascii=False, indent=1)
     label = {"baseline": "Baseline", "ours": "Ours"}
     lines = [
         "# Résultats : Apertus seul contre Apertus + code",
         "",
-        f"Modèle : `{model_name}` · date : {date.today().isoformat()} · papiers : "
+        f"Modèle (LLM_NAME) : `{model_name}` · date : {date.today().isoformat()} · papiers : "
         + ", ".join(f"{label[m]} {s['papers']}" for m, s in summaries.items()) + ".",
         "",
         "Champs comptés : montants, dates, IBAN, références, numéros (les clés de `schema.scored_keys`). "
@@ -587,7 +588,7 @@ def write_results(out_dir: str, summaries: dict[str, dict[str, Any]], details: d
             cells.append(f"{v['invented']} / {v['correct'] + v['invented'] + v['blank']}" if v else "–")
         lines.append(f"| {f} | " + " | ".join(cells) + " |")
     lines.append("")
-    with open(os.path.join(out_dir, "results.md"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(out_dir, f"results{suffix}.md"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
 
 
@@ -605,7 +606,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--baseline-questions", type=int, default=-1, help="n premières questions pour la Baseline (-1 = comme --questions)")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--no-cache", action="store_true")
+    ap.add_argument("--tag", default="", help="suffixe des résultats (docs/results-<tag>.*) et du cache (runtime/cache-<tag>/)")
     args = ap.parse_args(argv)
+    global RUNTIME
+    if args.tag:
+        RUNTIME = os.path.join(ROOT, "runtime", f"cache-{args.tag}")
     use_cache = not args.no_cache
     methods = ["baseline", "ours"] if args.methods == "both" else [args.methods]
     model_name = os.getenv("LLM_NAME") or llm.DEFAULT_MODEL
@@ -695,8 +700,9 @@ def main(argv: list[str] | None = None) -> int:
         same = [q for q in details["ours"]["questions"] if q["id"] in seen]
         summaries["ours"]["questions_same_as_baseline"] = len(same)
         summaries["ours"]["questions_same_as_baseline_match_pct"] = _pct(sum(int(q["match"]) for q in same), len(same))
-    write_results(args.out, summaries, details, model_name)
-    log(f"wrote {os.path.join(args.out, 'results.md')} and results.json · total tokens this run: {llm.usage_total()['total_tokens']}")
+    write_results(args.out, summaries, details, model_name, args.tag)
+    suffix = f"-{args.tag}" if args.tag else ""
+    log(f"wrote {os.path.join(args.out, f'results{suffix}.md')} and results{suffix}.json · model {model_name} · total tokens this run: {llm.usage_total()['total_tokens']}")
     return 0
 
 

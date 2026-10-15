@@ -102,7 +102,7 @@ Ours costs fewer tokens than the baseline because the kind is decided by rules a
 - **Tests:** `make test` runs 82 unit tests (checks, QR payloads, IBAN/QRR/SCOR vectors, report tables, rule answers, the no-call path, the web routes) plus the forbidden-names guard; four live tests run when `LLM_API_KEY` is set.
 - **Endpoint used for the reported numbers:** Infomaniak AI tools, model `swiss-ai/Apertus-v1.5-70B`, temperature 0, 14 and 15 October 2026. For the air-gapped configuration: `LLM_NAME=swiss-ai/Apertus-v1.5-8B`, `LLM_BASE_URL=http://host.docker.internal:8080/v1` with any OpenAI-compatible server holding the 8B weights.
 - **Hardware for the author's runs:** a laptop for the container and the tests; the model on the hosted endpoint.
-- **Tooling disclosure:** the code was written during the hackathon period with an AI coding assistant (Claude) under the author's direction; the design, the checks, the tests and every reported number were run and verified by the author.
+- **Tooling disclosure:** the code was written during the hackathon period with an AI coding assistant from Anthropic under the author's direction; the design, the checks, the tests and every reported number were run and verified by the author.
 
 ## 8. Next steps
 

@@ -75,6 +75,18 @@ def test_number_tokens_swiss_formats():
     assert report.chf(1234567.891) == "1'234'567.89"
 
 
+def test_status_line_reads_the_endpoint(monkeypatch):
+    monkeypatch.setenv("LLM_BASE_URL", "http://host.docker.internal:8080/v1")
+    monkeypatch.setenv("LLM_NAME", "swiss-ai/Apertus-v1.5-8B")
+    assert report.status_line("fr") == "Apertus 8B · sur cette machine · rien ne sort"
+    assert report.deployment()["local"] is True
+    monkeypatch.setenv("LLM_BASE_URL", "https://example.invalid/v1")
+    monkeypatch.setenv("LLM_NAME", "swiss-ai/Apertus-v1.5-70B")
+    assert report.status_line("de") == "Apertus 70B · Schweizer Cloud" and "ß" not in report.status_line("de")
+    monkeypatch.delenv("LLM_BASE_URL")
+    assert report.status_line("it") == "Nessun modello configurato"
+
+
 def test_renders_in_four_languages(papers):
     rep = report.build_report(papers, "2026-09", "fr", with_prose=False)
     for lang in ("fr", "de", "it", "en"):

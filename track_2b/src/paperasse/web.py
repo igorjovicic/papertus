@@ -249,7 +249,7 @@ async def _lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Paperasse", lifespan=_lifespan)
+app = FastAPI(title=i18n.APP_NAME, lifespan=_lifespan)
 
 
 def paper_json(p: Paper, *, full: bool = False) -> dict[str, Any]:
@@ -266,7 +266,7 @@ def health() -> dict[str, Any]:
     with STORE.lock:
         return {"ok": True, "papers": len(STORE.papers), "reading": STORE.status["running"],
                 "model": os.getenv("LLM_NAME") or "", "endpoint_set": bool(os.getenv("LLM_BASE_URL")),
-                "model_usage": llm.usage_total()}
+                "deployment": report_mod.deployment(), "model_usage": llm.usage_total()}
 
 
 @app.get("/status")
@@ -280,7 +280,11 @@ def status() -> dict[str, Any]:
 
 @app.get("/api/strings")
 def strings(lang: str = "fr") -> dict[str, str]:
-    return i18n.all_strings(lang)
+    out = i18n.all_strings(lang)
+    out["_status"] = report_mod.status_line(lang)
+    out["_badge"] = report_mod.model_badge(lang)
+    out["_app"] = i18n.APP_NAME
+    return out
 
 
 @app.get("/api/papers")
@@ -393,7 +397,7 @@ async def upload_papers(files: list[UploadFile] = File(...)) -> dict[str, Any]:
 
 @app.get("/", response_class=HTMLResponse)
 def page() -> HTMLResponse:
-    return HTMLResponse(PAGE)
+    return HTMLResponse(PAGE.replace("{{APP}}", i18n.APP_NAME))
 
 
 # ---------------------------------------------------------------------------
@@ -405,134 +409,191 @@ PAGE = r"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paperasse</title>
+<title>{{APP}}</title>
 <style>
-:root { --ink:#111; --paper:#fff; --grey:#777; --line:#e3e3e3; --soft:#f5f5f5; --accent:#d52b1e; }
+/* Style international suisse : une grille, du blanc, du noir, un seul rouge. */
+:root { --ink:#111; --paper:#fff; --grey:#6b6b6b; --rule:#111; --hair:#d9d9d9; --soft:#f4f4f4; --red:#d52b1e; }
 * { box-sizing:border-box; }
 html, body { margin:0; background:var(--paper); color:var(--ink);
-  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size:15px; line-height:1.45; }
+  font-family:"Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, sans-serif; font-size:15px; line-height:1.5;
+  -webkit-font-smoothing:antialiased; }
 a { color:var(--ink); }
-a.pid { color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); font-variant-numeric:tabular-nums; }
-header { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line); }
-header h1 { font-size:20px; margin:0; letter-spacing:.2px; }
-header h1 b { color:var(--accent); }
-header .tag { color:var(--grey); flex:1 1 240px; font-size:13px; }
-.langs { display:flex; gap:4px; }
-button, .btn { min-height:40px; min-width:40px; padding:0 14px; border:1px solid var(--ink); background:var(--paper); color:var(--ink);
-  font:inherit; border-radius:4px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
+a.pid { color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink); font-variant-numeric:tabular-nums; }
+.label { display:block; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); font-weight:400; }
+.num, .amt { font-variant-numeric:tabular-nums; }
+:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+
+/* la grille : 12 colonnes, gouttières de 24 px, marges de 32 px */
+.wrap { max-width:1280px; margin:0 auto; padding:0 32px; }
+.grid { display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:24px; }
+
+header { border-bottom:1px solid var(--rule); }
+header .grid { align-items:center; min-height:72px; }
+.mark { grid-column:1 / span 3; font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0; }
+.mark b { color:var(--red); }
+.tag { grid-column:4 / span 5; color:var(--grey); font-size:14px; }
+.langs { grid-column:9 / span 4; display:flex; justify-content:flex-end; gap:0; }
+.pill { font-size:11px; letter-spacing:.08em; text-transform:uppercase; border-top:1px solid var(--hair); padding:10px 0; display:flex; align-items:center; gap:10px; }
+.pill i { width:8px; height:8px; background:var(--ink); display:inline-block; }
+
+button, .btn { min-height:40px; min-width:40px; padding:0 16px; border:1px solid var(--ink); background:var(--paper); color:var(--ink);
+  font:inherit; font-size:14px; border-radius:0; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 button.on, .btn.on { background:var(--ink); color:var(--paper); }
-button.accent { background:var(--accent); border-color:var(--accent); color:#fff; }
-button:disabled { opacity:.5; cursor:default; }
-main { padding:12px 16px 120px; max-width:1200px; margin:0 auto; }
-.drop { border:2px dashed var(--line); border-radius:6px; padding:14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
-.drop.over { border-color:var(--accent); background:var(--soft); }
-.drop .t { flex:1 1 200px; }
-.drop .t strong { display:block; }
-.drop .t span { color:var(--grey); font-size:13px; }
+button.primary { background:var(--red); border-color:var(--red); color:#fff; font-weight:700; }
+button:disabled { opacity:.4; cursor:default; }
+.langs button { border-left-width:0; }
+.langs button:first-child { border-left-width:1px; }
+
+main { padding:32px 0 220px; }
+.drop { grid-column:1 / span 12; border:1px solid var(--ink); padding:24px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px 24px; align-items:center; }
+.drop.over { background:var(--soft); }
+.drop strong { display:block; font-size:18px; font-weight:700; letter-spacing:-.01em; line-height:1.3; }
+.drop span.hint { color:var(--grey); font-size:14px; }
+.drop .acts { display:flex; gap:8px; flex-wrap:wrap; }
 input[type=file] { display:none; }
-.progress { margin:8px 0 0; font-size:13px; color:var(--grey); min-height:18px; }
-.progress .err { color:var(--accent); }
-.tabs { display:flex; gap:4px; margin:16px 0 12px; border-bottom:1px solid var(--line); }
-.tabs button { border:none; border-bottom:3px solid transparent; border-radius:0; padding:0 12px; }
-.tabs button.on { background:none; color:var(--ink); border-bottom-color:var(--accent); font-weight:600; }
-.panel { display:none; } .panel.on { display:block; }
-.cols { display:grid; grid-template-columns:300px 1fr; gap:16px; }
-.list { border:1px solid var(--line); border-radius:6px; max-height:70vh; overflow:auto; }
-.list .row { display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; width:100%; min-height:44px;
-  padding:6px 10px; border:none; border-bottom:1px solid var(--line); background:none; text-align:left; cursor:pointer; font:inherit; }
-.list .row:last-child { border-bottom:none; }
-.list .row.on { background:var(--soft); }
-.list .row .f { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; }
-.badge { font-size:11px; border:1px solid var(--ink); border-radius:3px; padding:1px 5px; white-space:nowrap; }
-.badge.lang { border-color:var(--line); color:var(--grey); }
-.list .empty, .facts .empty { padding:16px; color:var(--grey); }
-.facts h2 { font-size:17px; margin:0 0 4px; }
-.facts .meta { color:var(--grey); font-size:13px; margin-bottom:10px; display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; }
-table { border-collapse:collapse; width:100%; font-size:14px; }
-th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
-th { font-weight:600; font-size:13px; color:var(--grey); }
-td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
-tr.total td { font-weight:600; border-top:1px solid var(--ink); }
-tr.warn td { color:var(--accent); font-size:13px; }
-.g { display:inline-block; width:20px; text-align:center; font-weight:700; }
-.g.verified { color:var(--accent); }
+.empty-line { grid-column:1 / span 8; font-size:22px; line-height:1.35; letter-spacing:-.01em; margin:0 0 24px; }
+.progress { grid-column:1 / span 12; font-size:13px; color:var(--grey); min-height:20px; margin-top:12px; font-variant-numeric:tabular-nums; }
+.progress .err { color:var(--red); }
+
+.tabs { grid-column:1 / span 12; display:flex; gap:32px; margin:40px 0 24px; border-bottom:1px solid var(--rule); }
+.tabs button { border:none; border-bottom:3px solid transparent; padding:0 0 10px; min-height:44px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--grey); margin-bottom:-1px; }
+.tabs button.on { color:var(--ink); border-bottom-color:var(--ink); background:none; }
+.panel { display:none; grid-column:1 / span 12; } .panel.on { display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); column-gap:24px; }
+
+.list { grid-column:1 / span 4; border-top:1px solid var(--rule); max-height:72vh; overflow:auto; }
+.list .row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 12px; width:100%; min-height:56px; padding:10px 0;
+  border:none; border-bottom:1px solid var(--hair); background:none; text-align:left; cursor:pointer; font:inherit; border-radius:0; }
+.list .row.on { background:var(--soft); box-shadow:inset 3px 0 0 var(--ink); padding-left:12px; }
+.list .row .k { grid-column:1; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
+.list .row .f { grid-column:1; min-width:0; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.list .row .l { grid-column:2; grid-row:1 / span 2; align-self:center; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); }
+.list .empty, .facts .empty { padding:24px 0; color:var(--grey); }
+
+.facts { grid-column:5 / span 8; }
+.facts h2 { font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0 0 4px; }
+.facts .meta { color:var(--grey); font-size:13px; margin-bottom:24px; display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; }
+table { border-collapse:collapse; width:100%; font-size:15px; }
+th, td { text-align:left; padding:10px 12px 10px 0; border-bottom:1px solid var(--hair); vertical-align:top; }
+thead th { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); font-weight:400; border-bottom:1px solid var(--rule); }
+td.num, th.num { text-align:right; white-space:nowrap; }
+tr.total td { font-weight:700; border-top:1px solid var(--rule); border-bottom:none; }
+tr.warn td { color:var(--red); font-size:13px; }
+.facts > table { table-layout:fixed; }
+.facts th { width:34%; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); font-weight:400; padding-top:13px; }
+.g { display:inline-block; width:24px; font-weight:700; }
+.g.verified { color:var(--red); }
 .g.model { color:var(--ink); }
 .g.blank { color:var(--grey); }
-td.v { word-break:break-word; }
+td.v { word-break:break-word; min-width:0; }
+.facts td:nth-child(2) { width:28px; }
+td.v.amt { font-size:22px; font-weight:700; letter-spacing:-.01em; line-height:1.2; }
 td.blank { color:var(--grey); }
 .reason { color:var(--grey); font-size:12px; }
 .muted { color:var(--grey); }
-.legend { font-size:12px; color:var(--grey); display:flex; gap:14px; flex-wrap:wrap; margin-top:12px; }
-.mov { margin:4px 0; font-size:13px; }
-.mov td { padding:2px 6px; border-bottom:1px dotted var(--line); }
-details summary { cursor:pointer; color:var(--grey); font-size:13px; }
-pre { white-space:pre-wrap; font-size:12px; background:var(--soft); padding:8px; border-radius:4px; max-height:300px; overflow:auto; }
-.bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
-select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--ink); border-radius:4px; background:var(--paper); }
-.report #report { overflow-x:auto; }
+.legend { font-size:12px; color:var(--grey); display:flex; gap:24px; flex-wrap:wrap; margin-top:16px; }
+.mov { margin:4px 0; font-size:13px; table-layout:auto; }
+.mov td { padding:3px 8px 3px 0; border-bottom:1px solid var(--hair); word-break:normal; }
+.mov td.num { width:1%; white-space:nowrap; }
+.mov td:nth-child(2) { width:98%; }
+details { margin-top:16px; } details summary { cursor:pointer; color:var(--grey); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+pre { white-space:pre-wrap; font-size:12px; background:var(--soft); padding:12px; max-height:320px; overflow:auto; font-family:"SF Mono", Menlo, Consolas, monospace; }
+
+.bar { grid-column:1 / span 12; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:24px; }
+select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--ink); border-radius:0; background:var(--paper); }
+.report #report { grid-column:1 / span 12; overflow-x:auto; }
 .report td.d, .report td.num { white-space:nowrap; }
-.report h2 { font-size:18px; margin:4px 0 10px; }
-.report h3 { font-size:15px; margin:18px 0 6px; }
-.report p.prose { border-left:3px solid var(--accent); padding:6px 10px; margin:6px 0; }
-.ask { position:fixed; left:0; right:0; bottom:0; background:var(--paper); border-top:1px solid var(--line); padding:10px 16px; }
-.ask .in { display:flex; gap:8px; max-width:1200px; margin:0 auto; }
-.ask input { flex:1; min-height:40px; font:inherit; padding:0 10px; border:1px solid var(--ink); border-radius:4px; }
-.ask .out { max-width:1200px; margin:8px auto 0; font-size:14px; display:none; }
+.report h2 { font-size:26px; font-weight:700; letter-spacing:-.02em; margin:0 0 24px; }
+.report h3 { font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:400; color:var(--grey); margin:32px 0 8px; }
+.report .prose { border-left:3px solid var(--red); padding:4px 0 4px 20px; margin:8px 0 0; max-width:720px; }
+.report .prose p { margin:0 0 8px; font-size:17px; line-height:1.5; }
+
+.ask { position:fixed; left:0; right:0; bottom:0; background:var(--paper); border-top:1px solid var(--rule); padding:12px 0 16px; }
+.ask .chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; align-items:center; }
+.ask .chips .label { white-space:nowrap; margin-right:8px; }
+.ask .chips button { flex:0 0 auto; white-space:nowrap; font-size:13px; color:var(--ink); border-color:var(--hair); }
+.ask .chips button:hover { border-color:var(--ink); }
+.ask .in { display:flex; gap:0; }
+.ask input { flex:1; min-height:44px; font:inherit; padding:0 12px; border:1px solid var(--ink); border-right:none; border-radius:0; }
+.ask .in button { min-height:44px; }
+.ask .out { margin:12px 0 0; font-size:15px; display:none; max-width:900px; }
 .ask .out.on { display:block; }
-.ask .out .st { font-size:12px; color:var(--grey); margin-top:3px; }
-.ask .out .st .ok { color:var(--accent); }
+.ask .out .st { font-size:12px; color:var(--grey); margin-top:4px; }
+.ask .out .st .ok { color:var(--red); }
 @media (max-width:760px) {
-  .cols { grid-template-columns:1fr; }
-  .list { max-height:34vh; }
-  header .tag { display:none; }
-  main { padding-bottom:160px; }
+  .wrap { padding:0 16px; }
+  header .grid { min-height:auto; padding:12px 0; row-gap:8px; }
+  .mark { grid-column:1 / span 12; font-size:22px; }
+  .tag { display:none; }
+  .langs { grid-column:1 / span 12; justify-content:flex-start; }
+  .langs button { padding:0 12px; }
+  .mov td { padding:3px 4px 3px 0; font-size:12px; }
+  .drop { grid-template-columns:1fr; padding:16px; }
+  .drop strong { font-size:16px; }
+  .empty-line { grid-column:1 / span 12; font-size:18px; }
+  .tabs { margin:24px 0 16px; gap:24px; }
+  .list, .facts, .bar, .report #report { grid-column:1 / span 12; }
+  .list { max-height:36vh; margin-bottom:24px; }
+  .facts th { width:40%; }
+  td.v.amt { font-size:20px; }
+  main { padding-bottom:240px; }
 }
 </style>
 </head>
 <body>
 <header>
-  <h1><b>Paperasse</b></h1>
-  <div class="tag" data-i18n="app.tagline"></div>
-  <div class="langs" id="langs"></div>
+  <div class="wrap">
+    <div class="grid">
+      <h1 class="mark">{{APP}}<b>.</b></h1>
+      <div class="tag" data-i18n="app.tagline"></div>
+      <div class="langs" id="langs"></div>
+    </div>
+    <div class="pill"><i></i><span id="status-line"></span></div>
+  </div>
 </header>
-<main>
-  <div class="drop" id="drop">
-    <div class="t"><strong data-i18n="drop.title"></strong><span data-i18n="drop.hint"></span></div>
-    <label class="btn" for="fdir" data-i18n="drop.folder"></label>
-    <input type="file" id="fdir" webkitdirectory directory multiple>
-    <label class="btn" for="ffiles" data-i18n="drop.files"></label>
-    <input type="file" id="ffiles" multiple accept="application/pdf,.pdf">
-  </div>
-  <div class="progress" id="progress"></div>
+<main class="wrap">
+  <div class="grid">
+    <p class="empty-line" id="empty-line" data-i18n="empty.line" hidden></p>
+    <div class="drop" id="drop">
+      <div><strong data-i18n="drop.title"></strong><span class="hint" data-i18n="drop.hint"></span></div>
+      <div class="acts">
+        <label class="btn" for="fdir" data-i18n="drop.folder"></label>
+        <input type="file" id="fdir" webkitdirectory directory multiple>
+        <label class="btn" for="ffiles" data-i18n="drop.files"></label>
+        <input type="file" id="ffiles" multiple accept="application/pdf,.pdf">
+      </div>
+    </div>
+    <div class="progress" id="progress"></div>
 
-  <div class="tabs">
-    <button id="tab-papers" class="on" data-i18n="tab.papers"></button>
-    <button id="tab-report" data-i18n="tab.report"></button>
-  </div>
+    <div class="tabs">
+      <button id="tab-papers" class="on" data-i18n="tab.papers"></button>
+      <button id="tab-report" data-i18n="tab.report"></button>
+    </div>
 
-  <section class="panel on" id="panel-papers">
-    <div class="cols">
+    <section class="panel on" id="panel-papers">
       <div class="list" id="list"></div>
       <div class="facts" id="facts"></div>
-    </div>
-  </section>
+    </section>
 
-  <section class="panel report" id="panel-report">
-    <div class="bar">
-      <label><span data-i18n="month.label"></span> <select id="month"></select></label>
-      <button class="accent" id="gen" data-i18n="report.generate"></button>
-      <a class="btn" id="md" href="#" data-i18n="report.markdown"></a>
-    </div>
-    <div id="report"></div>
-  </section>
+    <section class="panel report" id="panel-report">
+      <div class="bar">
+        <label><span class="label" data-i18n="month.label"></span><select id="month"></select></label>
+        <button class="primary" id="gen" data-i18n="report.generate"></button>
+        <a class="btn" id="md" href="#" data-i18n="report.markdown"></a>
+      </div>
+      <div id="report"></div>
+    </section>
+  </div>
 </main>
 
 <div class="ask">
-  <form class="in" id="askform">
-    <input id="q" type="text" autocomplete="off">
-    <button class="accent" type="submit" id="askbtn" data-i18n="ask.button"></button>
-  </form>
-  <div class="out" id="out"></div>
+  <div class="wrap">
+    <div class="chips" id="chips"></div>
+    <form class="in" id="askform">
+      <input id="q" type="text" autocomplete="off">
+      <button class="primary" type="submit" id="askbtn" data-i18n="ask.button"></button>
+    </form>
+    <div class="out" id="out"></div>
+  </div>
 </div>
 
 <script>
@@ -544,6 +605,7 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var T = function (k) { return S[k] || k; };
   var LANGS = ['fr', 'de', 'it', 'en'];
+  var AMOUNT_KEYS = { amount_chf: 1, opening_balance: 1, closing_balance: 1 };
   var FIELD_ORDER = {
     qr_bill: ['issuer','recipient','amount_chf','currency','iban','reference','reference_type','invoice_number','invoice_date','due_date','purpose'],
     bank_statement: ['bank','account_iban','holder','period_start','period_end','opening_balance','closing_balance','movements','currency'],
@@ -554,20 +616,27 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
   // --- langue ------------------------------------------------------------
   function setLang(l, first) {
     state.lang = l;
-    try { localStorage.setItem('paperasse.lang', l); } catch (e) {}
+    try { localStorage.setItem('papertus.lang', l); } catch (e) {}
     document.documentElement.lang = l;
     fetch('/api/strings?lang=' + l).then(function (r) { return r.json(); }).then(function (s) {
       S = s;
       document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = T(el.getAttribute('data-i18n')); });
       $('q').placeholder = T('ask.placeholder');
-      renderLangs(); renderList(); renderFacts(); renderProgress(lastStatus);
+      $('status-line').textContent = S._status || '';
+      renderLangs(); renderChips(); renderList(); renderFacts(); renderProgress(lastStatus);
       if (!first && state.tab === 'report' && $('report').innerHTML) genReport();
     });
   }
   function renderLangs() {
     $('langs').innerHTML = LANGS.map(function (l) {
-      return '<button class="' + (l === state.lang ? 'on' : '') + '" data-l="' + l + '">' + l.toUpperCase() + '</button>'; }).join('');
+      return '<button class="' + (l === state.lang ? 'on' : '') + '" data-l="' + l + '" aria-label="' + l + '">' + l.toUpperCase() + '</button>'; }).join('');
     $('langs').querySelectorAll('button').forEach(function (b) { b.onclick = function () { setLang(b.getAttribute('data-l')); }; });
+  }
+  function renderChips() {
+    var keys = ['ask.chip.1', 'ask.chip.2', 'ask.chip.3', 'ask.chip.4', 'ask.chip.5'];
+    $('chips').innerHTML = '<span class="label">' + esc(T('ask.examples')) + '</span>' + keys.map(function (k) {
+      return '<button type="button" data-q="' + esc(T(k)) + '">' + esc(T(k)) + '</button>'; }).join('');
+    $('chips').querySelectorAll('button').forEach(function (b) { b.onclick = function () { $('q').value = b.getAttribute('data-q'); $('askform').requestSubmit ? $('askform').requestSubmit() : $('askbtn').click(); }; });
   }
 
   // --- liste et fiche ------------------------------------------------------
@@ -577,6 +646,7 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
       state.papers = ps;
       if (state.selected && !ps.some(function (p) { return p.id === state.selected; })) state.selected = null;
       var after = JSON.stringify(ps.filter(function (p) { return p.id === state.selected; })[0] || null);
+      $('empty-line').hidden = ps.length > 0;
       renderList(); loadMonths();
       if (before !== after || !state.selected) renderFacts();  // la fiche ne bouge que si son papier a changé
     });
@@ -586,9 +656,9 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
     if (!state.papers.length) { el.innerHTML = '<div class="empty">' + esc(T('papers.empty')) + '</div>'; return; }
     el.innerHTML = state.papers.map(function (p) {
       return '<button class="row' + (p.id === state.selected ? ' on' : '') + '" data-id="' + esc(p.id) + '">' +
-        '<span class="badge">' + esc(T('kind.' + p.kind)) + '</span>' +
+        '<span class="k">' + esc(T('kind.' + p.kind)) + '</span>' +
         '<span class="f">' + esc(p.id) + ' · ' + esc(p.file) + '</span>' +
-        '<span class="badge lang">' + esc(p.language) + '</span></button>'; }).join('');
+        '<span class="l">' + esc(p.language) + '</span></button>'; }).join('');
     el.querySelectorAll('.row').forEach(function (b) { b.onclick = function () { state.selected = b.getAttribute('data-id'); renderList(); renderFacts(); }; });
   }
   function glyph(st) { return st === 'verified' ? '✓' : (st === 'model' ? '•' : '—'); }
@@ -599,12 +669,13 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
       html += '<td class="v blank">' + esc(T('status.blank')) + (reason ? ' <span class="reason">· ' + esc(T('status.reason')) + ' : ' + esc(reason) + '</span>' : '') + '</td>';
     } else if (key === 'movements' && Array.isArray(v)) {
       html += '<td class="v"><table class="mov">' + v.map(function (m) {
-        return '<tr><td>' + esc(m.date || '') + '</td><td>' + esc(m.label || '') + '</td><td class="num">' + chf(m.amount) + '</td></tr>'; }).join('') + '</table>';
+        return '<tr><td class="num">' + esc(m.date || '') + '</td><td>' + esc(m.label || '') + '</td><td class="num">' + chf(m.amount) + '</td></tr>'; }).join('') + '</table>';
       if (reason) html += '<span class="reason">' + esc(reason) + '</span>';
       html += '</td>';
     } else {
+      var isAmt = (typeof v === 'number') && AMOUNT_KEYS[key];
       var shown = (typeof v === 'number') ? chf(v) : String(v);
-      html += '<td class="v">' + esc(shown) + (st === 'model' && reason ? ' <span class="reason">· ' + esc(reason) + '</span>' : '') +
+      html += '<td class="v' + (isAmt ? ' amt num' : '') + '">' + esc(shown) + (st === 'model' && reason ? ' <span class="reason">· ' + esc(reason) + '</span>' : '') +
         (st === 'verified' && f.source ? ' <span class="reason">· ' + esc(f.source) + '</span>' : '') + '</td>';
     }
     return html + '</tr>';
@@ -615,7 +686,7 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
     if (!p) { el.innerHTML = '<div class="empty">' + esc(state.papers.length ? T('paper.select') : T('papers.empty')) + '</div>'; return; }
     var keys = FIELD_ORDER[p.kind] || Object.keys(p.facts || {});
     var rows = keys.map(function (k) { return fieldRow(k, (p.facts || {})[k]); }).join('');
-    el.innerHTML = '<h2>' + esc(p.id) + ' · ' + esc(T('kind.' + p.kind)) + '</h2>' +
+    el.innerHTML = '<span class="label">' + esc(T('kind.' + p.kind)) + '</span><h2>' + esc(p.id) + '</h2>' +
       '<div class="meta"><span>' + esc(p.file) + '</span><span>' + esc(p.language) + ' · ' + p.pages + ' ' + esc(T('paper.pages')) + '</span>' +
       '<a class="btn" href="/api/paper/' + esc(p.id) + '/file" target="_blank">' + esc(T('paper.open')) + '</a></div>' +
       '<table>' + rows + '</table>' +
@@ -719,7 +790,7 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
         out.innerHTML = '<div>' + text + '</div>' +
           (cites ? '<div class="st">' + esc(T('ask.sources')) + ' : ' + cites + '</div>' : '') +
           '<div class="st">' + (a.grounded ? '<span class="ok">✓ ' + esc(T('ask.grounded')) + '</span>' : esc(T('ask.not_grounded'))) +
-          (a.by === 'code' ? ' · ' + esc(T('ask.by_code')) : (a.by === 'model' ? ' · ' + esc(T('ask.by_model')) : '')) +
+          (a.by === 'code' ? ' · ' + esc(T('ask.by_code')) : (a.by === 'model' ? ' · ' + esc(S._badge || T('ask.by_model')) : '')) +
           (a.note ? ' · ' + esc(a.note) : '') + '</div>';
         $('askbtn').disabled = false;
       }).catch(function () { out.innerHTML = '<span class="muted">' + esc(T('error')) + '</span>'; $('askbtn').disabled = false; });
@@ -728,7 +799,7 @@ select { min-height:40px; font:inherit; padding:0 8px; border:1px solid var(--in
   // --- départ ---------------------------------------------------------------
   // L'adresse peut préciser ?lang=de&paper=p050&tab=report (lien partageable, captures d'écran).
   var params = new URLSearchParams(location.search);
-  var saved = 'fr'; try { saved = localStorage.getItem('paperasse.lang') || 'fr'; } catch (e) {}
+  var saved = 'fr'; try { saved = localStorage.getItem('papertus.lang') || 'fr'; } catch (e) {}
   if (params.get('lang')) saved = params.get('lang');
   if (LANGS.indexOf(saved) < 0) saved = 'fr';
   if (params.get('paper')) state.selected = params.get('paper');

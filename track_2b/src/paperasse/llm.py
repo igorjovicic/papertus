@@ -14,6 +14,7 @@ from __future__ import annotations
 import json as _json
 import os
 import random
+import re
 import threading
 import time
 from typing import Any
@@ -32,8 +33,13 @@ _usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "calls"
 # Compteur par fil d'exécution : l'évaluation attribue les jetons à chaque papier.
 _local = threading.local()
 
-# Mémorise si le serveur refuse response_format, pour ne pas réessayer à chaque appel.
+# Mémorise si le serveur refuse response_format / chat_template_kwargs, pour ne pas réessayer à chaque appel.
 _json_mode_supported: bool | None = None
+_template_kwargs_supported: bool | None = None
+
+# Apertus en local peut ouvrir sa réponse par un bloc de réflexion ; on le demande éteint
+# (chat_template_kwargs) et, par sécurité, on retire le bloc s'il apparaît quand même.
+_THINKING_BLOCK = re.compile(r"<\|inner_prefix\|>.*?(?:<\|inner_suffix\|>|$)", re.DOTALL)
 
 
 class ModelError(RuntimeError):
@@ -114,6 +120,11 @@ def _post(url: str, headers: dict[str, str], body: dict[str, Any]) -> httpx.Resp
     raise ModelError(f"endpoint failed after {RETRIES + 1} attempts: {last}")
 
 
+def strip_thinking(text: str) -> str:
+    """Retire un éventuel bloc <|inner_prefix|>…<|inner_suffix|> (réflexion du modèle)."""
+    return _THINKING_BLOCK.sub("", text or "").strip()
+
+
 def chat(
     messages: list[dict[str, str]],
     *,
@@ -123,39 +134,63 @@ def chat(
 ) -> tuple[str, dict[str, int]]:
     """Un tour de conversation. Retourne (texte, usage) ; usage = jetons de cet appel.
 
-    Avec json=True on demande le mode JSON du serveur (response_format) ; s'il est
-    refusé (HTTP 400), on recommence sans et on s'en souvient.
+    Deux champs facultatifs sont envoyés tant que le serveur les accepte : response_format
+    (mode JSON, avec json=True) et chat_template_kwargs {enable_thinking: false}. Sur un
+    HTTP 400 on cherche lequel est refusé (sans l'un, sans l'autre, sans les deux) et on
+    s'en souvient pour les appels suivants.
     """
-    global _json_mode_supported
+    global _json_mode_supported, _template_kwargs_supported
     name, base, key = _settings()
     url = f"{base}/chat/completions"
     headers = {"Content-Type": "application/json"}
     if key:
         headers["Authorization"] = f"Bearer {key}"
-    body: dict[str, Any] = {
+    base_body: dict[str, Any] = {
         "model": name,
         "messages": messages,
         "max_tokens": max_tokens,
         "temperature": temperature,
     }
-    want_json_mode = json and _json_mode_supported is not False
-    if want_json_mode:
-        body["response_format"] = {"type": "json_object"}
+    want_json = json and _json_mode_supported is not False
+    want_tpl = _template_kwargs_supported is not False
 
-    r = _post(url, headers, body)
-    if r.status_code == 400 and want_json_mode:
-        # Le serveur ne connaît pas response_format : on retire l'option, une fois pour toutes.
-        _json_mode_supported = False
-        body.pop("response_format", None)
-        r = _post(url, headers, body)
-    elif want_json_mode and r.status_code == 200:
-        _json_mode_supported = True
+    def body_with(json_mode: bool, tpl: bool) -> dict[str, Any]:
+        b = dict(base_body)
+        if json_mode:
+            b["response_format"] = {"type": "json_object"}
+        if tpl:
+            b["chat_template_kwargs"] = {"enable_thinking": False}
+        return b
+
+    r = _post(url, headers, body_with(want_json, want_tpl))
+    if r.status_code == 400 and (want_json or want_tpl):
+        # On retire les champs facultatifs un à un pour trouver le coupable.
+        attempts = []
+        if want_tpl:
+            attempts.append((want_json, False))
+        if want_json:
+            attempts.append((False, want_tpl))
+        if want_json and want_tpl:
+            attempts.append((False, False))
+        for json_mode, tpl in attempts:
+            r = _post(url, headers, body_with(json_mode, tpl))
+            if r.status_code != 400:
+                if want_tpl and not tpl:
+                    _template_kwargs_supported = False
+                if want_json and not json_mode:
+                    _json_mode_supported = False
+                break
+    elif r.status_code == 200:
+        if want_json:
+            _json_mode_supported = True
+        if want_tpl:
+            _template_kwargs_supported = True
     if r.status_code != 200:
         raise ModelError(f"HTTP {r.status_code}: {r.text[:300]}")
 
     data = r.json()
     try:
-        text = data["choices"][0]["message"]["content"] or ""
+        text = strip_thinking(data["choices"][0]["message"]["content"] or "")
     except (KeyError, IndexError, TypeError) as e:
         raise ModelError(f"unexpected answer shape: {str(data)[:200]}") from e
     usage = _add_usage(data.get("usage"))
