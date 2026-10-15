@@ -76,3 +76,27 @@ def test_seed_is_model_independent_but_runtime_cache_is_not(client, monkeypatch,
     assert p["facts"]["amount_chf"]["value"] == 12.5 and p["read_with"]["size"] == "70B"
     assert web.cache_key(digest) in web.STORE.cache  # recopié dans le cache d'exécution, clé avec le modèle
     assert web.reader_stamp() != web.reader_hash()
+
+
+def test_agenda_routes(client, tmp_path):
+    bill = Paper(id="p001", file="p001.pdf", kind="qr_bill", language="fr",
+                 facts=Facts(fields={"issuer": Field("Gärtnerei Wyss", "verified", source="qr"),
+                                     "amount_chf": Field(2276.96, "verified", source="qr"),
+                                     "due_date": Field("2026-10-03", "verified", source="text")}))
+    web.STORE.add_paper(bill, web.PAPERS_DIR / "p001.pdf", "feed")
+    a = client.get("/api/agenda?today=2026-10-01&lang=de").json()
+    assert a["figures"]["due_7_total"] == 2276.96 and a["groups"]["week"][0]["id"] == "p001:bill"
+    assert a["line"].startswith("1 Rechnung diese Woche zu zahlen")
+    assert client.get("/api/agenda?today=october").status_code == 400
+    r = client.post("/api/agenda/done", json={"event_id": "p001:bill", "done": True}).json()
+    assert r == {"event_id": "p001:bill", "done": True}
+    assert (web.RUNTIME_DIR / "state.json").exists() and "p001:bill" in (web.RUNTIME_DIR / "state.json").read_text()
+    a2 = client.get("/api/agenda?today=2026-10-01").json()
+    assert a2["counts"]["week"] == 0 and a2["counts"]["done"] == 1 and a2["figures"]["due_7_total"] == 0
+    assert client.post("/api/agenda/done", json={"event_id": "drop table", "done": True}).status_code == 400
+    client.post("/api/agenda/done", json={"event_id": "p001:bill", "done": False})
+    ics = client.get("/api/agenda.ics?lang=fr&today=2026-10-01")
+    assert ics.status_code == 200 and ics.headers["content-type"].startswith("text/calendar")
+    assert "SUMMARY:Payer Gärtnerei Wyss · CHF 2'276.96" in ics.text and "TRIGGER:-P2D" in ics.text
+    page = client.get("/").text
+    assert 'id="tab-agenda"' in page and page.index('id="tab-agenda"') < page.index('id="tab-papers"')

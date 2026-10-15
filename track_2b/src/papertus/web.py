@@ -33,6 +33,9 @@ from typing import Any
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 
+from datetime import date
+
+from . import agenda as agenda_mod
 from . import ask as ask_mod
 from . import i18n
 from . import report as report_mod
@@ -42,6 +45,10 @@ PKG_ROOT = Path(__file__).resolve().parents[2]  # track_2b/
 PAPERS_DIR = Path(os.getenv("PAPERS_DIR") or "./papers").resolve()
 RUNTIME_DIR = Path(os.getenv("RUNTIME_DIR") or (PKG_ROOT / "runtime")).resolve()
 CACHE_FILE = RUNTIME_DIR / "cache.json"
+def _state_file() -> Path:
+    """L'état « fait / payé » des événements de l'agenda, à côté du cache (lu à l'appel : les tests
+    déplacent RUNTIME_DIR)."""
+    return RUNTIME_DIR / "state.json"
 SEED_CACHE = PKG_ROOT / "data" / "cache.json"       # lectures livrées avec les papiers d'exemple (facultatif)
 EVAL_CACHE = RUNTIME_DIR / "cache" / "ours"        # lectures faites par `make eval` (même chaîne, même modèle)
 INDEX_FILE = RUNTIME_DIR / "index.db"
@@ -65,6 +72,7 @@ class Store:
         self.cache: dict[str, dict[str, Any]] = {}  # clé d'exécution → Paper.to_dict() (+ read_with)
         self.seed: dict[str, dict[str, Any]] = {}   # clé de graine → Paper.to_dict() (+ read_with), jamais réécrite
         self.read_with: dict[str, dict[str, Any]] = {}  # id → {model, size, local}
+        self.done: set[str] = set()                     # ids d'événements marqués faits / payés
         self.queue: "queue.Queue[Path | None]" = queue.Queue()
         self.status: dict[str, Any] = {"total": 0, "done": 0, "running": False, "current": None, "errors": []}
         self.index: ask_mod.Index | None = None
@@ -81,6 +89,27 @@ class Store:
                     target.update(got)
             except (OSError, ValueError):
                 continue
+
+    def load_state(self) -> None:
+        try:
+            got = json.loads(_state_file().read_text(encoding="utf-8"))
+            self.done = {str(x) for x in got.get("done", [])}
+        except (OSError, ValueError, AttributeError):
+            self.done = set()
+
+    def save_state(self) -> None:
+        RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
+        tmp = _state_file().with_suffix(".tmp")
+        tmp.write_text(json.dumps({"done": sorted(self.done)}, ensure_ascii=False), encoding="utf-8")
+        tmp.replace(_state_file())
+
+    def set_done(self, event_id: str, done: bool) -> None:
+        with self.lock:
+            if done:
+                self.done.add(event_id)
+            else:
+                self.done.discard(event_id)
+            self.save_state()
 
     @staticmethod
     def from_eval_cache(path: Path, digest: str) -> dict[str, Any] | None:
@@ -250,6 +279,7 @@ def boot(papers_dir: Path | None = None) -> None:
     PAPERS_DIR.mkdir(parents=True, exist_ok=True)
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
     STORE.load_cache()
+    STORE.load_state()
     try:
         if INDEX_FILE.exists():
             INDEX_FILE.unlink()
@@ -380,6 +410,45 @@ async def api_ask(request: Request) -> dict[str, Any]:
     d["papers"] = [{"id": i, "kind": STORE.papers[i].kind, "file": STORE.paths[i].name}
                    for i in answer.cited_ids if i in STORE.papers]
     return d
+
+
+def _today(today: str | None) -> date:
+    """`?today=YYYY-MM-DD` fixe la date du jour (captures, tests) ; sinon la vraie."""
+    if today:
+        d = report_mod.as_date(today)
+        if d is None:
+            raise HTTPException(400, "today must be YYYY-MM-DD")
+        return d
+    return date.today()
+
+
+@app.get("/api/agenda")
+def api_agenda(today: str | None = None, lang: str = "fr") -> dict[str, Any]:
+    with STORE.lock:
+        done = set(STORE.done)
+    return agenda_mod.build_agenda(STORE.ordered(), _today(today), done, i18n.norm_lang(lang))
+
+
+@app.post("/api/agenda/done")
+async def api_agenda_done(request: Request) -> dict[str, Any]:
+    body = await request.json()
+    event_id = str(body.get("event_id") or "").strip()
+    if not re.fullmatch(r"p\d{3,}:(bill|deadline|statement)", event_id):
+        raise HTTPException(400, "event_id must look like p001:bill")
+    done = bool(body.get("done", True))
+    STORE.set_done(event_id, done)
+    return {"event_id": event_id, "done": done}
+
+
+@app.get("/api/agenda.ics")
+def api_agenda_ics(lang: str = "fr", today: str | None = None) -> PlainTextResponse:
+    with STORE.lock:
+        done = set(STORE.done)
+    events = agenda_mod.events_from_papers(STORE.ordered(), done)
+    agenda_mod.group_events(events, _today(today))
+    text = agenda_mod.to_ics(events, i18n.norm_lang(lang))
+    return PlainTextResponse(text, media_type="text/calendar; charset=utf-8",
+                             headers={"Content-Disposition": f'attachment; filename="{i18n.APP_NAME.lower()}-agenda.ics"'})
 
 
 _SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
@@ -520,6 +589,30 @@ td.blank { color:var(--grey); }
 details { margin-top:16px; } details summary { cursor:pointer; color:var(--grey); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
 pre { white-space:pre-wrap; font-size:12px; background:var(--soft); padding:12px; max-height:320px; overflow:auto; font-family:"SF Mono", Menlo, Consolas, monospace; }
 
+.agenda .today { grid-column:1 / span 10; font-size:24px; line-height:1.3; letter-spacing:-.015em; margin:0 0 28px; }
+.agenda .today b { font-weight:400; color:var(--grey); display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+.figs { grid-column:1 / span 12; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); column-gap:24px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); margin-bottom:32px; }
+.fig { padding:16px 0 18px; border-left:1px solid var(--hair); padding-left:16px; }
+.fig:first-child { border-left:none; padding-left:0; }
+.fig .n { font-size:36px; font-weight:700; letter-spacing:-.03em; line-height:1.05; font-variant-numeric:tabular-nums; }
+.fig.red .n { color:var(--red); }
+.fig .u { font-size:11px; color:var(--grey); letter-spacing:.06em; text-transform:uppercase; margin-top:6px; }
+.events { grid-column:1 / span 12; }
+.events h3 { font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:400; color:var(--grey); margin:28px 0 0; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+.events h3.red { color:var(--red); }
+.ev { display:grid; grid-template-columns:96px 88px minmax(0,1fr) 120px auto 56px; gap:0 16px; align-items:center; min-height:56px; padding:8px 0; border-bottom:1px solid var(--hair); }
+.ev .d { font-size:20px; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.ev .d small { display:block; font-size:11px; font-weight:400; color:var(--grey); letter-spacing:.06em; }
+.ev .k { font-size:11px; letter-spacing:.1em; color:var(--grey); min-width:0; overflow-wrap:anywhere; }
+.ev .w { min-width:0; } .ev .w .who { font-weight:600; } .ev .w .what { color:var(--grey); font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ev .a { text-align:right; font-variant-numeric:tabular-nums; font-size:17px; white-space:nowrap; }
+.ev .a.blank { color:var(--grey); font-size:12px; white-space:normal; }
+.ev .a .st { display:block; font-size:11px; color:var(--grey); letter-spacing:.06em; }
+.ev button { min-width:88px; }
+.ev.done { color:var(--grey); } .ev.done .d, .ev.done .w .who { font-weight:400; text-decoration:line-through; }
+.ev .p { text-align:right; }
+.reminders { grid-column:1 / span 12; display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; margin-top:40px; padding-top:20px; border-top:1px solid var(--rule); }
+.reminders .hint { color:var(--grey); font-size:13px; flex:1 1 320px; }
 .bar { grid-column:1 / span 12; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:24px; }
 select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--ink); border-radius:0; background:var(--paper); }
 .report #report { grid-column:1 / span 12; overflow-x:auto; }
@@ -554,6 +647,14 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   .empty-line { grid-column:1 / span 12; font-size:18px; }
   .tabs { margin:24px 0 16px; gap:24px; }
   .list, .facts, .bar, .report #report { grid-column:1 / span 12; }
+  .agenda .today { grid-column:1 / span 12; font-size:19px; }
+  .figs { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .fig { padding-left:12px; } .fig:nth-child(3) { border-left:none; padding-left:0; }
+  .fig:nth-child(n+3) { border-top:1px solid var(--hair); }
+  .fig .n { font-size:28px; }
+  .ev { grid-template-columns:80px minmax(0,1fr) auto; grid-template-areas:"d w a" "d w b" "k k p"; row-gap:4px; }
+  .ev .d { grid-area:d; font-size:18px; } .ev .w { grid-area:w; } .ev .a { grid-area:a; } .ev button { grid-area:b; justify-self:end; }
+  .ev .k { grid-area:k; } .ev .p { grid-area:p; }
   .list { max-height:36vh; margin-bottom:24px; }
   .facts th { width:40%; }
   td.v.amt { font-size:20px; }
@@ -587,11 +688,23 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
     <div class="progress" id="progress"></div>
 
     <div class="tabs">
-      <button id="tab-papers" class="on" data-i18n="tab.papers"></button>
+      <button id="tab-agenda" class="on" data-i18n="tab.agenda"></button>
+      <button id="tab-papers" data-i18n="tab.papers"></button>
       <button id="tab-report" data-i18n="tab.report"></button>
     </div>
 
-    <section class="panel on" id="panel-papers">
+    <section class="panel agenda on" id="panel-agenda">
+      <p class="today" id="agenda-line"></p>
+      <div class="figs" id="agenda-figs"></div>
+      <div class="events" id="agenda-events"></div>
+      <div class="reminders">
+        <span class="label" data-i18n="agenda.reminders"></span>
+        <a class="btn primary" id="ics" href="/api/agenda.ics" data-i18n="agenda.export"></a>
+        <span class="hint" data-i18n="agenda.export_hint"></span>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-papers">
       <div class="list" id="list"></div>
       <div class="facts" id="facts"></div>
     </section>
@@ -621,7 +734,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
 <script>
 (function () {
   var S = {};                       // chaînes de la langue courante
-  var state = { lang: 'fr', papers: [], selected: null, tab: 'papers' };
+  var state = { lang: 'fr', papers: [], selected: null, tab: 'agenda', today: null };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -647,6 +760,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
       $('status-line').textContent = S._status || '';
       renderLangs(); renderChips(); renderList(); renderFacts(); renderProgress(lastStatus);
       if (!first && state.tab === 'report' && $('report').innerHTML) genReport();
+      if (state.tab === 'agenda') loadAgenda();
     });
   }
   function renderLangs() {
@@ -671,6 +785,7 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
       $('empty-line').hidden = ps.length > 0;
       renderList(); loadMonths();
       if (before !== after || !state.selected) renderFacts();  // la fiche ne bouge que si son papier a changé
+      if (state.tab === 'agenda') loadAgenda();
     });
   }
   function renderList() {
@@ -774,10 +889,57 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   // --- onglets ------------------------------------------------------------
   function showTab(t) {
     state.tab = t;
-    ['papers', 'report'].forEach(function (x) {
+    ['agenda', 'papers', 'report'].forEach(function (x) {
       $('tab-' + x).classList.toggle('on', x === t); $('panel-' + x).classList.toggle('on', x === t); });
+    if (t === 'agenda') loadAgenda();
   }
+  $('tab-agenda').onclick = function () { showTab('agenda'); };
   $('tab-papers').onclick = function () { showTab('papers'); };
+  function openPaper(id) { state.selected = id; showTab('papers'); renderList(); renderFacts(); window.scrollTo(0, 0); }
+
+  // --- agenda : tout vient de /api/agenda, calculé par le code ------------------
+  function fmtDay(iso) { var p = iso.split('-'); return p[2] + '.' + p[1]; }
+  function loadAgenda() {
+    var url = '/api/agenda?lang=' + state.lang + (state.today ? '&today=' + state.today : '');
+    $('ics').href = '/api/agenda.ics?lang=' + state.lang + (state.today ? '&today=' + state.today : '');
+    fetch(url).then(function (r) { return r.json(); }).then(renderAgenda).catch(function () { $('agenda-line').textContent = T('error'); });
+  }
+  function renderAgenda(a) {
+    var f = a.figures;
+    $('agenda-line').innerHTML = '<b>' + esc(T('agenda.today.label')) + ' · ' + esc(a.today) + '</b>' + esc(a.line);
+    var plural = function (k, n) { return T(n === 1 ? k + '_1' : k + '_n').replace('{n}', n); };
+    $('agenda-figs').innerHTML =
+      '<div class="fig"><div class="n">' + chf(f.due_7_total) + '</div><div class="u">' + esc(T('agenda.fig.due7')) + ' · ' + esc(plural('agenda.fig.count', f.due_7_count)) + '</div></div>' +
+      '<div class="fig' + (f.overdue_count ? ' red' : '') + '"><div class="n">' + chf(f.overdue_total) + '</div><div class="u">' + esc(T('agenda.fig.overdue')) + ' · ' + esc(plural('agenda.fig.count', f.overdue_count)) + '</div></div>' +
+      '<div class="fig"><div class="n">' + f.deadlines_month + '</div><div class="u">' + esc(T('agenda.fig.deadlines')) + '</div></div>' +
+      '<div class="fig"><div class="n">' + chf(f.balance_total) + '</div><div class="u">' + esc(T('agenda.fig.balance')) + (f.balance_blank ? ' · ' + esc(plural('agenda.fig.blank', f.balance_blank)) : '') + '</div></div>';
+    var html = '', any = false;
+    ['overdue', 'week', 'month', 'later', 'done'].forEach(function (g) {
+      var evs = a.groups[g] || []; if (!evs.length) return; any = true;
+      html += '<h3 class="' + (g === 'overdue' ? 'red' : '') + '">' + esc(T('agenda.group.' + g)) + ' · ' + evs.length + '</h3>';
+      evs.forEach(function (e) {
+        var amt = e.amount == null
+          ? '<div class="a blank">' + esc(e.kind === 'statement' ? T('agenda.unverified') + (e.amount_reason ? ' · ' + e.amount_reason : '') : '—') + '</div>'
+          : '<div class="a">' + chf(e.amount) + (e.kind === 'statement' ? '<span class="st">' + esc(T('field.closing_balance')) + '</span>' : '') + '</div>';
+        var btn = e.kind === 'bill' ? 'agenda.paid' : 'agenda.done';
+        html += '<div class="ev' + (e.done ? ' done' : '') + '" data-id="' + esc(e.id) + '">' +
+          '<div class="d">' + esc(fmtDay(e.date)) + '<small>' + esc(e.date.slice(0, 4)) + '</small></div>' +
+          '<div class="k">' + esc(T('agenda.kind.' + e.kind)) + (e.action && e.action !== 'none' ? '<br>' + esc(e.action) : '') + '</div>' +
+          '<div class="w"><div class="who">' + esc(e.who || '—') + '</div><div class="what">' + esc(e.what || '') + '</div></div>' + amt +
+          '<button type="button" class="' + (e.done ? 'on' : '') + '" data-done="' + (e.done ? '0' : '1') + '" title="' + esc(e.done ? T('agenda.undo') : '') + '">' + esc(e.done ? '✓ ' + T(btn) : T(btn)) + '</button>' +
+          '<div class="p"><a class="pid" href="#" data-open="' + esc(e.paper_id) + '">' + esc(e.paper_id) + '</a></div></div>';
+      });
+    });
+    $('agenda-events').innerHTML = any ? html : '<p class="muted">' + esc(T('agenda.empty')) + '</p>';
+    $('agenda-events').querySelectorAll('button[data-done]').forEach(function (b) {
+      b.onclick = function () {
+        var id = b.closest('.ev').getAttribute('data-id'), done = b.getAttribute('data-done') === '1';
+        fetch('/api/agenda/done', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_id: id, done: done }) })
+          .then(function () { loadAgenda(); });
+      };
+    });
+    $('agenda-events').querySelectorAll('a[data-open]').forEach(function (l) { l.onclick = function (e) { e.preventDefault(); openPaper(l.getAttribute('data-open')); }; });
+  }
   $('tab-report').onclick = function () { showTab('report'); if (!$('report').innerHTML) genReport(); };
 
   // --- rapport ------------------------------------------------------------
@@ -827,9 +989,14 @@ select { min-height:40px; font:inherit; padding:0 12px; border:1px solid var(--i
   if (params.get('lang')) saved = params.get('lang');
   if (LANGS.indexOf(saved) < 0) saved = 'fr';
   if (params.get('paper')) state.selected = params.get('paper');
+  state.today = /^\d{4}-\d{2}-\d{2}$/.test(params.get('today') || '') ? params.get('today') : null;
   setLang(saved, true);
   loadPapers().then(function () {
-    if (params.get('tab') === 'report') { showTab('report'); genReport(); }
+    var tab = params.get('tab');
+    if (tab === 'report') { showTab('report'); genReport(); }
+    else if (tab === 'papers' || params.get('paper') || params.get('q')) showTab('papers');
+    else if (tab === 'agenda' || state.papers.length) showTab('agenda');
+    else showTab('papers');
     // ?q=… pose la question à l'ouverture (lien partageable, captures d'écran).
     if (params.get('q')) { $('q').value = params.get('q'); $('askform').onsubmit(new Event('submit')); }
   });
